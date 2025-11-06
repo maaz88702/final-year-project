@@ -1,0 +1,56 @@
+Create a **frontend-only** React application for a Student College Management website. Do **NOT** generate backend code — instead implement frontend logic that calls REST API endpoints (assume the backend will be provided).
+
+Requirements:
+- Tech: React (latest), React Router, Tailwind CSS, Context API (or Redux) for auth/state, Axios for API calls.
+- Styling: Tailwind CSS with responsive design and accessible components.
+- Architecture: Clean folder structure (src/components, src/pages, src/context, src/services, src/hooks, src/assets).
+- Use functional components + hooks only.
+- Provide a config file for API base URL and environment variables (.env.example).
+- Include routing and protected routes for student/teacher/admin dashboards.
+- Include reusable components: Navbar, Footer, Sidebar, Card, Modal, ProtectedRoute, FormInput, Table, FileUploader, Pagination, Toast/Notifications.
+- Provide sample/demo data and a script to seed demo frontend state (so app works without backend).
+- Implement client-side form validation and user feedback (errors, loading states).
+- Implement theme toggle (light/dark) persisted in localStorage.
+- Accessibility: semantic HTML, proper aria-* attributes, keyboard navigable modals and menus.
+- Tests: add a couple of basic unit tests for critical components (Jest + React Testing Library).
+- README: detailed instructions to install, run, and connect to backend, plus API contract (endpoints and expected responses).
+
+Pages & Components (must include):
+1. Public pages: Home, About, Departments, Admissions (form), Contact, Gallery, News/Events.
+2. Auth: Login and Signup forms (support role selection: student, teacher, admin), Forgot Password UI.
+3. Student Dashboard: Profile (name, roll, class, semester), Attendance view, Results view, Notices/Events, Assignments page.
+4. Teacher Dashboard: Attendance management UI (select class/subject, mark present/absent), Upload Marks form, Post Notices/Assignments.
+5. Admin Dashboard: CRUD UI for Students, Teachers, Departments, Courses, Notices, Admissions approval list.
+6. Shared: Notifications/Toasts, Search (students/teachers), File/image uploader for gallery and assignments, Calendar or Events list.
+7. Mobile-first responsive layout: collapsible sidebar on mobile.
+
+API Contract (frontend should call these — mock responses allowed if backend absent):
+- POST /api/auth/signup {name, email, password, role} -> { success, user: {id, name, role}, token }
+- POST /api/auth/login {email, password} -> { success, user, token }
+- GET /api/auth/me -> { user }
+- GET /api/departments -> [{id, name, description}]
+- GET /api/courses?departmentId= -> [{id, name, credits}]
+- GET /api/students/:id -> {student}
+- GET /api/students?search=&page=&limit= -> {data:[...], total, page}
+- POST /api/students -> {createdStudent}
+- PUT /api/students/:id -> {updatedStudent}
+- DELETE /api/students/:id
+- GET /api/attendance?studentId=&month= -> [{date, status}]
+- POST /api/attendance (teacher submits) -> {success}
+- GET /api/results?studentId= -> [{subject, marks, grade}]
+- POST /api/results (teacher) -> {success}
+- GET /api/notices -> [{id, title, body, date, author}]
+- POST /api/notices (teacher/admin) -> {success}
+- GET /api/gallery -> [{id, url, caption}]
+- POST /api/gallery -> {success}
+- POST /api/admissions -> {success}
+- Any file upload endpoints should be POST /api/uploads -> {url}
+
+Extra deliverables:
+- .env.example with REACT_APP_API_BASE_URL
+- Axios instance with interceptors to attach JWT and handle 401 (redirect to login).
+- Demo credentials in README (student, teacher, admin) and instructions how to switch between demo/mock and real API via a config flag.
+- Provide build & deploy steps for Vercel and Netlify.
+- Produce clean, commented code and a concise code map in README.
+
+Make the generated frontend ready to plug into a real Node/Express + MongoDB backend later.

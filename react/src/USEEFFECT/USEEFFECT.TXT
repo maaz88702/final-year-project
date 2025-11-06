@@ -1,0 +1,19 @@
+1. The Main Function (Setup)
+The code inside useEffect (before the return) is the Setup phase. It starts the side effect—in this case, attaching the listener:
+
+JavaScript
+
+window.addEventListener('click', handleWindowClick);
+2. The return Function (Cleanup)
+The function you return is the Cleanup phase. It undoes the setup phase.
+
+JavaScript
+
+return () => {
+  window.removeEventListener('click', handleWindowClick);
+};
+When will this cleanup run?
+
+When you unmount the component: If you navigate away from the page or hide this component, the return runs to ensure the listener is removed, otherwise, handleWindowClick would keep trying to update state on a component that no longer exists (a memory leak!).
+
+If the dependencies change: (Not applicable here since the array is empty, but if it weren't), the cleanup runs before the main function runs again.
