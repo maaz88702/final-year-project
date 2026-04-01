@@ -26,47 +26,59 @@ const assignmentGrade_Id = async (req, res) => {
 }
 
 
+// const AssignmentGrade = require("../models/assignmentGrade.model");
+
 const assignmentGrade_add = async (req, res) => {
   try {
     const { assignmentId, studentId, obtainmarks, details } = req.body;
 
-    // Basic validation
+    // ================= VALIDATION =================
     if (!assignmentId || !studentId || obtainmarks === undefined) {
       return res.status(400).json({
-        message: "assignmentId, studentId and obtainmarks are required"
+        message: "assignmentId, studentId and obtainmarks are required",
       });
     }
 
     if (!Array.isArray(details) || details.length === 0) {
       return res.status(400).json({
-        message: "details must be a non-empty array"
+        message: "details must be a non-empty array",
       });
     }
 
-    // Create new grade document
+    // ================= 🚫 DUPLICATE CHECK =================
+    const existing = await AssignmentGrade.findOne({
+      assignmentId,
+      studentId,
+    });
+
+    if (existing) {
+      return res.status(400).json({
+        message: "This student has already been graded for this assignment",
+      });
+    }
+
+    // ================= SAVE =================
     const newAssignmentGrade = new AssignmentGrade({
       assignmentId,
       studentId,
       obtainmarks,
-      details
+      details,
     });
 
     const savedData = await newAssignmentGrade.save();
 
     res.status(201).json({
       message: "Assignment grade added successfully",
-      data: savedData
+      data: savedData,
     });
 
   } catch (error) {
     res.status(500).json({
       message: "Error while adding assignment grade",
-      error: error.message
+      error: error.message,
     });
   }
 };
-
-
 const assignmentGrade_delete = async (req, res) => {
   try {
     const { _id } = req.params;   // assuming route: /delete/:_id

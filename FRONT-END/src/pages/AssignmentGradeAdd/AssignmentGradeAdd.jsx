@@ -1,5 +1,3 @@
-// AssignmentGradeAdd.jsx
-cannot select multiple checkboxes for a question, only one can be selected at a time. When a checkbox is selected, it updates the marks for that question and recalculates the total marks accordingly.
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -81,12 +79,9 @@ const AssignmentGradeAdd = () => {
     }
   }, [assignments]);
 
-  // ================= FILTER STUDENTS =================
+  // ================= FILTER STUDENTS BY SEMESTER =================
   useEffect(() => {
-    if (!selectedAssignment) {
-      setFilteredStudents([]);
-      return;
-    }
+    if (!selectedAssignment) return;
 
     const assignment = assignments.find(
       (a) => a._id === selectedAssignment
@@ -102,7 +97,6 @@ const AssignmentGradeAdd = () => {
 
     setFilteredStudents(filtered);
     setSelectedStudent("");
-
   }, [selectedAssignment, students, assignments]);
 
   // ================= LOAD QUESTIONS + RUBRICS =================
@@ -118,22 +112,28 @@ const AssignmentGradeAdd = () => {
     const mapped = assignment.assignmentDetails.map((q) => ({
       question: q.ques,
       rubrics: q.rubrics,
-      selectedIndex: null,
+      selectedIndexes: [],
       marks: 0,
     }));
 
     setDetails(mapped);
     setTotalMarks(0);
-
   }, [selectedAssignment]);
 
-  // ================= HANDLE CHECKBOX =================
+  // ================= MULTI CHECKBOX LOGIC =================
   const handleCheckboxChange = (qIndex, rIndex, marks) => {
     const updated = [...details];
+    const selected = updated[qIndex].selectedIndexes;
 
-    // single select behavior
-    updated[qIndex].selectedIndex = rIndex;
-    updated[qIndex].marks = marks;
+    if (selected.includes(rIndex)) {
+      // remove
+      updated[qIndex].selectedIndexes = selected.filter(i => i !== rIndex);
+      updated[qIndex].marks -= marks;
+    } else {
+      // add
+      updated[qIndex].selectedIndexes.push(rIndex);
+      updated[qIndex].marks += marks;
+    }
 
     setDetails(updated);
 
@@ -183,7 +183,7 @@ const AssignmentGradeAdd = () => {
     <Container maxWidth="md">
       <Paper sx={{ p: 4, mt: 4 }}>
         <Typography variant="h5" fontWeight="bold">
-          Assignment Grading (Checkbox Rubrics)
+          Assignment Grading (Multi-Checkbox Rubrics)
         </Typography>
 
         <form onSubmit={handleSubmit}>
@@ -246,7 +246,7 @@ const AssignmentGradeAdd = () => {
                     key={rIndex}
                     control={
                       <Checkbox
-                        checked={q.selectedIndex === rIndex}
+                        checked={q.selectedIndexes.includes(rIndex)}
                         onChange={() =>
                           handleCheckboxChange(qIndex, rIndex, r.marks)
                         }
@@ -258,7 +258,7 @@ const AssignmentGradeAdd = () => {
               </FormGroup>
 
               <Typography sx={{ mt: 1 }}>
-                Selected Marks: {q.marks}
+                Marks for this question: {q.marks}
               </Typography>
             </Paper>
           ))}
