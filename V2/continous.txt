@@ -1,0 +1,9 @@
+
+ backend approximately completed now working on frontend
+student front end completed now working on teacher
+
+ >> NOW WORKING ON ASSIGNMENTGRADE AND ASSIGNMENTSUBMITTED
+
+then we will start working on dashboard for students and teachers
+
+for more just check backend routes and working according to it
