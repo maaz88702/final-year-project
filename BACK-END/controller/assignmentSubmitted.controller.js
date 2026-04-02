@@ -2,47 +2,64 @@ const AssignmentSubmitted = require('../models/AssignmentSubmitted.model');
 
 
 const assignmentSubmitted_get = async (req, res) => {
-    try {
-        const assignmentSubmittedData = await AssignmentSubmitted.find();
-        res.send(assignmentSubmittedData)
-    } catch (error) {
-        res.status(500).json({
-            message: "Failed",
-            error: error.message
-        });
-    }
+  try {
+    const assignmentSubmittedData = await AssignmentSubmitted.find()
+      .populate("studentId", "studentName rollNo")
+      .populate("assignmentId", "title");
+    res.send(assignmentSubmittedData)
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed",
+      error: error.message
+    });
+  }
 }
 
-const assignmentSubmitted_id=async(req,res)=>{
-    try {
-        const {assignmentSubmittedId}=req.params;
-        const assignmentSubmittedById=await AssignmentSubmitted.findById(assignmentSubmittedId).populate("studentId assignmentId")
-        res.send(assignmentSubmittedById)
-    } catch (error) {
-          res.status(500).json({
-            message: "Failed",
-            error: error.message
-        });
-    }
+const assignmentSubmitted_id = async (req, res) => {
+  try {
+    const { assignmentSubmittedId } = req.params;
+    const assignmentSubmittedById = await AssignmentSubmitted.findById(assignmentSubmittedId).populate("studentId assignmentId")
+    res.send(assignmentSubmittedById)
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed",
+      error: error.message
+    });
+  }
 }
 
 
 const assignmentSubmitted_add = async (req, res) => {
   try {
-     const { studentId, assignmentId, file } = req.body;
-// marks will be 0 initially but it will be updated by teacher after grading 
-    // Basic validation
+    const { studentId, assignmentId, file } = req.body;
+
     if (!studentId || !assignmentId || !file) {
       return res.status(400).json({
         message: "studentId, assignmentId, and file are required fields"
       });
     }
 
+    // ✅ 🔥 ADD THIS BLOCK HERE
+    const assignment = await AssignmentPosted.findById(assignmentId);
+
+    if (!assignment) {
+      return res.status(404).json({
+        message: "Assignment not found"
+      });
+    }
+
+    if (new Date() > new Date(assignment.dueDate)) {
+      return res.status(400).json({
+        message: "Deadline passed. Cannot submit."
+      });
+    }
+    // 🔥 END BLOCK
+
     // Create new submission
     const newAssignmentSubmitted = new AssignmentSubmitted({
       studentId,
       assignmentId,
-      file // optional, default is 0 if not provided
+      file
     });
 
     const savedData = await newAssignmentSubmitted.save();
@@ -60,11 +77,10 @@ const assignmentSubmitted_add = async (req, res) => {
   }
 };
 
-
 const assignmentSubmitted_update = async (req, res) => {
   try {
     const { _id } = req.params;   // document id
-  const { marks } = req.body;  // only marks will be updated
+    const { marks } = req.body;  // only marks will be updated
 
     if (marks === undefined) {
       return res.status(400).json({
@@ -126,4 +142,4 @@ const assignmentSubmitted_delete = async (req, res) => {
 
 
 
-module.exports = { assignmentSubmitted_get ,assignmentSubmitted_id,assignmentSubmitted_add,assignmentSubmitted_update,assignmentSubmitted_delete}
+module.exports = { assignmentSubmitted_get, assignmentSubmitted_id, assignmentSubmitted_add, assignmentSubmitted_update, assignmentSubmitted_delete }
