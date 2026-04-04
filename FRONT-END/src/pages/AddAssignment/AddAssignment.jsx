@@ -12,6 +12,7 @@ import {
     IconButton,
     Divider
 } from "@mui/material";
+// import Grid from "@mui/material/Grid2";
 import { Add, Delete } from "@mui/icons-material";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -166,7 +167,7 @@ const AddAssignment = () => {
     // ================= UI =================
     return (
         <Container maxWidth="md">
-            <Paper sx={{ p: 4, mt: 4 }}>
+            <Paper size={{ p: 4, mt: 4 }}>
                 <Typography variant="h5" fontWeight="bold" gutterBottom>
                     Post Assignment
                 </Typography>
@@ -174,7 +175,7 @@ const AddAssignment = () => {
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {/* Course Dropdown */}
-                        <Grid xs={12} md={6}>
+                       <Grid size={{ xs: 12, md: 6 }}>
                            <TextField
     select
     label="Select Course"
@@ -195,7 +196,7 @@ const AddAssignment = () => {
                         </Grid>
 
                         {/* Semester Dropdown */}
-                        <Grid xs={12} md={6}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                             <TextField
                                 select
                                 label="Select Semester"
@@ -214,7 +215,7 @@ const AddAssignment = () => {
                         </Grid>
 
                         {/* Due Date */}
-                        <Grid xs={12} md={6}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                             <TextField
                                 type="date"
                                 label="Due Date"
@@ -228,7 +229,7 @@ const AddAssignment = () => {
                         </Grid>
 
                         {/* Total Marks */}
-                        <Grid xs={12} md={6}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                             <TextField
                                 label="Total Marks (Auto)"
                                 fullWidth

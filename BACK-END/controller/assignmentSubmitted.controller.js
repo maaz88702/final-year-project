@@ -1,3 +1,4 @@
+const AssignmentPosted = require('../models/Assignmentposted.model');
 const AssignmentSubmitted = require('../models/AssignmentSubmitted.model');
 
 
@@ -29,17 +30,34 @@ const assignmentSubmitted_id = async (req, res) => {
 }
 
 
+// const AssignmentSubmitted = require('../models/AssignmentSubmitted.model');
+// const AssignmentPosted = require('../models/AssignmentPosted.model');
+
 const assignmentSubmitted_add = async (req, res) => {
   try {
-    const { studentId, assignmentId, file } = req.body;
+    const { studentId, assignmentId } = req.body;
+    const file = req.file?.filename; // ✅ from multer
 
+    // ✅ 1. Validation first
     if (!studentId || !assignmentId || !file) {
       return res.status(400).json({
-        message: "studentId, assignmentId, and file are required fields"
+        message: "studentId, assignmentId, and file are required"
       });
     }
 
-    // ✅ 🔥 ADD THIS BLOCK HERE
+    // ✅ 2. Prevent duplicate
+    const existingSubmission = await AssignmentSubmitted.findOne({
+      studentId,
+      assignmentId
+    });
+
+    if (existingSubmission) {
+      return res.status(400).json({
+        message: "You already submitted this assignment"
+      });
+    }
+
+    // ✅ 3. Check assignment
     const assignment = await AssignmentPosted.findById(assignmentId);
 
     if (!assignment) {
@@ -48,21 +66,21 @@ const assignmentSubmitted_add = async (req, res) => {
       });
     }
 
+    // ✅ 4. Deadline check
     if (new Date() > new Date(assignment.dueDate)) {
       return res.status(400).json({
         message: "Deadline passed. Cannot submit."
       });
     }
-    // 🔥 END BLOCK
 
-    // Create new submission
-    const newAssignmentSubmitted = new AssignmentSubmitted({
+    // ✅ 5. Save
+    const newSubmission = new AssignmentSubmitted({
       studentId,
       assignmentId,
       file
     });
 
-    const savedData = await newAssignmentSubmitted.save();
+    const savedData = await newSubmission.save();
 
     res.status(201).json({
       message: "Assignment submitted successfully",

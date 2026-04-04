@@ -48,9 +48,7 @@ const AssignmentSubmit = () => {
 
   // ================= DATE CHECK =================
   const isExpired = (dueDate) => {
-    const today = new Date();
-    const due = new Date(dueDate);
-    return today > due;
+    return new Date() > new Date(dueDate);
   };
 
   // ================= FETCH =================
@@ -71,7 +69,7 @@ const AssignmentSubmit = () => {
 
         const student = studentRes.data;
 
-        // ✅ Filter by semester
+        // ✅ Filter assignments by student semester
         const filteredAssignments = assignRes.data.filter(
           (a) =>
             String(a.semesterId?._id || a.semesterId) ===
@@ -96,7 +94,7 @@ const AssignmentSubmit = () => {
     if (token && studentId) fetchData();
   }, [token, studentId]);
 
-  // ================= DUPLICATE =================
+  // ================= DUPLICATE CHECK =================
   const isAlreadySubmitted = (assignmentId) => {
     return submittedAssignments.some(
       (s) =>
@@ -116,6 +114,12 @@ const AssignmentSubmit = () => {
     const assignment = assignments.find(
       (a) => a._id === selectedAssignment
     );
+
+    // ✅ Safety check
+    if (!assignment) {
+      toast.error("Invalid assignment");
+      return;
+    }
 
     if (!selectedAssignment || !file) {
       toast.error("Select assignment and upload file");
@@ -151,11 +155,13 @@ const AssignmentSubmit = () => {
 
       toast.success("Assignment submitted successfully!");
 
+      // update UI instantly
       setSubmittedAssignments((prev) => [
         ...prev,
         { assignmentId: selectedAssignment },
       ]);
 
+      // reset
       setSelectedAssignment("");
       setFile(null);
 
@@ -178,7 +184,7 @@ const AssignmentSubmit = () => {
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2} sx={{ mt: 2 }}>
 
-            {/* Assignment */}
+            {/* Assignment Dropdown */}
             <Grid size={12}>
               <TextField
                 select
@@ -212,9 +218,16 @@ const AssignmentSubmit = () => {
               </TextField>
             </Grid>
 
-            {/* File */}
+            {/* File Upload */}
             <Grid size={12}>
-              <input type="file" onChange={handleFileChange} />
+              <Typography sx={{ mb: 1 }}>
+                Upload Assignment File
+              </Typography>
+              <input
+                type="file"
+                onChange={handleFileChange}
+                key={file ? file.name : ""}
+              />
             </Grid>
 
           </Grid>

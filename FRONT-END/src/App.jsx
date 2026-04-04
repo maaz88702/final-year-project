@@ -15,6 +15,7 @@ import AddAssignment from "./pages/AddAssignment/AddAssignment";
 import AddAssignmentGrade from "./pages/AssignmentGradeAdd/AssignmentGradeAdd";
 import AssignmentSubmit from "./pages/AssignmentSubmit/AssignmentSubmit";
 import AssignmentSubmittedList from "./pages/AssignmentSubmittedList/AssignmentSubmittedList";
+import TeacherDashboard from "./pages/TeacherDashboard/TeacherDashboard";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -38,7 +39,10 @@ function App() {
         <Route path="/teachers/AssignmentSubmittedList" element={<AssignmentSubmittedList />} />
 
 {/* now add addgrade route and and then add teacher dashboard and then student dashboard */}
-         <Route path="/teachers/add-grade" element={<AddAssignmentGrade />} /> 
+         <Route path="/teacher/add-grade" element={<AddAssignmentGrade />} /> 
+
+
+         <Route path="/teacher/dashboard" element={<TeacherDashboard />} /> 
         {/* <Route path="/update-grade/:id" element={<UpdateGrade />} />  */}
         <Route path="*" element={<NotFound />} />
       </Routes>
