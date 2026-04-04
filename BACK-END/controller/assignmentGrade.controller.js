@@ -67,6 +67,14 @@ const assignmentGrade_add = async (req, res) => {
 
     const savedData = await newAssignmentGrade.save();
 
+    await Notification.create({
+  userId: studentId,
+  userModel: "Student",
+  title: "Assignment Graded",
+  message: "Your assignment has been graded",
+  type: "grade",
+});
+
     res.status(201).json({
       message: "Assignment grade added successfully",
       data: savedData,

@@ -1,4 +1,6 @@
 const AssignmentPosted = require('../models/Assignmentposted.model');
+const Notification = require("../models/Notification.model");
+const Student = require("../models/Student.model");
 
 const assignmentPosted_get = async (req, res) => {
   try {
@@ -48,7 +50,7 @@ const assignmentPosted_add = async (req, res) => {
       });
     });
 
-    console.log(teacherId,courseId,semesterId);
+    console.log(teacherId, courseId, semesterId);
     const newAssignment = new AssignmentPosted({
       teacherId,
       courseId,
@@ -60,6 +62,22 @@ const assignmentPosted_add = async (req, res) => {
     });
 
     const savedAssignment = await newAssignment.save();
+
+
+    // after saving assignment
+    const students = await Student.find({
+      semester: savedAssignment.semesterId,
+    });
+
+    const notifications = students.map((s) => ({
+      userId: s._id,
+      userModel: "Student",
+      title: "New Assignment",
+      message: `New assignment "${savedAssignment.title}" posted`,
+      type: "assignment",
+    }));
+
+    await Notification.insertMany(notifications);
 
     res.status(201).json({
       success: true,

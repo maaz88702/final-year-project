@@ -82,6 +82,14 @@ const assignmentSubmitted_add = async (req, res) => {
 
     const savedData = await newSubmission.save();
 
+    await Notification.create({
+      userId: teacherId,
+      userModel: "Teacher",
+      title: "New Submission",
+      message: "A student submitted assignment",
+      type: "submission",
+    });
+
     res.status(201).json({
       message: "Assignment submitted successfully",
       data: savedData
