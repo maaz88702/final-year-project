@@ -17,6 +17,7 @@ import AssignmentSubmit from "./pages/AssignmentSubmit/AssignmentSubmit";
 import AssignmentSubmittedList from "./pages/AssignmentSubmittedList/AssignmentSubmittedList";
 import TeacherDashboard from "./pages/TeacherDashboard/TeacherDashboard";
 import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/student/signup" element={<SignUp_student />} />
         <Route path="/student/login" element={<StudentLogin />} />
-        <Route path="/studentlist/" element={<StudentList />} />
+        <Route path="/admin/studentlist" element={<StudentList />} />
         <Route path="/student/edit/:id" element={<StudentEdit />} />
       
         <Route path="/student/assignmentsubmit" element={<AssignmentSubmit />} />
@@ -35,16 +36,14 @@ function App() {
         <Route path="/teacher/login" element={<TeacherLogin />} />
         <Route path="/teacherslist" element={<TeacherList />} />
         <Route path="/teachers/edit/:id" element={<TeacherEdit />} />
-        <Route path="/teachers/AddAssignment" element={<AddAssignment />} />
-
-        <Route path="/teachers/AssignmentSubmittedList" element={<AssignmentSubmittedList />} />
-
-{/* now add addgrade route and and then add teacher dashboard and then student dashboard */}
+        <Route path="/teacher/addassignment" element={<AddAssignment />} />
+        <Route path="/teacher/AssignmentSubmittedList" element={<AssignmentSubmittedList />} />
          <Route path="/teacher/add-grade" element={<AddAssignmentGrade />} /> 
 
 
          <Route path="/teacher/dashboard" element={<TeacherDashboard />} /> 
          <Route path="/student/dashboard" element={<StudentDashboard />} /> 
+         <Route path="/admin/dashboard" element={<AdminDashboard />} /> 
         {/* <Route path="/update-grade/:id" element={<UpdateGrade />} />  */}
         <Route path="*" element={<NotFound />} />
       </Routes>

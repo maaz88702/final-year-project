@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
+import TeacherNavbar from "../../components/TeacherNavbar/TeacherNavbar";
 
 const AssignmentGradeAdd = () => {
   const baseURL = "http://localhost:3000";
@@ -180,6 +181,8 @@ const AssignmentGradeAdd = () => {
 
   // ================= UI =================
   return (
+    <>
+      <TeacherNavbar />
     <Container maxWidth="md">
       <Paper sx={{ p: 4, mt: 4 }}>
         <Typography variant="h5" fontWeight="bold">
@@ -278,6 +281,7 @@ const AssignmentGradeAdd = () => {
         </form>
       </Paper>
     </Container>
+    </>
   );
 };
 

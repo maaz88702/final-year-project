@@ -14,6 +14,7 @@ import { Delete, Edit, Download } from "@mui/icons-material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import TeacherNavbar from "../../components/TeacherNavbar/TeacherNavbar";
 
 const AssignmentSubmittedList = () => {
   const baseURL = "http://localhost:3000";
@@ -105,6 +106,8 @@ const AssignmentSubmittedList = () => {
 
   // ================= UI =================
   return (
+    <>
+      <TeacherNavbar />
     <Container maxWidth="lg">
       <Paper sx={{ p: 4, mt: 4 }}>
         <Typography variant="h5" fontWeight="bold">
@@ -188,6 +191,7 @@ const AssignmentSubmittedList = () => {
         ))}
       </Paper>
     </Container>
+    </>
   );
 };
 

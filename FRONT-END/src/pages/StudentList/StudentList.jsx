@@ -81,6 +81,8 @@ const StudentList = () => {
     );
 
   return (
+    <>  
+  
     <Paper style={{ padding: "20px", margin: "20px" }}>
       {/* Search Bar */}
       <TextField
@@ -142,6 +144,7 @@ const StudentList = () => {
         </Table>
       </TableContainer>
     </Paper>
+      </>
   );
 };
 
