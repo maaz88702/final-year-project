@@ -34,13 +34,11 @@ function App() {
 
         <Route path="/teacher/signup" element={<TeacherSignUp />} />
         <Route path="/teacher/login" element={<TeacherLogin />} />
-        <Route path="/teacherslist" element={<TeacherList />} />
-        <Route path="/teachers/edit/:id" element={<TeacherEdit />} />
+        <Route path="/admin/teacherslist" element={<TeacherList />} />
+        <Route path="/admin/teachers/edit/:id" element={<TeacherEdit />} />
         <Route path="/teacher/addassignment" element={<AddAssignment />} />
         <Route path="/teacher/AssignmentSubmittedList" element={<AssignmentSubmittedList />} />
          <Route path="/teacher/add-grade" element={<AddAssignmentGrade />} /> 
-
-
          <Route path="/teacher/dashboard" element={<TeacherDashboard />} /> 
          <Route path="/student/dashboard" element={<StudentDashboard />} /> 
          <Route path="/admin/dashboard" element={<AdminDashboard />} /> 

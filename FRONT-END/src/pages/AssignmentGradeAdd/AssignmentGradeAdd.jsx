@@ -193,7 +193,7 @@ const AssignmentGradeAdd = () => {
           <Grid container spacing={2} sx={{ mt: 2 }}>
 
             {/* Assignment */}
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
               <TextField
                 select
                 label="Assignment"
@@ -213,7 +213,7 @@ const AssignmentGradeAdd = () => {
             </Grid>
 
             {/* Student */}
-            <Grid item xs={12} md={6}>
+            <Grid  size={{xs:12,md:6}}>
               <TextField
                 select
                 label="Student"

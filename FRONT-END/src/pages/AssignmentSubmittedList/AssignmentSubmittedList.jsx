@@ -116,7 +116,7 @@ const AssignmentSubmittedList = () => {
 
         {/* FILTER */}
         <Grid container spacing={2} sx={{ mt: 2 }}>
-          <Grid item size={12}>
+          <Grid size={12}>
             <TextField
               select
               label="Filter by Assignment"

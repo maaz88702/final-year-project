@@ -168,169 +168,169 @@ const AddAssignment = () => {
     // ================= UI =================
     return (
         <>
-        <TeacherNavbar />
-      
-        <Container maxWidth="md">
-            <Paper size={{ p: 4, mt: 4 }}>
-                <Typography variant="h5" fontWeight="bold" gutterBottom>
-                    Post Assignment
-                </Typography>
+            <TeacherNavbar />
 
-                <form onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
-                        {/* Course Dropdown */}
-                       <Grid size={{ xs: 12, md: 6 }}>
-                           <TextField
-    select
-    label="Select Course"
-    name="courseId"
-    fullWidth
-    required
-    value={formData.courseId || courses[0]?._id} // default to first course
-    onChange={handleChange}
->
-    {courses.length === 0 && <MenuItem disabled>No courses available</MenuItem>}
-    {courses.map((course) => (
-        <MenuItem key={course._id} value={course._id}>
-            {course.courseTitle}
-        </MenuItem>
-    ))}
-</TextField>
-
-                        </Grid>
-
-                        {/* Semester Dropdown */}
-                        <Grid size={{ xs: 12, md: 6 }}>
-                            <TextField
-                                select
-                                label="Select Semester"
-                                name="semesterId"
-                                fullWidth
-                                required
-                                value={formData.semesterId || semesters[0]?._id} // default to first semester
-                                onChange={handleChange}
-                            >
-                                {semesters.map((sem) => (
-                                    <MenuItem key={sem._id} value={sem._id}>
-                                        {sem.semester}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                        </Grid>
-
-                        {/* Due Date */}
-                        <Grid size={{ xs: 12, md: 6 }}>
-                            <TextField
-                                type="date"
-                                label="Due Date"
-                                name="dueDate"
-                                fullWidth
-                                required
-                                InputLabelProps={{ shrink: true }}
-                                value={formData.dueDate}
-                                onChange={handleChange}
-                            />
-                        </Grid>
-
-                        {/* Total Marks */}
-                        <Grid size={{ xs: 12, md: 6 }}>
-                            <TextField
-                                label="Total Marks (Auto)"
-                                fullWidth
-                                value={calculateTotalMarks()}
-                                InputProps={{ readOnly: true }}
-                            />
-                        </Grid>
-
-                        {/* Title */}
-                        <Grid xs={12}>
-                            <TextField
-                                label="Assignment Title"
-                                name="title"
-                                fullWidth
-                                required
-                                value={formData.title}
-                                onChange={handleChange}
-                            />
-                        </Grid>
-                    </Grid>
-
-                    <Divider sx={{ my: 3 }} />
-
-                    <Typography variant="h6">Questions & Rubrics</Typography>
-
-                    {formData.assignmentDetails.map((q, qIndex) => (
-                        <Paper key={qIndex} sx={{ p: 2, mt: 2, bgcolor: "#f7f7f7" }}>
-                            <Grid container spacing={2}>
-                                <Grid xs={11}>
-                                    <TextField
-                                        label={`Question ${qIndex + 1}`}
-                                        fullWidth
-                                        value={q.ques}
-                                        onChange={(e) => handleQuestionChange(qIndex, e.target.value)}
-                                    />
-                                </Grid>
-                                <Grid xs={1}>
-                                    {qIndex > 0 && (
-                                        <IconButton color="error" onClick={() => removeQuestion(qIndex)}>
-                                            <Delete />
-                                        </IconButton>
-                                    )}
-                                </Grid>
-
-                                {q.rubrics.map((r, rIndex) => (
-                                    <React.Fragment key={rIndex}>
-                                        <Grid xs={6}>
-                                            <TextField
-                                                label="Rubric Condition"
-                                                fullWidth
-                                                value={r.condition}
-                                                onChange={(e) =>
-                                                    handleRubricChange(qIndex, rIndex, "condition", e.target.value)
-                                                }
-                                            />
-                                        </Grid>
-                                        <Grid xs={4}>
-                                            <TextField
-                                                type="number"
-                                                label="Marks"
-                                                fullWidth
-                                                value={r.marks}
-                                                onChange={(e) =>
-                                                    handleRubricChange(qIndex, rIndex, "marks", e.target.value)
-                                                }
-                                            />
-                                        </Grid>
-                                        <Grid xs={2}>
-                                            {rIndex > 0 && (
-                                                <IconButton color="error" onClick={() => removeRubric(qIndex, rIndex)}>
-                                                    <Delete />
-                                                </IconButton>
-                                            )}
-                                        </Grid>
-                                    </React.Fragment>
-                                ))}
-
-                                <Grid xs={12}>
-                                    <Button size="small" startIcon={<Add />} onClick={() => addRubric(qIndex)}>
-                                        Add Rubric
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Paper>
-                    ))}
-
-                    <Button sx={{ mt: 2 }} startIcon={<Add />} onClick={addQuestion}>
-                        Add Question
-                    </Button>
-
-                    <Button type="submit" variant="contained" fullWidth sx={{ mt: 3, height: 45 }}>
+            <Container maxWidth="md">
+                <Paper size={{ p: 4, mt: 4 }}>
+                    <Typography variant="h5" fontWeight="bold" gutterBottom>
                         Post Assignment
-                    </Button>
-                </form>
-            </Paper>
-        </Container>
-          </>
+                    </Typography>
+
+                    <form onSubmit={handleSubmit}>
+                        <Grid container spacing={2}>
+                            {/* Course Dropdown */}
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <TextField
+                                    select
+                                    label="Select Course"
+                                    name="courseId"
+                                    fullWidth
+                                    required
+                                    value={formData.courseId || courses[0]?._id} // default to first course
+                                    onChange={handleChange}
+                                >
+                                    {courses.length === 0 && <MenuItem disabled>No courses available</MenuItem>}
+                                    {courses.map((course) => (
+                                        <MenuItem key={course._id} value={course._id}>
+                                            {course.courseTitle}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+
+                            </Grid>
+
+                            {/* Semester Dropdown */}
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <TextField
+                                    select
+                                    label="Select Semester"
+                                    name="semesterId"
+                                    fullWidth
+                                    required
+                                    value={formData.semesterId || semesters[0]?._id} // default to first semester
+                                    onChange={handleChange}
+                                >
+                                    {semesters.map((sem) => (
+                                        <MenuItem key={sem._id} value={sem._id}>
+                                            {sem.semester}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
+
+                            {/* Due Date */}
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <TextField
+                                    type="date"
+                                    label="Due Date"
+                                    name="dueDate"
+                                    fullWidth
+                                    required
+                                    InputLabelProps={{ shrink: true }}
+                                    value={formData.dueDate}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+
+                            {/* Total Marks */}
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <TextField
+                                    label="Total Marks (Auto)"
+                                    fullWidth
+                                    value={calculateTotalMarks()}
+                                    InputProps={{ readOnly: true }}
+                                />
+                            </Grid>
+
+                            {/* Title */}
+                            <Grid xs={12}>
+                                <TextField
+                                    label="Assignment Title"
+                                    name="title"
+                                    fullWidth
+                                    required
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                        </Grid>
+
+                        <Divider sx={{ my: 3 }} />
+
+                        <Typography variant="h6">Questions & Rubrics</Typography>
+
+                        {formData.assignmentDetails.map((q, qIndex) => (
+                            <Paper key={qIndex} sx={{ p: 2, mt: 2, bgcolor: "#f7f7f7" }}>
+                                <Grid container spacing={2}>
+                                    <Grid xs={11}>
+                                        <TextField
+                                            label={`Question ${qIndex + 1}`}
+                                            fullWidth
+                                            value={q.ques}
+                                            onChange={(e) => handleQuestionChange(qIndex, e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid xs={1}>
+                                        {qIndex > 0 && (
+                                            <IconButton color="error" onClick={() => removeQuestion(qIndex)}>
+                                                <Delete />
+                                            </IconButton>
+                                        )}
+                                    </Grid>
+
+                                    {q.rubrics.map((r, rIndex) => (
+                                        <React.Fragment key={rIndex}>
+                                            <Grid xs={6}>
+                                                <TextField
+                                                    label="Rubric Condition"
+                                                    fullWidth
+                                                    value={r.condition}
+                                                    onChange={(e) =>
+                                                        handleRubricChange(qIndex, rIndex, "condition", e.target.value)
+                                                    }
+                                                />
+                                            </Grid>
+                                            <Grid xs={4}>
+                                                <TextField
+                                                    type="number"
+                                                    label="Marks"
+                                                    fullWidth
+                                                    value={r.marks}
+                                                    onChange={(e) =>
+                                                        handleRubricChange(qIndex, rIndex, "marks", e.target.value)
+                                                    }
+                                                />
+                                            </Grid>
+                                            <Grid xs={2}>
+                                                {rIndex > 0 && (
+                                                    <IconButton color="error" onClick={() => removeRubric(qIndex, rIndex)}>
+                                                        <Delete />
+                                                    </IconButton>
+                                                )}
+                                            </Grid>
+                                        </React.Fragment>
+                                    ))}
+
+                                    <Grid xs={12}>
+                                        <Button size="small" startIcon={<Add />} onClick={() => addRubric(qIndex)}>
+                                            Add Rubric
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        ))}
+
+                        <Button sx={{ mt: 2 }} startIcon={<Add />} onClick={addQuestion}>
+                            Add Question
+                        </Button>
+
+                        <Button type="submit" variant="contained" fullWidth sx={{ mt: 3, height: 45 }}>
+                            Post Assignment
+                        </Button>
+                    </form>
+                </Paper>
+            </Container>
+        </>
     );
 };
 

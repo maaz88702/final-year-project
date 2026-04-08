@@ -20,6 +20,7 @@ const courseRoute=require('./routes/course.route');
 const assignmentPostedRoute=require('./routes/assignmentPosted.route');
 const assignmentGradeRoute=require('./routes/assignmentGrade.route.js')
 const assignmentSubmittedRoute=require('./routes/assignmentSubmitted.route.js')
+const notificationRoute=require('./routes/notification.route.js')
 
 
 app.use('/api',homeRoute)
@@ -30,6 +31,7 @@ app.use('/api/assignmentPosted',assignmentPostedRoute)
 app.use('/api/assignmentgrade',assignmentGradeRoute)
 app.use('/api/assignmentsubmitted',assignmentSubmittedRoute)
 app.use('/api/course',courseRoute)
+app.use('/api/notification',notificationRoute)
 // app.use('/api/teacher/assignment',homeRoute)
 // app.use('/api/student/assignment',homeRoute)
 
