@@ -1,5 +1,5 @@
 const AssignmentPosted = require('../models/Assignmentposted.model');
-const Notification = require("../models/Notification.model");
+const Notification = require("../models/Notice.model");
 const Student = require("../models/Student.model");
 
 const assignmentPosted_get = async (req, res) => {
