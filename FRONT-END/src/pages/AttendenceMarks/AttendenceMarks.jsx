@@ -13,68 +13,92 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 
 const AttendanceMark = () => {
   const baseURL = "http://localhost:3000";
 
   // ================= JWT =================
   const token = localStorage.getItem("jwt");
+  let teacherId = "";
+
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      teacherId = decoded.id || decoded._id;
+    } catch (err) {
+      console.error("Invalid token", err);
+    }
+  }
 
   // ================= STATES =================
-  const [semesters, setSemesters] = useState([]);
   const [courses, setCourses] = useState([]);
   const [students, setStudents] = useState([]);
 
-  const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
-
   const [filteredStudents, setFilteredStudents] = useState([]);
+
   const [attendance, setAttendance] = useState({});
 
-  // ================= FETCH DATA =================
+  // ================= FETCH TEACHER COURSES =================
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCourses = async () => {
       try {
-        const [semRes, courseRes, studentRes] = await Promise.all([
-          axios.get(`${baseURL}/api/semester`, {
+        const res = await axios.get(
+          `${baseURL}/api/course/teacher/my`,
+          {
             headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get(`${baseURL}/api/course`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get(`${baseURL}/api/student`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
+          }
+        );
 
-        setSemesters(semRes.data);
-        setCourses(courseRes.data);
-        console.log("courses", courseRes.data);
-        setStudents(studentRes.data);
+        setCourses(res.data);
+
       } catch (error) {
         console.error(error);
-        toast.error("Failed to load data");
+        toast.error("Failed to load courses");
       }
     };
 
-    if (token) fetchData();
+    if (token) fetchCourses();
   }, [token]);
 
-  // ================= FILTER STUDENTS =================
+  // ================= FETCH STUDENTS BASED ON COURSE =================
   useEffect(() => {
-    if (!selectedSemester) {
-      setFilteredStudents([]);
-      return;
-    }
+    const fetchStudents = async () => {
+      try {
+        if (!selectedCourse) return;
 
-    const filtered = students.filter(
-      (s) =>
-        String(s.semester?._id || s.semester) === selectedSemester
-    );
+        const course = courses.find(
+          (c) => c._id === selectedCourse
+        );
 
-    setFilteredStudents(filtered);
-    setAttendance({});
-  }, [selectedSemester, students]);
+        if (!course) return;
+
+        const semesterId =
+          course.semesterId?._id || course.semesterId;
+
+        const res = await axios.get(`${baseURL}/api/student`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const filtered = res.data.filter(
+          (s) =>
+            String(s.semester?._id || s.semester) ===
+            String(semesterId)
+        );
+
+        setStudents(res.data);
+        setFilteredStudents(filtered);
+        setAttendance({});
+
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to load students");
+      }
+    };
+
+    fetchStudents();
+  }, [selectedCourse, courses, token]);
 
   // ================= HANDLE STATUS =================
   const handleStatusChange = (studentId, status) => {
@@ -84,7 +108,7 @@ const AttendanceMark = () => {
     }));
   };
 
-  // ================= CALCULATE =================
+  // ================= CALCULATE % =================
   const calculatePercentage = () => {
     const total = filteredStudents.length;
     if (total === 0) return 0;
@@ -98,14 +122,23 @@ const AttendanceMark = () => {
 
   // ================= SUBMIT =================
   const handleSubmit = async () => {
-    if (!selectedSemester || !selectedCourse) {
-      toast.error("Select semester and course");
+    if (!selectedCourse) {
+      toast.error("Select course");
+      return;
+    }
+
+    if (filteredStudents.length === 0) {
+      toast.error("No students found");
       return;
     }
 
     try {
+      const course = courses.find(
+        (c) => c._id === selectedCourse
+      );
+
       const payload = {
-        semesterId: selectedSemester,
+        semesterId: course.semesterId,
         courseId: selectedCourse,
         date: new Date(),
 
@@ -127,6 +160,7 @@ const AttendanceMark = () => {
 
       toast.success("Attendance saved successfully");
       setAttendance({});
+
     } catch (error) {
       console.error(error);
       toast.error(
@@ -143,37 +177,25 @@ const AttendanceMark = () => {
           Subject-wise Attendance
         </Typography>
 
-        {/* Filters */}
+        {/* Course Dropdown */}
         <Grid container spacing={2} sx={{ mt: 2 }}>
-          {/* Semester */}
-          <Grid size={6}>
-            <TextField
-              select
-              label="Select Semester"
-              fullWidth
-              value={selectedSemester}
-              onChange={(e) => setSelectedSemester(e.target.value)}
-            >
-              {semesters.map((sem) => (
-                <MenuItem key={sem._id} value={sem._id}>
-                  {sem.semester}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-
-          {/* Course */}
-          <Grid size={6}>
+          <Grid size={12}>
             <TextField
               select
               label="Select Course"
               fullWidth
               value={selectedCourse}
-              onChange={(e) => setSelectedCourse(e.target.value)}
+              onChange={(e) =>
+                setSelectedCourse(e.target.value)
+              }
             >
+              {courses.length === 0 && (
+                <MenuItem disabled>No courses</MenuItem>
+              )}
+
               {courses.map((c) => (
                 <MenuItem key={c._id} value={c._id}>
-                  {c.courseName}
+                  {c.courseTitle}
                 </MenuItem>
               ))}
             </TextField>
@@ -186,6 +208,7 @@ const AttendanceMark = () => {
         {filteredStudents.map((s) => (
           <Paper key={s._id} sx={{ p: 2, mb: 2 }}>
             <Grid container alignItems="center">
+
               {/* Name */}
               <Grid size={4}>
                 <Typography>
@@ -237,6 +260,7 @@ const AttendanceMark = () => {
                   label="Leave"
                 />
               </Grid>
+
             </Grid>
           </Paper>
         ))}

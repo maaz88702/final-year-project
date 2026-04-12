@@ -5,13 +5,20 @@ const courseSchema = new mongoose.Schema(
     courseTitle: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
     },
-    teacher: {
+
+    teacherId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
-      required: true
-    }
+      required: true,
+    },
+
+    semesterId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Semester",
+      required: true,
+    },
   },
   { timestamps: true }
 );

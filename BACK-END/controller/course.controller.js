@@ -1,46 +1,68 @@
-const Course = require('../models/Course.model')
+const Course = require("../models/Course.model");
+
+// ================= GET ALL =================
 const course_get = async (req, res) => {
-    try {
-        const courseData = await Course.find().populate({ path: 'teacher', select: 'teacherName' });
-        // console.log(courseData)
-     res.status(200).json(courseData);
+  try {
+    const courseData = await Course.find()
+      .populate({ path: "teacherId", select: "teacherName" })
+      .populate({ path: "semesterId", select: "semester" });
 
-    } catch (error) {
-        res.send(error)
-    }
-}
+    res.status(200).json(courseData);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
+
+// ================= GET BY ID =================
 const course_id = async (req, res) => {
-    try {
-        const { _id } = req.params;
-        const courseById = await Course.findById(_id).populate('teacher')
-         if (!courseById) {
-           return res.status(404).json({ message: 'Course not found' });
+  try {
+    const { _id } = req.params;
 
-        }
-        res.send(courseById)
-    } catch (error) {
-        res.send(error)
+    const courseById = await Course.findById(_id)
+      .populate("teacherId", "teacherName")
+      .populate("semesterId", "semester");
+
+    if (!courseById) {
+      return res.status(404).json({ message: "Course not found" });
     }
-}
 
+    res.status(200).json(courseById);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
+// ================= ADD =================
 const course_add = async (req, res) => {
   try {
-    const { courseTitle, teacher } = req.body;
+    const { courseTitle, teacherId, semesterId } = req.body;
 
-    // Basic validation
-    if (!courseTitle || !teacher) {
+    // ✅ Validation
+    if (!courseTitle || !teacherId || !semesterId) {
       return res.status(400).json({
         success: false,
-        message: "Both courseTitle and teacher ID are required",
+        message: "courseTitle, teacherId and semesterId are required",
       });
     }
 
-    // Create new course
+    // ✅ Optional: prevent duplicate course in same semester
+    const existing = await Course.findOne({
+      courseTitle,
+      semesterId,
+    });
+
+    if (existing) {
+      return res.status(400).json({
+        success: false,
+        message: "Course already exists in this semester",
+      });
+    }
+
     const newCourse = await Course.create({
       courseTitle,
-      teacher,
+      teacherId,
+      semesterId,
     });
 
     res.status(201).json({
@@ -58,11 +80,11 @@ const course_add = async (req, res) => {
   }
 };
 
-
+// ================= UPDATE =================
 const course_update = async (req, res) => {
   try {
     const id = req.params._id;
-    const { courseTitle, teacher } = req.body;
+    const { courseTitle, teacherId, semesterId } = req.body;
 
     if (!id) {
       return res.status(400).json({
@@ -71,17 +93,18 @@ const course_update = async (req, res) => {
       });
     }
 
-    // Prepare update object
     const updateData = {};
     if (courseTitle) updateData.courseTitle = courseTitle;
-    if (teacher) updateData.teacher = teacher;
+    if (teacherId) updateData.teacherId = teacherId;
+    if (semesterId) updateData.semesterId = semesterId;
 
-    // Find and update course
     const updatedCourse = await Course.findByIdAndUpdate(
       id,
       updateData,
-      { new: true } // return the updated document
-    );
+      { new: true }
+    )
+      .populate("teacherId", "teacherName")
+      .populate("semesterId", "semester");
 
     if (!updatedCourse) {
       return res.status(404).json({
@@ -105,7 +128,7 @@ const course_update = async (req, res) => {
   }
 };
 
-
+// ================= DELETE =================
 const course_delete = async (req, res) => {
   try {
     const id = req.params._id;
@@ -140,7 +163,27 @@ const course_delete = async (req, res) => {
     });
   }
 };
-console.clear()
 
 
-module.exports = { course_get, course_id,course_add,course_update ,course_delete}
+const course_by_teacher = async (req, res) => {
+  try {
+    const teacherId = req.user.id; // from middleware
+
+    const courses = await Course.find({ teacherId })
+      .populate("semesterId", "semester");
+
+    res.json(courses);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  course_get,
+  course_id,
+  course_add,
+  course_update,
+  course_delete,
+  course_by_teacher,
+};
