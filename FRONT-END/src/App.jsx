@@ -20,6 +20,7 @@ import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import NoticeBoardAdmin from "./pages/NoticeBoardAdmin/NoticeBoardAdmin";
 import NoticeBoard from "./pages/NoticeBoard/NoticeBoard";
+import AttendanceMark from "./pages/AttendenceMarks/AttendenceMarks";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
          <Route path="/admin/dashboard" element={<AdminDashboard />} /> 
          <Route path="/admin/notice" element={<NoticeBoardAdmin />} /> 
          <Route path="/noticeboard" element={<NoticeBoard />} /> 
+         <Route path="/teacher/attendance" element={<AttendanceMark />} /> 
         {/* <Route path="/update-grade/:id" element={<UpdateGrade />} />  */}
         <Route path="*" element={<NotFound />} />
       </Routes>

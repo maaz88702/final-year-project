@@ -1,6 +1,6 @@
 const router=require('express').Router();
 const { assignmentPosted_get, assignmentPostedById, assignmentPosted_add, assignmentPosted_delete } = require('../controller/assignmentPosted.controller');
-const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../middleware/auth.middleware');
 
 
 router.get('/',assignmentPosted_get)

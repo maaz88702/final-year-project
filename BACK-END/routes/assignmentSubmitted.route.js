@@ -6,7 +6,7 @@ const {
   assignmentSubmitted_delete
 } = require('../controller/assignmentSubmitted.controller');
 
-const authMiddleware = require('../middleware/authMiddleware');
+const authMiddleware = require('../middleware/auth.middleware');
 const router = require('express').Router();
 const multer = require("multer");
 
