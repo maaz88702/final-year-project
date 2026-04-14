@@ -1,21 +1,26 @@
-const Attendance = require("../models/Attendence.model");
+const Attendance = require("../models/Attendance.model");
 
 // ================= ADD ATTENDANCE =================
 const markAttendance = async (req, res) => {
   try {
     const { semesterId, courseId, date, attendance } = req.body;
 
+    // ✅ Validation
     if (!semesterId || !courseId || !date || !attendance) {
       return res.status(400).json({
         message: "All fields are required",
       });
     }
 
-    // 🚫 prevent duplicate (same subject + date)
+    // ✅ Normalize date (remove time)
+    const selectedDate = new Date(date);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    // ✅ Prevent duplicate (controller level)
     const existing = await Attendance.findOne({
       semesterId,
       courseId,
-      date: new Date(date),
+      date: selectedDate,
     });
 
     if (existing) {
@@ -46,7 +51,7 @@ const markAttendance = async (req, res) => {
     const newAttendance = new Attendance({
       semesterId,
       courseId,
-      date,
+      date: selectedDate,
       attendance,
       summary: {
         totalStudents,
@@ -64,8 +69,18 @@ const markAttendance = async (req, res) => {
       data: saved,
     });
 
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    // ✅ MongoDB duplicate protection
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message: "Attendance already exists for this course today",
+      });
+    }
+
+    res.status(500).json({
+      message: "Error saving attendance",
+      error: error.message,
+    });
   }
 };
 
@@ -74,7 +89,7 @@ const getAttendance = async (req, res) => {
   try {
     const data = await Attendance.find()
       .populate("attendance.studentId", "studentName rollNo")
-      .populate("courseId", "courseName")
+      .populate("courseId", "courseTitle")
       .populate("semesterId", "semester")
       .sort({ date: -1 });
 
@@ -85,31 +100,29 @@ const getAttendance = async (req, res) => {
   }
 };
 
-// ================= GET STUDENT ATTENDANCE =================
+// ================= GET STUDENT =================
 const getStudentAttendance = async (req, res) => {
   try {
     const { studentId } = req.params;
 
-    const records = await Attendance.find({
+    // 🔐 Logged-in user
+    const loggedInUserId = req.user.id;
+
+    // ❌ Prevent accessing other students
+    if (studentId !== loggedInUserId) {
+      return res.status(403).json({
+        message: "Unauthorized access",
+      });
+    }
+
+    const data = await Attendance.find({
       "attendance.studentId": studentId,
     })
-      .populate("courseId", "courseName")
+      .populate("courseId", "courseTitle")
+      .populate("semesterId", "semester")
       .sort({ date: -1 });
 
-    // extract only that student's attendance
-    const result = records.map((record) => {
-      const studentRecord = record.attendance.find(
-        (a) => String(a.studentId) === studentId
-      );
-
-      return {
-        course: record.courseId,
-        date: record.date,
-        status: studentRecord?.status,
-      };
-    });
-
-    res.json(result);
+    res.json(data);
 
   } catch (err) {
     res.status(500).json({ message: err.message });

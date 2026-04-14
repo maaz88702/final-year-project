@@ -227,7 +227,7 @@ const teacher_login = async (req, res) => {
     const token = jwt.sign(
       { id: teacher._id, role: "teacher" },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "100d" }
     );
 
     // Remove password before sending response

@@ -22,6 +22,7 @@ const assignmentGradeRoute=require('./routes/assignmentGrade.route.js')
 const assignmentSubmittedRoute=require('./routes/assignmentSubmitted.route.js')
 const noticeRoute=require('./routes/notice.route.js')
 const attandenceRoute=require("./routes/attendence.route.js")
+const adminRoute=require("./routes/admin.route.js")
 
 
 app.use('/api',homeRoute)
@@ -34,7 +35,7 @@ app.use('/api/assignmentsubmitted',assignmentSubmittedRoute)
 app.use('/api/course',courseRoute)
 app.use('/api/notice',noticeRoute)
 app.use('/api/attendance',attandenceRoute)
-// app.use('/api/student/assignment',homeRoute)
+app.use('/api/admin',adminRoute)
 
 app.listen(port,()=>{
     console.log(`app is listening on ${port}`);

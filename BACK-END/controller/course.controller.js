@@ -171,8 +171,9 @@ const course_by_teacher = async (req, res) => {
 
     const courses = await Course.find({ teacherId })
       .populate("semesterId", "semester");
-
-    res.json(courses);
+    
+console.log("Courses" , courses);
+    res.status(200).json(courses);
 
   } catch (error) {
     res.status(500).json({ message: error.message });
