@@ -14,7 +14,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import StudentNavbar from "../../components/StudentNavbar/StudentNavbar";
 
 const StudentDashboard = () => {
   const baseURL = "http://localhost:3000";
@@ -123,7 +122,7 @@ const StudentDashboard = () => {
   // ================= UI =================
   return (
       <Container maxWidth="lg">
-        <StudentNavbar />
+       
       <Paper sx={{ p: 4, mt: 4 }}>
 
         {/* Header */}

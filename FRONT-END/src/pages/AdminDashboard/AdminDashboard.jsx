@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import AdminNavbar from "../../components/AdminNavbar/AdminNavbar";
 
 const AdminDashboard = () => {
   const baseURL = "http://localhost:3000";
@@ -79,7 +78,7 @@ const AdminDashboard = () => {
   // ================= UI =================
   return (
     <>
-    <AdminNavbar/>
+   
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Typography variant="h4" fontWeight="bold" mb={3}>
         Admin Dashboard

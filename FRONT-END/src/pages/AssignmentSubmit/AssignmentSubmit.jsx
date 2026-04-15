@@ -13,7 +13,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import StudentNavbar from "../../components/StudentNavbar/StudentNavbar";
 
 const AssignmentSubmit = () => {
   const baseURL = "http://localhost:3000";
@@ -177,7 +176,7 @@ const AssignmentSubmit = () => {
   // ================= UI =================
   return (
     <Container maxWidth="md">
-      <StudentNavbar />
+    
       <Paper sx={{ p: 4, mt: 4 }}>
         <Typography variant="h5" fontWeight="bold">
           Submit Assignment
