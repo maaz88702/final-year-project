@@ -24,6 +24,7 @@ import NoticeBoard from "./pages/NoticeBoard/NoticeBoard";
 import AttendanceMark from "./pages/AttendenceMarks/AttendenceMarks";
 import AdminLogin from "./pages/Adminlogin/AdminLogin";
 import StudentLayout from "./layouts/StudentLayout";
+import TeacherLayout from "./layouts/TeacherLayout";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -58,8 +59,8 @@ function App() {
         </Route>
 
         {/* TEACHER ROUTE */}
-        teacher layout remining
-        <Route path="/teacher" element={<AdminLayout />}>
+        <Route path="/teacher" element={<TeacherLayout />}>
+        {/* fixing teacherlayout and geting semester id from course table and showing in add assignment page */}
           <Route path="addassignment" element={<AddAssignment />} />
           <Route path="AssignmentSubmittedList" element={<AssignmentSubmittedList />} />
           <Route path="add-grade" element={<AddAssignmentGrade />} />

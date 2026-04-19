@@ -10,7 +10,6 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import TeacherNavbar from "../../components/TeacherNavbar/TeacherNavbar";
 
 const TeacherDashboard = () => {
   const baseURL = "http://localhost:3000";
@@ -92,7 +91,7 @@ const TeacherDashboard = () => {
   // ================= UI =================
   return (
       <>
-      <TeacherNavbar />
+    
     <Container maxWidth="lg">
       <Typography variant="h4" sx={{ mt: 4, mb: 3 }} fontWeight="bold">
         Teacher Dashboard
