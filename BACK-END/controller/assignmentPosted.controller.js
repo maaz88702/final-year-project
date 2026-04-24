@@ -67,6 +67,7 @@ const assignmentPosted_add = async (req, res) => {
     // after saving assignment
     const students = await Student.find({
       semester: savedAssignment.semesterId,
+      "notificationSettings.assignment": true,
     });
 
     const notifications = students.map((s) => ({

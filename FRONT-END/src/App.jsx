@@ -25,6 +25,7 @@ import AttendanceMark from "./pages/AttendenceMarks/AttendenceMarks";
 import AdminLogin from "./pages/Adminlogin/AdminLogin";
 import StudentLayout from "./layouts/StudentLayout";
 import TeacherLayout from "./layouts/TeacherLayout";
+import NotificationSettings from "./components/NotificationSetting/NotificationSetting";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -34,7 +35,6 @@ function App() {
 
         {/* ✅ PUBLIC ROUTE */}
         <Route path="/" element={<Home />} />
-        <Route path="/noticeboard" element={<NoticeBoard />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/teacher/signup" element={<TeacherSignUp />} />
         <Route path="/teacher/login" element={<TeacherLogin />} />
@@ -50,17 +50,19 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="notice" element={<NoticeBoardAdmin />} />
           <Route path="student/edit/:id" element={<StudentEdit />} />
+          <Route path="notifications" element={<NoticeBoardAdmin />} />
         </Route>
 
         {/* STUDENT ROUTE */}
         <Route path="/student" element={<StudentLayout />}>
-          <Route path="assignmentsubmit" element={<AssignmentSubmit />} />
           <Route path="dashboard" element={<StudentDashboard />} />
+          <Route path="assignmentsubmit" element={<AssignmentSubmit />} />
+          <Route path="noticeboard" element={<NoticeBoard />} />
+          <Route path="NotificationSettings" element={<NotificationSettings />} />
         </Route>
 
         {/* TEACHER ROUTE */}
         <Route path="/teacher" element={<TeacherLayout />}>
-        {/* fixing teacherlayout and geting semester id from course table and showing in add assignment page */}
           <Route path="addassignment" element={<AddAssignment />} />
           <Route path="AssignmentSubmittedList" element={<AssignmentSubmittedList />} />
           <Route path="add-grade" element={<AddAssignmentGrade />} />
