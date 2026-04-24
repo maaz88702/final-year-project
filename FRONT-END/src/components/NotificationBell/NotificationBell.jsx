@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+component reloads every 10second and i dont want it
 import {
   Badge,
   IconButton,
@@ -12,19 +13,33 @@ import {
   Button,
   Stack,
 } from "@mui/material";
+
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
-import axios from "axios";
+
 import { jwtDecode } from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  fetchNotifications,
+  markAsReadNotification,
+  markAllReadNotification,
+} from "../../redux/slices/notificationSlice";
 
 const NotificationBell = () => {
-  const baseURL = "http://localhost:3000";
+  const dispatch = useDispatch();
+
+  const { notifications, loading } = useSelector(
+    (state) => state.notifications
+  );
+
+  const [anchorEl, setAnchorEl] = useState(null);
 
   // ================= TOKEN =================
   const token = localStorage.getItem("jwt");
-  console.log("JWT Token:", token);
+
   // ================= USER ID =================
   const userId = useMemo(() => {
     if (!token) return "";
@@ -38,100 +53,26 @@ const NotificationBell = () => {
     }
   }, [token]);
 
-  // ================= STATES =================
-  const [notifications, setNotifications] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  // ================= FETCH NOTIFICATIONS =================
-  const fetchNotifications = async () => {
-    if (!userId || !token) return;
-
-    try {
-      setLoading(true);
-
-      const res = await axios.get(
-        `${baseURL}/api/notification/${userId}`,
-        // `${baseURL}/api/notification-settings`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Notifications fetched:", res.data);
-      setNotifications(res.data || []);
-    } catch (error) {
-      console.error("Fetch notification error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // ================= AUTO REFRESH =================
+  // ================= FETCH =================
   useEffect(() => {
-    if (!userId || !token) return;
+    if (!userId) return;
 
-    fetchNotifications();
+    dispatch(fetchNotifications(userId));
 
     const interval = setInterval(() => {
-      fetchNotifications();
-    }, 10000); // every 10 sec
+      dispatch(fetchNotifications(userId));
+    }, 10000);
 
     return () => clearInterval(interval);
-  }, [userId, token]);
+  }, [dispatch, userId]);
 
-  // ================= MARK AS READ =================
-  const handleMarkAsRead = async (id) => {
-    try {
-      await axios.patch(
-        `${baseURL}/api/notification/read/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setNotifications((prev) =>
-        prev.map((item) =>
-          item._id === id ? { ...item, read: true } : item
-        )
-      );
-    } catch (error) {
-      console.error(error);
-    }
+  // ================= ACTIONS =================
+  const handleMarkAsRead = (id) => {
+    dispatch(markAsReadNotification(id));
   };
 
-  // ================= MARK ALL AS READ =================
-  const handleMarkAllRead = async () => {
-    try {
-      const unread = notifications.filter((n) => !n.read);
-
-      await Promise.all(
-        unread.map((item) =>
-          axios.patch(
-            `${baseURL}/api/notification/read/${item._id}`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-        )
-      );
-
-      setNotifications((prev) =>
-        prev.map((item) => ({
-          ...item,
-          read: true,
-        }))
-      );
-    } catch (error) {
-      console.error(error);
-    }
+  const handleMarkAllRead = () => {
+    dispatch(markAllReadNotification(userId));
   };
 
   // ================= HELPERS =================
@@ -182,7 +123,7 @@ const NotificationBell = () => {
   // ================= UI =================
   return (
     <>
-      {/* Notification Bell */}
+      {/* Bell */}
       <IconButton
         onClick={(e) => setAnchorEl(e.currentTarget)}
       >
@@ -265,7 +206,7 @@ const NotificationBell = () => {
             </MenuItem>
           )}
 
-        {/* Notification List */}
+        {/* List */}
         {!loading &&
           notifications.map((item) => (
             <MenuItem
