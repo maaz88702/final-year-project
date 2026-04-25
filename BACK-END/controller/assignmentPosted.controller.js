@@ -1,5 +1,6 @@
+const { models } = require('mongoose');
 const AssignmentPosted = require('../models/Assignmentposted.model');
-const Notification = require("../models/Notice.model");
+const Notification = require("../models/Notification.model");
 const Student = require("../models/Student.model");
 
 const assignmentPosted_get = async (req, res) => {
@@ -29,69 +30,94 @@ const assignmentPostedById = async (req, res) => {
 // Add Assignment
 const assignmentPosted_add = async (req, res) => {
   try {
-    // Get teacher ID from JWT middleware
     const teacherId = req.user?.id;
+
     if (!teacherId) {
-      return res.status(401).json({ message: "Unauthorized: No teacher ID found" });
-    }
-
-    const { courseId, semesterId, dueDate, title, assignmentDetails } = req.body;
-
-    // Basic validation
-    if (!courseId || !semesterId || !dueDate || !title || !assignmentDetails || assignmentDetails.length === 0) {
-      return res.status(400).json({ success: false, message: "All fields are required" });
-    }
-
-    // Calculate total marks from rubrics
-    let totalMarks = 0;
-    assignmentDetails.forEach(detail => {
-      detail.rubrics.forEach(rubric => {
-        totalMarks += Number(rubric.marks || 0);
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
       });
-    });
+    }
 
-    console.log(teacherId, courseId, semesterId);
-    const newAssignment = new AssignmentPosted({
-      teacherId,
+    const {
       courseId,
       semesterId,
       dueDate,
       title,
       assignmentDetails,
-      totalMarks
+    } = req.body;
+
+    if (
+      !courseId ||
+      !semesterId ||
+      !dueDate ||
+      !title ||
+      !assignmentDetails?.length
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields required",
+      });
+    }
+
+    let totalMarks = 0;
+
+    assignmentDetails.forEach((q) => {
+      q.rubrics.forEach((r) => {
+        totalMarks += Number(r.marks || 0);
+      });
     });
 
-    const savedAssignment = await newAssignment.save();
+    const savedAssignment =
+      await AssignmentPosted.create({
+        teacherId,
+        courseId,
+        semesterId,
+        dueDate,
+        title,
+        assignmentDetails,
+        totalMarks,
+      });
 
-
-    // after saving assignment
     const students = await Student.find({
-      semester: savedAssignment.semesterId,
-      "notificationSettings.assignment": true,
-    });
+  semester: semesterId,
+});
 
-    const notifications = students.map((s) => ({
-      userId: s._id,
+for (const student of students) {
+  const savedNotification =
+    await Notification.create({
+      userId: student._id,
       userModel: "Student",
       title: "New Assignment",
-      message: `New assignment "${savedAssignment.title}" posted`,
+      message: `New Assignment Added: ${title}`,
       type: "assignment",
-    }));
+    });
 
-    await Notification.insertMany(notifications);
+  global.io
+    .to(student._id.toString())
+    .emit(
+      "newNotification",
+      savedNotification
+    );
+}
 
     res.status(201).json({
       success: true,
-      message: "Assignment posted successfully",
-      data: savedAssignment
+      message:
+        "Assignment posted successfully",
+      data: savedAssignment,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message: "Error posting assignment", error: error.message });
+
+    res.status(500).json({
+      success: false,
+      message:
+        "Error posting assignment",
+      error: error.message,
+    });
   }
 };
-
-
 
 // workiddddddddddddd
 

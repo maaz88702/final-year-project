@@ -11,28 +11,53 @@ const {
 const authMiddleware = require("../middleware/auth.middleware");
 
 // =======================================
-// GET STUDENT NOTIFICATIONS
+// IMPORTANT:
+// Put fixed routes BEFORE dynamic routes
 // =======================================
-router.get("/:userId", authMiddleware, getNotifications);
-
-// =======================================
-// MARK SINGLE AS READ
-// =======================================
-router.patch("/read/:id", authMiddleware, markAsRead);
 
 // =======================================
 // MARK ALL AS READ
 // =======================================
-router.patch("/read-all/:userId", authMiddleware, markAllAsRead);
+router.patch(
+  "/read-all/:userId",
+  authMiddleware,
+  markAllAsRead
+);
+
+// =======================================
+// CLEAR ALL
+// =======================================
+router.delete(
+  "/clear/:userId",
+  authMiddleware,
+  deleteAllNotifications
+);
+
+// =======================================
+// MARK SINGLE AS READ
+// =======================================
+router.patch(
+  "/read/:id",
+  authMiddleware,
+  markAsRead
+);
 
 // =======================================
 // DELETE SINGLE
 // =======================================
-router.delete("/:id", authMiddleware, deleteNotification);
+router.delete(
+  "/:id",
+  authMiddleware,
+  deleteNotification
+);
 
 // =======================================
-// DELETE ALL
+// GET USER NOTIFICATIONS
 // =======================================
-router.delete("/clear/:userId", authMiddleware, deleteAllNotifications);
+router.get(
+  "/:userId",
+  authMiddleware,
+  getNotifications
+);
 
 module.exports = router;
