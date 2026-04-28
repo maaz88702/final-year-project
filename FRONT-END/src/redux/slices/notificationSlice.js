@@ -17,16 +17,18 @@ export const fetchNotifications =
   createAsyncThunk(
     "notifications/fetch",
     async (userId) => {
+      console.log("Fetching notifications for user:", userId);
       const res =
         await axios.get(
           `${baseURL}/api/notification/${userId}`,
           {
             headers: {
+             
               Authorization: `Bearer ${getToken()}`,
             },
           }
         );
-
+console.log(res.data);
       return res.data;
     }
   );
@@ -36,6 +38,7 @@ export const markAsRead =
   createAsyncThunk(
     "notifications/readOne",
     async (id) => {
+      
       await axios.patch(
         `${baseURL}/api/notification/read/${id}`,
         {},

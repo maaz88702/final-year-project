@@ -220,7 +220,7 @@ const StudentDashboard = () => {
                             submission || isExpired(a.dueDate)
                           }
                           onClick={() =>
-                            navigate("/student/submit")
+                            navigate("/student/assignmentsubmit")
                           }
                         >
                           Submit

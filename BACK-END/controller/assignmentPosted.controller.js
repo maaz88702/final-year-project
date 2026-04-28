@@ -1,4 +1,4 @@
-const { models } = require('mongoose');
+const { models, default: mongoose } = require('mongoose');
 const AssignmentPosted = require('../models/Assignmentposted.model');
 const Notification = require("../models/Notification.model");
 const Student = require("../models/Student.model");
@@ -30,8 +30,9 @@ const assignmentPostedById = async (req, res) => {
 // Add Assignment
 const assignmentPosted_add = async (req, res) => {
   try {
+    // ================= Teacher Auth =================
     const teacherId = req.user?.id;
-
+    // console.log(`teacher id is ${teacherId}`)
     if (!teacherId) {
       return res.status(401).json({
         success: false,
@@ -39,6 +40,7 @@ const assignmentPosted_add = async (req, res) => {
       });
     }
 
+    // ================= Request Body =================
     const {
       courseId,
       semesterId,
@@ -56,18 +58,34 @@ const assignmentPosted_add = async (req, res) => {
     ) {
       return res.status(400).json({
         success: false,
-        message: "All fields required",
+        message:
+          "All fields are required",
       });
     }
-
+    // console.log(`course id is ${courseId}`)
+    // console.log(`semester id is`,semesterId)
+    // console.log(`title is ${title}`)
+    // console.log(courseId,
+    //   semesterId,
+    //   dueDate,
+    //   title,
+    //   assignmentDetails)
+    // ================= Calculate Total Marks =================
     let totalMarks = 0;
+    // console.log("assignment details are",assignmentDetails)
+    assignmentDetails.forEach(
+      (question) => {
+        question.rubrics.forEach(
+          (rubric) => {
+            totalMarks += Number(
+              rubric.marks || 0
+            );
+          }
+        );
+      }
+    );
 
-    assignmentDetails.forEach((q) => {
-      q.rubrics.forEach((r) => {
-        totalMarks += Number(r.marks || 0);
-      });
-    });
-
+    // ================= Save Assignment =================
     const savedAssignment =
       await AssignmentPosted.create({
         teacherId,
@@ -78,29 +96,77 @@ const assignmentPosted_add = async (req, res) => {
         assignmentDetails,
         totalMarks,
       });
-
+    // not working here 
+    // cannot fetch semester id
+    // console.log("assignmentsaved with", savedAssignment)
+    // console.log(`semester id is fetching : ${semesterId}`)
+    // console.log("type of semesterid",typeof semesterId)
+    // const semesterObjId=new mongoose.Types.ObjectId(semesterId)
+    // console.log("semester obj id",semesterObjId)
+    // console.log("type of semesterid",typeof semesterObjId)
+    // ================= Find Students =================
     const students = await Student.find({
-  semester: semesterId,
-});
-
-for (const student of students) {
-  const savedNotification =
-    await Notification.create({
-      userId: student._id,
-      userModel: "Student",
-      title: "New Assignment",
-      message: `New Assignment Added: ${title}`,
-      type: "assignment",
-    });
-
-  global.io
-    .to(student._id.toString())
-    .emit(
-      "newNotification",
-      savedNotification
+      // email: "test@gmail.com"
+      // semester: "6953a1206022d3b1f34bfeeb"
+      semester: semesterId
+      // semester: semesterObjId
+      // semester: new mongoose.Types.ObjectId(semesterId)
+      // semester: new mongoose.Types.ObjectId("6953a1206022d3b1f34bfeeb")
+    }
     );
-}
+    // console.log("students are ", students)
+    // const students = await Student.find(
+    //   {
+    //     semester: semesterId,
+    //   },
+    //   "_id"
+    // );
+    // cannot show students here
+    console.log('getting all student of same semester', students)
+    // ================= If Students Exist =================
+    // even not running this code
+    if (students.length > 0) {
+      // Prepare notifications
+      // console.log("student length iṡ greater than 0")
+      const notifications =
+        students.map((student) => ({
+          userId: student._id,
+          userModel: "Student",
+          title: "New Assignment",
+          message: `New Assignment Added: ${title}`,
+          type: "assignment",
+          read: false,
+        }));
+      // console.log(`notifications from mapping ${notifications}`)
+      // Save all notifications in DB
+      const savedNotifications =
+        await Notification.insertMany(
+          notifications
+        );
+      //   console.log(`saved notification ${savedNotifications}`)
+      // console.log("Students:", students);
+      // console.log("Students Count:", students.length);
+      // console.log("SemesterId:", semesterId);
+      // console.log(
+      //   "Saved Notifications:",
+      //   savedNotifications
+      // );
+      // ================= Real-time Emit =================
+      savedNotifications.forEach(
+        (notification) => {
+          global.io
+            .to(
+              notification.userId.toString()
+            )
+            .emit(
+              "newNotification",
+              notification
+            );
+        }
+      );
+    }
 
+    // ================= Response =================
     res.status(201).json({
       success: true,
       message:
@@ -108,7 +174,10 @@ for (const student of students) {
       data: savedAssignment,
     });
   } catch (error) {
-    console.error(error);
+    console.error(
+      "Assignment Post Error:",
+      error
+    );
 
     res.status(500).json({
       success: false,
