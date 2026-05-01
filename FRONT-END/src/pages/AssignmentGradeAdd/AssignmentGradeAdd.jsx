@@ -160,7 +160,7 @@ const AssignmentGradeAdd = () => {
           marks: d.marks,
         })),
       };
-
+console.log("payload is ",payload)
       await axios.post(`${baseURL}/api/assignmentGrade/add`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });

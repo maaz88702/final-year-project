@@ -65,7 +65,7 @@ const TeacherLogin = () => {
               
               localStorage.setItem("jwt", res.data.token)
               toast.success(res.data.message);
-              navigation("/");
+              navigation("/teacher/dashboard");
             } catch (err) {
               toast.error(err.response?.data?.message || "Something went wrong");
             }

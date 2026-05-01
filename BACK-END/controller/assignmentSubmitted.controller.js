@@ -82,8 +82,8 @@ const assignmentSubmitted_add = async (req, res) => {
 
     const savedData = await newSubmission.save();
 
-    notifications are not working and maybe we should remove It 
-    notification saving and model are different
+    // notifications are not working and maybe we should remove It 
+    // notification saving and model are different
     // console.log(userId, title, message, type)
     // await Notification.create({
     //   userId: teacherId,

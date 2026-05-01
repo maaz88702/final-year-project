@@ -122,7 +122,7 @@ const assignmentPosted_add = async (req, res) => {
     //   "_id"
     // );
     // cannot show students here
-    console.log('getting all student of same semester', students)
+    // console.log('getting all student of same semester', students)
     // ================= If Students Exist =================
     // even not running this code
     if (students.length > 0) {

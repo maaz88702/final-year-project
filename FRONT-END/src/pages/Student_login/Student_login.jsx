@@ -71,7 +71,7 @@ const StudentLogin = () => {
               toast.success(res.data.message)
               // setMessage(res.data.message);
               // resetForm();
-              navigation('/');
+              navigation('/student/dashboard');
               // Optionally save JWT token
               // localStorage.setItem("token", res.data.token);
             } catch (err) {

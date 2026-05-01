@@ -1,0 +1,43 @@
+
+
+
+
+ db.students.find({semester:"6953a1206022d3b1f34bfeeb"},{_id:1})
+
+
+
+{
+  "_id": {
+    "$oid": "69f090e2d6491a86b8e740e8"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69e4ce311d1612bc61f2d6af"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-04-30",
+  "totalMarks": 3,
+  "title": "sdf",
+  "assignmentDetails": [
+    {
+      "ques": "sdf",
+      "rubrics": [
+        {
+          "condition": "sdf",
+          "marks": 3
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-04-28T10:50:10.235Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-28T10:50:10.235Z"
+  },
+  "__v": 0
+}

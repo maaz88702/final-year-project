@@ -1,4 +1,5 @@
 const AssignmentGrade = require('../models/AssignmentGrade.model')
+const Notification=require('../models/Notification.model')
 const assignmentGrade_get = async (req, res) => {
     try {
         const assignmentGradeData = await AssignmentGrade.find().populate('assignmentId studentId');
@@ -75,6 +76,7 @@ const assignmentGrade_add = async (req, res) => {
   type: "grade",
 });
 
+console.log("assignment graded notification",Notification)
     res.status(201).json({
       message: "Assignment grade added successfully",
       data: savedData,

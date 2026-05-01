@@ -21,6 +21,7 @@ const notificationSchema =
           "notice",
           "attendance",
           "general",
+          "grade"
         ],
         default: "assignment",
       },
