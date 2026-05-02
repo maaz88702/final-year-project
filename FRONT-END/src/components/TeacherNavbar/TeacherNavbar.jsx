@@ -44,6 +44,7 @@ const TeacherNavbar = () => {
     { label: "Post Assignment", path: "/teacher/addassignment" },
     { label: "Grade Assignment", path: "/teacher/add-grade" },
     { label: "Submissions", path: "/teacher/AssignmentSubmittedList" },
+    { label: "StudentGrades", path: "/teacher/StudentGrades" }
   ];
 
   // ================= MOBILE DRAWER =================

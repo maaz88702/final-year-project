@@ -30,6 +30,7 @@ const AssignmentSubmittedList = () => {
     try {
       const [res, assignRes] = await Promise.all([
         axios.get(`${baseURL}/api/assignmentSubmitted`, {
+        // axios.get(`${baseURL}/api/assignmentSubmitted`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
         axios.get(`${baseURL}/api/assignmentPosted`, {
@@ -58,6 +59,7 @@ const AssignmentSubmittedList = () => {
           selectedAssignment
       )
     : data;
+    console.log("Filtered Data:", filteredData);
 
   // ================= DELETE =================
   const handleDelete = async (id) => {
@@ -147,9 +149,9 @@ const AssignmentSubmittedList = () => {
               {item.assignmentId?.title}
             </Typography>
 
-            <Typography>
+            {/* <Typography>
               <strong>Marks:</strong> {item.marks || 0}
-            </Typography>
+            </Typography> */}
 
             {/* ACTION BUTTONS */}
             <Grid container spacing={1} sx={{ mt: 1 }}>
@@ -165,14 +167,14 @@ const AssignmentSubmittedList = () => {
               </Grid>
 
               {/* Grade */}
-              <Grid>
+              {/* <Grid>
                 <IconButton
                   color="success"
                   onClick={() => handleGrade(item)}
                 >
                   <Edit />
                 </IconButton>
-              </Grid>
+              </Grid> */}
 
               {/* Delete */}
               <Grid>

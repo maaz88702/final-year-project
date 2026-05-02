@@ -26,6 +26,7 @@ import AdminLogin from "./pages/Adminlogin/AdminLogin";
 import StudentLayout from "./layouts/StudentLayout";
 import TeacherLayout from "./layouts/TeacherLayout";
 import NotificationSettings from "./components/NotificationSetting/NotificationSetting";
+import StudentGrades from "./pages/StudentGrades/StudentGrades";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
         {/* TEACHER ROUTE */}
         <Route path="/teacher" element={<TeacherLayout />}>
           <Route path="addassignment" element={<AddAssignment />} />
+          <Route path="studentgrades" element={<StudentGrades />} />
           <Route path="AssignmentSubmittedList" element={<AssignmentSubmittedList />} />
           <Route path="add-grade" element={<AddAssignmentGrade />} />
           <Route path="dashboard" element={<TeacherDashboard />} />

@@ -1,29 +1,39 @@
 const AssignmentGrade = require('../models/AssignmentGrade.model')
-const Notification=require('../models/Notification.model')
+const Notification = require('../models/Notification.model')
 const assignmentGrade_get = async (req, res) => {
-    try {
-        const assignmentGradeData = await AssignmentGrade.find().populate('assignmentId studentId');
-        res.send(assignmentGradeData)
-    } catch (error) {
-        res.status(500).json({
-            message: "Failed to fetch assignment grades",
-            error: error.message
-        });
+  try {
+    const assignmentGradeData = await AssignmentGrade.find().populate({
+    path: "assignmentId",
+    populate: [
+      { path: "teacherId" },
+      { path: "courseId" }
+    ]
+  })
+  .populate("studentId");
+    // const assignmentGradeData = await AssignmentGrade.find().populate('assignmentId studentId');
+    console.log("assignmentGradeData", assignmentGradeData)
+    res.send(assignmentGradeData)
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch assignment grades",
+      error: error.message
+    });
 
-    }
+  }
 }
-const assignmentGrade_Id = async (req, res) => {
-    try {
-        const { assignmentgradeid } = req.params;
-        const assignmentGradeById = await AssignmentGrade.findById(assignmentgradeid).populate('assignmentId studentId');
-        res.send(assignmentGradeById)
-    } catch (error) {
-        res.status(500).json({
-            message: "Failed to fetch assignment grades",
-            error: error.message
-        });
 
-    }
+const assignmentGrade_Id = async (req, res) => {
+  try {
+    const { assignmentgradeid } = req.params;
+    const assignmentGradeById = await AssignmentGrade.findById(assignmentgradeid).populate('assignmentId studentId');
+    res.send(assignmentGradeById)
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch assignment grades",
+      error: error.message
+    });
+
+  }
 }
 
 
@@ -69,14 +79,14 @@ const assignmentGrade_add = async (req, res) => {
     const savedData = await newAssignmentGrade.save();
 
     await Notification.create({
-  userId: studentId,
-  userModel: "Student",
-  title: "Assignment Graded",
-  message: "Your assignment has been graded",
-  type: "grade",
-});
+      userId: studentId,
+      userModel: "Student",
+      title: "Assignment Graded",
+      message: "Your assignment has been graded",
+      type: "grade",
+    });
 
-console.log("assignment graded notification",Notification)
+    console.log("assignment graded notification", Notification)
     res.status(201).json({
       message: "Assignment grade added successfully",
       data: savedData,
@@ -154,4 +164,4 @@ const assignmentGrade_update = async (req, res) => {
   }
 };
 
-module.exports = { assignmentGrade_get, assignmentGrade_Id ,assignmentGrade_add,assignmentGrade_delete,assignmentGrade_update}
+module.exports = { assignmentGrade_get, assignmentGrade_Id, assignmentGrade_add, assignmentGrade_delete, assignmentGrade_update }
