@@ -41,10 +41,11 @@ const AdminNavbar = () => {
 
   const navItems = [
     { label: "Dashboard", path: "/admin/dashboard" },
-    { label: "Students", path: "/admin/students" },
-    { label: "Teachers", path: "/admin/teachers" },
-    { label: "Assignments", path: "/admin/assignments" },
-    { label: "Submissions", path: "/admin/submissions" },
+    { label: "Students", path: "/admin/studentlist" },
+    { label: "Teachers", path: "/admin/teacherslist" },
+    // { label: "Assignments", path: "/admin/assignments" },
+    { label: "Notices", path: "/admin/notice" },
+    // { label: "Submissions", path: "/admin/submissions" },
   ];
 
   // ================= DRAWER =================
@@ -112,7 +113,7 @@ const AdminNavbar = () => {
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
 
             {/* 🔔 Notifications */}
-            <NotificationBell />
+            {/* <NotificationBell /> */}
 
             {/* 👤 Profile */}
             <Avatar
@@ -129,9 +130,9 @@ const AdminNavbar = () => {
             >
               <MenuItem disabled>{adminName}</MenuItem>
 
-              <MenuItem onClick={() => navigate("/admin/profile")}>
+              {/* <MenuItem onClick={() => navigate("/admin/profile")}>
                 Profile
-              </MenuItem>
+              </MenuItem> */}
 
               <MenuItem onClick={handleLogout}>
                 Logout

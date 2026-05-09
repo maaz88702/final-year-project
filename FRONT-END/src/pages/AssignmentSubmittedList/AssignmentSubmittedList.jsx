@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-// filtering is remaining, rest is aproximately done
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Container,
   Paper,
@@ -7,191 +6,379 @@ import {
   Grid,
   MenuItem,
   TextField,
-  Button,
   IconButton,
+  Box,
+  Chip,
 } from "@mui/material";
-import { Delete, Edit, Download } from "@mui/icons-material";
+
+import {
+  Delete,
+  Download,
+} from "@mui/icons-material";
+
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const AssignmentSubmittedList = () => {
   const baseURL = "http://localhost:3000";
-  const navigate = useNavigate();
 
   const token = localStorage.getItem("jwt");
 
+  // ================= TEACHER ID =================
+  let teacherId = "";
+
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+
+      teacherId =
+        decoded.id || decoded._id;
+
+    } catch (error) {
+      console.error("Invalid token", error);
+    }
+  }
+
+  // ================= STATES =================
   const [data, setData] = useState([]);
-  const [assignments, setAssignments] = useState([]);
-  const [selectedAssignment, setSelectedAssignment] = useState("");
+
+  const [assignments, setAssignments] =
+    useState([]);
+
+  const [selectedAssignment,
+    setSelectedAssignment] = useState("");
 
   // ================= FETCH DATA =================
   const fetchData = async () => {
     try {
-      const [res, assignRes] = await Promise.all([
-        axios.get(`${baseURL}/api/assignmentSubmitted`, {
-        // axios.get(`${baseURL}/api/assignmentSubmitted`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-        axios.get(`${baseURL}/api/assignmentPosted`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-      ]);
+      const [submissionRes, assignmentRes] =
+        await Promise.all([
+          axios.get(
+            `${baseURL}/api/assignmentSubmitted`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          ),
 
-      setData(res.data);
-      setAssignments(assignRes.data);
+          axios.get(
+            `${baseURL}/api/assignmentPosted`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          ),
+        ]);
+
+      console.log(
+        "All Assignments:",
+        assignmentRes.data
+      );
+
+      console.log(
+        "All Submissions:",
+        submissionRes.data
+      );
+
+      // ================= ONLY LOGGED-IN TEACHER ASSIGNMENTS =================
+      const teacherAssignments =
+        assignmentRes.data.filter(
+          (assignment) =>
+            String(
+              assignment.teacherId?._id ||
+              assignment.teacherId
+            ) === String(teacherId)
+        );
+
+      console.log(
+        "Teacher Assignments:",
+        teacherAssignments
+      );
+
+      setAssignments(teacherAssignments);
+
+      // ================= GET TEACHER ASSIGNMENT IDS =================
+      const teacherAssignmentIds =
+        teacherAssignments.map((a) =>
+          String(a._id)
+        );
+
+      // ================= FILTER SUBMISSIONS =================
+      const teacherSubmissions =
+        submissionRes.data.filter(
+          (submission) =>
+            teacherAssignmentIds.includes(
+              String(
+                submission.assignmentId?._id ||
+                submission.assignmentId
+              )
+            )
+        );
+
+      console.log(
+        "Teacher Submissions:",
+        teacherSubmissions
+      );
+
+      setData(teacherSubmissions);
 
     } catch (error) {
       console.error(error);
-      toast.error("Failed to fetch data");
+
+      toast.error(
+        "Failed to fetch data"
+      );
     }
   };
 
   useEffect(() => {
-    fetchData();
+    if (token && teacherId) {
+      fetchData();
+    }
   }, []);
 
-  // ================= FILTER =================
-  const filteredData = selectedAssignment
-    ? data.filter(
-        (d) =>
-          String(d.assignmentId?._id || d.assignmentId) ===
-          selectedAssignment
-      )
-    : data;
-    console.log("Filtered Data:", filteredData);
+  // ================= FILTERED DATA =================
+  const filteredData = useMemo(() => {
+    if (!selectedAssignment) {
+      return data;
+    }
+
+    return data.filter(
+      (item) =>
+        String(
+          item.assignmentId?._id ||
+          item.assignmentId
+        ) === selectedAssignment
+    );
+  }, [data, selectedAssignment]);
+
+  console.log(
+    "Filtered Data:",
+    filteredData
+  );
 
   // ================= DELETE =================
   const handleDelete = async (id) => {
-    if (!window.confirm("Delete this submission?")) return;
+    const confirmDelete =
+      window.confirm(
+        "Delete this submission?"
+      );
+
+    if (!confirmDelete) return;
 
     try {
       await axios.delete(
         `${baseURL}/api/assignmentSubmitted/delete/${id}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
-      toast.success("Deleted successfully");
-      fetchData();
+      toast.success(
+        "Deleted successfully"
+      );
+
+      // remove locally
+      setData((prev) =>
+        prev.filter(
+          (item) => item._id !== id
+        )
+      );
 
     } catch (error) {
       console.error(error);
+
       toast.error("Delete failed");
     }
   };
 
   // ================= DOWNLOAD =================
-  const handleDownload = (filePath) => {
+  const handleDownload = (
+    filePath
+  ) => {
     if (!filePath) {
       toast.error("No file found");
       return;
     }
 
-    // adjust if your backend serves static files
-    // `${baseURL}/uploads/${fileName}`
-    const fileURL = `${baseURL}/uploads/${filePath}`;
-    window.open(fileURL, "_blank");
-  };
+    const fileURL =
+      `${baseURL}/uploads/${filePath}`;
 
-  // ================= GRADE =================
-  const handleGrade = (submission) => {
-    navigate("/teacher/add-grade", {
-      state: {
-        assignmentId: submission.assignmentId?._id || submission.assignmentId,
-        studentId: submission.studentId?._id || submission.studentId,
-      },
-    });
+    window.open(fileURL, "_blank");
   };
 
   // ================= UI =================
   return (
-    <>
     <Container maxWidth="lg">
-      <Paper sx={{ p: 4, mt: 4 }}>
-        <Typography variant="h5" fontWeight="bold">
-          Assignment Submissions
-        </Typography>
+      <Paper
+        sx={{
+          p: 4,
+          mt: 4,
+          borderRadius: 3,
+        }}
+      >
+        {/* HEADER */}
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={3}
+        >
+          <Typography
+            variant="h5"
+            fontWeight="bold"
+          >
+            Assignment Submissions
+          </Typography>
+
+          <Chip
+            label={`${filteredData.length} Submissions`}
+            color="primary"
+          />
+        </Box>
 
         {/* FILTER */}
-        <Grid container spacing={2} sx={{ mt: 2 }}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ mb: 3 }}
+        >
           <Grid size={12}>
             <TextField
               select
-              label="Filter by Assignment"
               fullWidth
+              label="Filter by Assignment"
               value={selectedAssignment}
-              onChange={(e) => setSelectedAssignment(e.target.value)}
+              onChange={(e) =>
+                setSelectedAssignment(
+                  e.target.value
+                )
+              }
             >
-              <MenuItem value="">All</MenuItem>
+              <MenuItem value="">
+                All Assignments
+              </MenuItem>
 
-              {assignments.map((a) => (
-                <MenuItem key={a._id} value={a._id}>
-                  {a.title}
-                </MenuItem>
-              ))}
+              {assignments.map(
+                (assignment) => (
+                  <MenuItem
+                    key={assignment._id}
+                    value={
+                      assignment._id
+                    }
+                  >
+                    {assignment.title}
+                  </MenuItem>
+                )
+              )}
             </TextField>
           </Grid>
         </Grid>
 
-        {/* LIST */}
+        {/* EMPTY */}
+        {filteredData.length === 0 && (
+          <Paper
+            sx={{
+              p: 4,
+              textAlign: "center",
+              bgcolor: "#fafafa",
+            }}
+          >
+            <Typography
+              variant="h6"
+            >
+              No submissions found
+            </Typography>
+          </Paper>
+        )}
+
+        {/* SUBMISSIONS */}
         {filteredData.map((item) => (
-          <Paper key={item._id} sx={{ p: 2, mt: 2 }}>
-            <Typography>
-              <strong>Student:</strong>{" "}
-              {item.studentId?.studentName} —{" "}
-              <strong>{item.studentId?.rollNo}</strong>
+          <Paper
+            key={item._id}
+            sx={{
+              p: 3,
+              mb: 2,
+              borderRadius: 3,
+              boxShadow: 2,
+            }}
+          >
+            <Typography mb={1}>
+              <strong>
+                Student:
+              </strong>{" "}
+              {
+                item.studentId
+                  ?.studentName
+              }{" "}
+              —
+              <strong>
+                {" "}
+                {
+                  item.studentId
+                    ?.rollNo
+                }
+              </strong>
             </Typography>
 
-            <Typography>
-              <strong>Assignment:</strong>{" "}
-              {item.assignmentId?.title}
+            <Typography mb={1}>
+              <strong>
+                Assignment:
+              </strong>{" "}
+              {
+                item.assignmentId
+                  ?.title
+              }
             </Typography>
 
-            {/* <Typography>
-              <strong>Marks:</strong> {item.marks || 0}
-            </Typography> */}
+            <Typography mb={1}>
+              <strong>
+                Submitted:
+              </strong>{" "}
+              {new Date(
+                item.createdAt
+              ).toLocaleString()}
+            </Typography>
 
-            {/* ACTION BUTTONS */}
-            <Grid container spacing={1} sx={{ mt: 1 }}>
+            {/* ACTIONS */}
+            <Box
+              display="flex"
+              gap={1}
+              mt={2}
+            >
+              {/* DOWNLOAD */}
+              <IconButton
+                color="primary"
+                onClick={() =>
+                  handleDownload(
+                    item.file
+                  )
+                }
+              >
+                <Download />
+              </IconButton>
 
-              {/* Download */}
-              <Grid>
-                <IconButton
-                  color="primary"
-                  onClick={() => handleDownload(item.file)}
-                >
-                  <Download />
-                </IconButton>
-              </Grid>
-
-              {/* Grade */}
-              {/* <Grid>
-                <IconButton
-                  color="success"
-                  onClick={() => handleGrade(item)}
-                >
-                  <Edit />
-                </IconButton>
-              </Grid> */}
-
-              {/* Delete */}
-              <Grid>
-                <IconButton
-                  color="error"
-                  onClick={() => handleDelete(item._id)}
-                >
-                  <Delete />
-                </IconButton>
-              </Grid>
-
-            </Grid>
+              {/* DELETE */}
+              <IconButton
+                color="error"
+                onClick={() =>
+                  handleDelete(
+                    item._id
+                  )
+                }
+              >
+                <Delete />
+              </IconButton>
+            </Box>
           </Paper>
         ))}
       </Paper>
     </Container>
-    </>
   );
 };
 

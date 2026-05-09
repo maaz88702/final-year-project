@@ -55,7 +55,7 @@ const TeacherEdit = () => {
     try {
       await axios.put(`${baseURL}/api/teacher/update/${id}`, form);
       toast.success("Teacher updated successfully");
-      navigate("/");
+      navigate("/admin/dashboard");
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message || "Update failed");

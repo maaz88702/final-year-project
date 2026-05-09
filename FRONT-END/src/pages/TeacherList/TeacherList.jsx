@@ -56,7 +56,7 @@ const TeacherList = () => {
 
   // Edit teacher
   const handleEdit = (id) => {
-    navigate(`/teachers/edit/${id}`);
+    navigate(`/admin/teachers/edit/${id}`);
   };
 
   // Filter teachers by search term

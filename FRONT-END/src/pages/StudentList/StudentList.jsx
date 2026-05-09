@@ -55,7 +55,7 @@ const StudentList = () => {
 
   // Edit student
   const handleEdit = (id) => {
-   navigate(`/student/edit/${id}`);
+   navigate(`/admin/student/edit/${id}`);
   };
 
   // Filter students based on search term (name, email, or roll number)

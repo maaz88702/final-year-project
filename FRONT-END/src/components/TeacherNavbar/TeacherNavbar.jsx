@@ -44,6 +44,7 @@ const TeacherNavbar = () => {
     { label: "Post Assignment", path: "/teacher/addassignment" },
     { label: "Grade Assignment", path: "/teacher/add-grade" },
     { label: "Submissions", path: "/teacher/AssignmentSubmittedList" },
+    { label: "Attendance", path: "/teacher/attendance" },
     { label: "StudentGrades", path: "/teacher/StudentGrades" }
   ];
 
@@ -112,7 +113,7 @@ const TeacherNavbar = () => {
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
 
             {/* 🔔 Notifications */}
-            <NotificationBell />
+            {/* <NotificationBell /> */}
 
             {/* 👤 Profile */}
             <Avatar
@@ -129,9 +130,9 @@ const TeacherNavbar = () => {
             >
               <MenuItem disabled>{teacherName}</MenuItem>
 
-              <MenuItem onClick={() => navigate("/teacher/profile")}>
+              {/* <MenuItem onClick={() => navigate("/teacher/profile")}>
                 Profile
-              </MenuItem>
+              </MenuItem> */}
 
               <MenuItem onClick={handleLogout}>
                 Logout

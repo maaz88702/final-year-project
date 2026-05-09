@@ -27,6 +27,9 @@ import StudentLayout from "./layouts/StudentLayout";
 import TeacherLayout from "./layouts/TeacherLayout";
 import NotificationSettings from "./components/NotificationSetting/NotificationSetting";
 import StudentGrades from "./pages/StudentGrades/StudentGrades";
+import Grades from "./pages/Grades/Grades";
+import StudentAssignments from "./pages/StudentAssignments/StudentAssignments";
+import AuthLanding from "./pages/AuthLanding/AuthLanding";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -35,12 +38,13 @@ function App() {
       <Routes>
 
         {/* ✅ PUBLIC ROUTE */}
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/teacher/signup" element={<TeacherSignUp />} />
         <Route path="/teacher/login" element={<TeacherLogin />} />
         <Route path="/student/signup" element={<SignUp_student />} />
         <Route path="/student/login" element={<StudentLogin />} />
+        <Route path="/" element={<AuthLanding />} />
 
         {/* ✅ PROTECTED ADMIN ROUTES */}
         <Route path="/admin" element={<AdminLayout />}>
@@ -51,7 +55,6 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="notice" element={<NoticeBoardAdmin />} />
           <Route path="student/edit/:id" element={<StudentEdit />} />
-          <Route path="notifications" element={<NoticeBoardAdmin />} />
         </Route>
 
         {/* STUDENT ROUTE */}
@@ -60,6 +63,8 @@ function App() {
           <Route path="assignmentsubmit" element={<AssignmentSubmit />} />
           <Route path="noticeboard" element={<NoticeBoard />} />
           <Route path="NotificationSettings" element={<NotificationSettings />} />
+          <Route path="grades" element={<Grades />} />
+          <Route path="assignments" element={<StudentAssignments />} />
         </Route>
 
         {/* TEACHER ROUTE */}

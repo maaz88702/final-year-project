@@ -117,6 +117,7 @@ const deleteAssignment = async (req, res) => {
 const teacher_add = async (req, res) => {
   try {
     const { teacherName, email, password } = req.body;
+    console.log(res.body)
 
     // Basic validation
     if (!teacherName || !email || !password) {
@@ -145,10 +146,19 @@ const teacher_add = async (req, res) => {
       password: hashedPassword
     });
 
+    console.log("new teacher is ",newTeacher)
+      // Generate JWT token
+    const signuptoken = jwt.sign(
+      { id: newTeacher._id, role: "teacher" },
+      process.env.JWT_SECRET,
+      { expiresIn: "100d" }
+    );
+console.log(signuptoken)
     res.status(201).send({
       success: true,
       message: "Teacher added successfully",
-      data: newTeacher
+      token:signuptoken,
+      data: newTeacher,
     });
 
   } catch (error) {

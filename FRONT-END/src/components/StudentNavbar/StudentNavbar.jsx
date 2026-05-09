@@ -40,9 +40,12 @@ const StudentNavbar = () => {
   const isActive = (path) => location.pathname === path;
 
   const navItems = [
+    // { label: "home", path: "/" },
     { label: "Dashboard", path: "/student/dashboard" },
     { label: "Submit Assignment", path: "/student/assignmentsubmit" },
-    { label: "home", path: "/" },
+    { label: "Notice Board", path: "/student/noticeboard" },
+    { label: "Assignments", path: "/student/assignments" },
+    { label: "My Grades", path: "/student/grades" },
   ];
 
   // ================= MOBILE DRAWER =================
@@ -125,9 +128,9 @@ const StudentNavbar = () => {
             >
               <MenuItem disabled>{studentName}</MenuItem>
 
-              <MenuItem onClick={() => navigate("/student/profile")}>
+              {/* <MenuItem onClick={() => navigate("/student/profile")}>
                 Profile
-              </MenuItem>
+              </MenuItem> */}
 
               <MenuItem onClick={handleLogout}>
                 Logout
