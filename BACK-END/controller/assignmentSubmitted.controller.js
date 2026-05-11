@@ -33,78 +33,57 @@ const assignmentSubmitted_id = async (req, res) => {
 // const AssignmentSubmitted = require('../models/AssignmentSubmitted.model');
 // const AssignmentPosted = require('../models/AssignmentPosted.model');
 
-const assignmentSubmitted_add = async (req, res) => {
-  try {
-    const { studentId, assignmentId } = req.body;
-    const file = req.file?.filename; // ✅ from multer
+const assignmentSubmitted_add =
+  async (req, res) => {
+    try {
+      const {
+        assignmentId,
+      } = req.body;
 
-    // ✅ 1. Validation first
-    if (!studentId || !assignmentId || !file) {
-      return res.status(400).json({
-        message: "studentId, assignmentId, and file are required"
+      const studentId =
+        req.user.id;
+
+      if (!req.file) {
+        return res
+          .status(400)
+          .json({
+            message:
+              "File is required",
+          });
+      }
+
+      const filePath =
+        req.file.path.replace(
+          /\\/g,
+          "/"
+        );
+
+      const data =
+        new AssignmentSubmitted({
+          assignmentId,
+          studentId,
+          file: filePath,
+        });
+
+      await data.save();
+
+      res.status(201).json({
+        message:
+          "Assignment submitted successfully",
+        data,
+      });
+
+    } catch (error) {
+      console.error(error);
+
+      res.status(500).json({
+        message:
+          "Failed to submit assignment",
+        error:
+          error.message,
       });
     }
-
-    // ✅ 2. Prevent duplicate
-    const existingSubmission = await AssignmentSubmitted.findOne({
-      studentId,
-      assignmentId
-    });
-
-    if (existingSubmission) {
-      return res.status(400).json({
-        message: "You already submitted this assignment"
-      });
-    }
-
-    // ✅ 3. Check assignment
-    const assignment = await AssignmentPosted.findById(assignmentId);
-
-    if (!assignment) {
-      return res.status(404).json({
-        message: "Assignment not found"
-      });
-    }
-
-    // ✅ 4. Deadline check
-    if (new Date() > new Date(assignment.dueDate)) {
-      return res.status(400).json({
-        message: "Deadline passed. Cannot submit."
-      });
-    }
-
-    // ✅ 5. Save
-    const newSubmission = new AssignmentSubmitted({
-      studentId,
-      assignmentId,
-      file
-    });
-
-    const savedData = await newSubmission.save();
-
-    // notifications are not working and maybe we should remove It 
-    // notification saving and model are different
-    // console.log(userId, title, message, type)
-    // await Notification.create({
-    //   userId: teacherId,
-    //   userModel: "Teacher",
-    //   title: "New Submission",
-    //   message: "A student submitted assignment",
-    //   type: "submission",
-    // });
-
-    res.status(201).json({
-      message: "Assignment submitted successfully",
-      data: savedData
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      message: "Error while submitting assignment",
-      error: error.message
-    });
-  }
-};
+  };
 
 const assignmentSubmitted_update = async (req, res) => {
   try {
