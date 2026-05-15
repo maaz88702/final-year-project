@@ -6,52 +6,118 @@ import {
   Typography,
   Box,
   Button,
+  CircularProgress,
+  Divider,
 } from "@mui/material";
+
+import PeopleIcon from "@mui/icons-material/People";
+import SchoolIcon from "@mui/icons-material/School";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import CampaignIcon from "@mui/icons-material/Campaign";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const baseURL = "http://localhost:3000";
+const token = localStorage.getItem("jwt");
   const navigate = useNavigate();
 
   // ================= STATE =================
+  const [loading, setLoading] = useState(false);
+
   const [stats, setStats] = useState({
     students: 0,
     teachers: 0,
-    assignments: 0,
-    submissions: 0,
+    courses: 0,
+    notices: 0,
   });
 
-  const [recentSubmissions, setRecentSubmissions] = useState([]);
+  const [recentNotices, setRecentNotices] =
+    useState([]);
 
   // ================= FETCH DATA =================
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [studentRes, teacherRes, assignRes, subRes] =
-          await Promise.all([
-            axios.get(`${baseURL}/api/student`),
-            axios.get(`${baseURL}/api/teacher`),
-            axios.get(`${baseURL}/api/assignmentPosted`),
-            axios.get(`${baseURL}/api/assignmentSubmitted`),
-          ]);
+        setLoading(true);
+
+       const [
+  studentRes,
+  teacherRes,
+  courseRes,
+  noticeRes,
+] = await Promise.all([
+  axios.get(
+    `${baseURL}/api/student`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  ),
+
+  axios.get(
+    `${baseURL}/api/teacher`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  ),
+
+  axios.get(
+    `${baseURL}/api/course`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  ),
+
+  axios.get(
+    `${baseURL}/api/notice`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  ),
+]);
 
         setStats({
-          students: studentRes.data.length,
-          teachers: teacherRes.data.length,
-          assignments: assignRes.data.length,
-          submissions: subRes.data.length,
+          students:
+            studentRes.data.length,
+          teachers:
+            teacherRes.data.length,
+          courses:
+            courseRes.data.length,
+          notices:
+            noticeRes.data.length,
         });
 
-        // latest 5 submissions
-        const sorted = subRes.data
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 5);
+        // latest notices
+        const sortedNotices =
+          noticeRes.data
+            .sort(
+              (a, b) =>
+                new Date(
+                  b.createdAt
+                ) -
+                new Date(
+                  a.createdAt
+                )
+            )
+            .slice(0, 5);
 
-        setRecentSubmissions(sorted);
+        setRecentNotices(
+          sortedNotices
+        );
 
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -59,115 +125,404 @@ const AdminDashboard = () => {
   }, []);
 
   // ================= CARD =================
-  const StatCard = ({ title, value }) => (
+  const StatCard = ({
+    title,
+    value,
+    icon,
+  }) => (
     <Paper
       sx={{
         p: 3,
-        textAlign: "center",
-        borderRadius: 3,
+        borderRadius: 4,
+        height: "100%",
         boxShadow: 3,
+        transition: "0.3s",
+        "&:hover": {
+          transform:
+            "translateY(-5px)",
+        },
       }}
     >
-      <Typography variant="h6">{title}</Typography>
-      <Typography variant="h4" fontWeight="bold">
-        {value}
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent:
+            "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Box>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+          >
+            {title}
+          </Typography>
+
+          <Typography
+            variant="h3"
+            fontWeight="bold"
+            mt={1}
+          >
+            {value}
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            bgcolor:
+              "primary.main",
+            color: "white",
+            p: 2,
+            borderRadius: 3,
+            display: "flex",
+            alignItems:
+              "center",
+            justifyContent:
+              "center",
+          }}
+        >
+          {icon}
+        </Box>
+      </Box>
     </Paper>
   );
 
+  // ================= LOADING =================
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          justifyContent:
+            "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   // ================= UI =================
   return (
-    <>
-   
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h4" fontWeight="bold" mb={3}>
-        Admin Dashboard
-      </Typography>
+    <Container
+      maxWidth="xl"
+      sx={{ py: 4 }}
+    >
+      {/* HEADER */}
+      <Box mb={4}>
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+        >
+          Admin Dashboard
+        </Typography>
 
-      {/* 📊 STATS */}
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 12, md: 3 }}>
-          <StatCard title="Students" value={stats.students} />
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          mt={1}
+        >
+          Manage students,
+          teachers, courses,
+          and notices
+        </Typography>
+      </Box>
+
+      {/* ================= STATS ================= */}
+      <Grid
+        container
+        spacing={3}
+      >
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 3,
+          }}
+        >
+          <StatCard
+            title="Students"
+            value={
+              stats.students
+            }
+            icon={
+              <PeopleIcon
+                fontSize="large"
+              />
+            }
+          />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 3 }}>
-          <StatCard title="Teachers" value={stats.teachers} />
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 3,
+          }}
+        >
+          <StatCard
+            title="Teachers"
+            value={
+              stats.teachers
+            }
+            icon={
+              <SchoolIcon
+                fontSize="large"
+              />
+            }
+          />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 3 }}>
-          <StatCard title="Assignments" value={stats.assignments} />
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 3,
+          }}
+        >
+          <StatCard
+            title="Courses"
+            value={
+              stats.courses
+            }
+            icon={
+              <MenuBookIcon
+                fontSize="large"
+              />
+            }
+          />
         </Grid>
 
-        <Grid size={{ xs: 12, md: 3 }}>
-          <StatCard title="Submissions" value={stats.submissions} />
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6,
+            md: 3,
+          }}
+        >
+          <StatCard
+            title="Notices"
+            value={
+              stats.notices
+            }
+            icon={
+              <CampaignIcon
+                fontSize="large"
+              />
+            }
+          />
         </Grid>
       </Grid>
 
-      {/* 🚀 QUICK ACTIONS */}
-      <Box mt={4}>
-        <Typography variant="h6" mb={2}>
+      {/* ================= QUICK ACTIONS ================= */}
+      <Paper
+        sx={{
+          mt: 5,
+          p: 3,
+          borderRadius: 4,
+          boxShadow: 3,
+        }}
+      >
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          mb={3}
+        >
           Quick Actions
         </Typography>
 
-        <Box display="flex" gap={2} flexWrap="wrap">
-          <Button
-            variant="contained"
-            onClick={() => navigate("/admin/students")}
+        <Grid
+          container
+          spacing={2}
+        >
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6,
+              md: 3,
+            }}
           >
-            Manage Students
-          </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{
+                height: 50,
+              }}
+              onClick={() =>
+                navigate(
+                  "/admin/studentlist"
+                )
+              }
+            >
+              Manage Students
+            </Button>
+          </Grid>
 
-          <Button
-            variant="contained"
-            onClick={() => navigate("/admin/teachers")}
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6,
+              md: 3,
+            }}
           >
-            Manage Teachers
-          </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{
+                height: 50,
+              }}
+              onClick={() =>
+                navigate(
+                  "/admin/teacherslist"
+                )
+              }
+            >
+              Manage Teachers
+            </Button>
+          </Grid>
 
-          <Button
-            variant="contained"
-            onClick={() => navigate("/admin/assignments")}
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6,
+              md: 3,
+            }}
           >
-            View Assignments
-          </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{
+                height: 50,
+              }}
+              onClick={() =>
+                navigate(
+                  "/admin/courseview"
+                )
+              }
+            >
+              Manage Courses
+            </Button>
+          </Grid>
 
-          <Button
-            variant="contained"
-            onClick={() => navigate("/admin/submissions")}
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6,
+              md: 3,
+            }}
           >
-            View Submissions
-          </Button>
-        </Box>
-      </Box>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{
+                height: 50,
+              }}
+              onClick={() =>
+                navigate(
+                  "/admin/notice"
+                )
+              }
+            >
+              Manage Notices
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
 
-      {/* 📥 RECENT SUBMISSIONS */}
-      <Box mt={5}>
-        <Typography variant="h6" mb={2}>
-          Recent Submissions
+      {/* ================= RECENT NOTICES ================= */}
+      <Paper
+        sx={{
+          mt: 5,
+          p: 3,
+          borderRadius: 4,
+          boxShadow: 3,
+        }}
+      >
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+        >
+          Recent Notices
         </Typography>
 
-        {recentSubmissions.length === 0 ? (
-          <Typography>No submissions found</Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ mb: 3 }}
+        >
+          Latest announcements
+          and notices
+        </Typography>
+
+        {recentNotices.length ===
+        0 ? (
+          <Typography>
+            No notices found
+          </Typography>
         ) : (
-          recentSubmissions.map((sub) => (
-            <Paper key={sub._id} sx={{ p: 2, mb: 2 }}>
-              <Typography fontWeight="bold">
-                {sub.assignmentId?.title || "Assignment"}
-              </Typography>
+          recentNotices.map(
+            (
+              notice,
+              index
+            ) => (
+              <Box
+                key={
+                  notice._id
+                }
+              >
+                <Box
+                  sx={{
+                    py: 2,
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    fontWeight="bold"
+                  >
+                    {notice.title ||
+                      "Notice"}
+                  </Typography>
 
-              <Typography>
-                Student: {sub.studentId?.rollNo || "N/A"}
-              </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      mt: 1,
+                    }}
+                  >
+                    {notice.description ||
+                      notice.notice ||
+                      "No description"}
+                  </Typography>
 
-              <Typography variant="caption" color="gray">
-                {new Date(sub.createdAt).toLocaleString()}
-              </Typography>
-            </Paper>
-          ))
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{
+                      display:
+                        "block",
+                      mt: 1,
+                    }}
+                  >
+                    {new Date(
+                      notice.createdAt
+                    ).toLocaleString()}
+                  </Typography>
+                </Box>
+
+                {index !==
+                  recentNotices.length -
+                    1 && (
+                  <Divider />
+                )}
+              </Box>
+            )
+          )
         )}
-      </Box>
+      </Paper>
     </Container>
-    </>
   );
 };
 
