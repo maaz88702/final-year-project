@@ -30,6 +30,18 @@ import StudentGrades from "./pages/StudentGrades/StudentGrades";
 import Grades from "./pages/Grades/Grades";
 import StudentAssignments from "./pages/StudentAssignments/StudentAssignments";
 import AuthLanding from "./pages/AuthLanding/AuthLanding";
+import AssignmentSubmitAdd from "./AssignmentSubmitAddId/AssignmentSubmitAddId";
+import AttendanceView from "./pages/AttendenceView/AttendenceView";
+import AttendanceViewByCourse from "./pages/AttendenceViewByCourse/AttendenceViewByCourse";
+import AssignmentGradeById from "./pages/AssignmentGradeById/AssignmentGradeById";
+import CourseAdd from "./pages/CourseAdd/CourseAdd";
+import CourseView from "./pages/CourseView/CourseView";
+import CourseUpdate from "./pages/CourseUpdate/CourseUpdate";
+import CourseSingleView from "./pages/SingleCourseView/SingleCourseView";
+import SemesterAdd from "./pages/SemesterAdd/SemesterAdd";
+import SemesterView from "./pages/SemesterView/SemesterView";
+import SemesterUpdate from "./pages/SemesterUpdate/SemesterUpdate";
+import SemesterSingleView from "./pages/SemesterSingleView/SemesterSingleView";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -55,6 +67,14 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="notice" element={<NoticeBoardAdmin />} />
           <Route path="student/edit/:id" element={<StudentEdit />} />
+          <Route path="courseadd" element={<CourseAdd />} />
+          <Route path="courseupdate/:id" element={<CourseUpdate />} />
+          <Route path="courseview" element={<CourseView />} />
+          <Route path="courseview/:id" element={<CourseSingleView />} />
+          <Route path="semesteradd" element={<SemesterAdd />} />
+          <Route path="semesterview" element={<SemesterView />} />
+          <Route path="semesterview/:id" element={<SemesterSingleView />} />
+          <Route path="semesterupdate/:id" element={<SemesterUpdate />} />
         </Route>
 
         {/* STUDENT ROUTE */}
@@ -65,6 +85,7 @@ function App() {
           <Route path="NotificationSettings" element={<NotificationSettings />} />
           <Route path="grades" element={<Grades />} />
           <Route path="assignments" element={<StudentAssignments />} />
+          <Route path="AssignmentSubmitAdd/:id" element={<AssignmentSubmitAdd />} />
         </Route>
 
         {/* TEACHER ROUTE */}
@@ -75,6 +96,10 @@ function App() {
           <Route path="add-grade" element={<AddAssignmentGrade />} />
           <Route path="dashboard" element={<TeacherDashboard />} />
           <Route path="attendance" element={<AttendanceMark />} />
+          <Route path="attendanceview" element={<AttendanceView />} />
+          <Route path="attendanceview/:courseId" element={<AttendanceViewByCourse />} />
+          <Route path="AssignmentGradeBySubmissionId/:submissionId" element={<AssignmentGradeById />} />
+       
           {/* <Route path="/update-grade/:id" element={<UpdateGrade />} /> */}
         </Route>
 

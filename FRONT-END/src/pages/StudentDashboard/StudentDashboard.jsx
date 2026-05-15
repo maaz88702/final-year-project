@@ -103,7 +103,7 @@ const StudentDashboard = () => {
     const submission = getSubmission(assignment._id);
 
     if (isExpired(assignment.dueDate))
-      return { label: "Expired", color: "error" };
+      return { label: "Time out", color: "error" };
 
     if (!submission)
       return { label: "Pending", color: "warning" };
@@ -220,7 +220,9 @@ const StudentDashboard = () => {
                             submission || isExpired(a.dueDate)
                           }
                           onClick={() =>
-                            navigate("/student/assignmentsubmit")
+                            navigate(
+        `/student/AssignmentSubmitAdd/${a._id}`
+      )
                           }
                         >
                           Submit

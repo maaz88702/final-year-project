@@ -45,6 +45,7 @@ const TeacherNavbar = () => {
     { label: "Grade Assignment", path: "/teacher/add-grade" },
     { label: "Submissions", path: "/teacher/AssignmentSubmittedList" },
     { label: "Attendance", path: "/teacher/attendance" },
+    { label: "Attendance View", path: "/teacher/attendanceview" },
     { label: "StudentGrades", path: "/teacher/StudentGrades" }
   ];
 
@@ -91,7 +92,7 @@ const TeacherNavbar = () => {
           </Box>
 
           {/* CENTER (Desktop only) */}
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
             {navItems.map((item) => (
               <Button
                 key={item.path}
@@ -101,7 +102,7 @@ const TeacherNavbar = () => {
                   borderBottom: isActive(item.path)
                     ? "2px solid white"
                     : "none",
-                  borderRadius: 0,
+                  borderRadius: 0,fontSize: "0.75rem"
                 }}
               >
                 {item.label}

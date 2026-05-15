@@ -43,8 +43,10 @@ const AdminNavbar = () => {
     { label: "Dashboard", path: "/admin/dashboard" },
     { label: "Students", path: "/admin/studentlist" },
     { label: "Teachers", path: "/admin/teacherslist" },
+    { label: "Courses", path: "/admin/courseview" },
     // { label: "Assignments", path: "/admin/assignments" },
     { label: "Notices", path: "/admin/notice" },
+    { label: "Semesters", path: "/admin/semesterview" },
     // { label: "Submissions", path: "/admin/submissions" },
   ];
 

@@ -151,6 +151,7 @@ const AssignmentGradeAdd = () => {
           marks: Number(d.marks || 0),
         })),
       };
+      console.log("Submitting payload:", payload);
       await axios.post(`${baseURL}/api/assignmentgrade/add`, payload, { headers: { Authorization: `Bearer ${token}` } });
       toast.success("Graded successfully");
       

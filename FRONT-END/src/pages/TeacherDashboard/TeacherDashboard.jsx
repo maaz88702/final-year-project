@@ -53,7 +53,8 @@ const TeacherDashboard = () => {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
-
+// console.log("Assignments:", assignRes.data);
+console.log("Submissions:", submitRes.data);
         // filter teacher assignments
         const teacherAssignments = assignRes.data.filter(
           (a) => String(a.teacherId?._id || a.teacherId) === teacherId
@@ -181,7 +182,7 @@ const TeacherDashboard = () => {
             size="small"
             sx={{ mt: 1 }}
             onClick={() =>
-              navigate("/teacher/add-grade", {
+              navigate(`/teacher/AssignmentGradeBySubmissionId/${s._id}`, {
                 state: {
                   assignmentId:
                     s.assignmentId?._id || s.assignmentId,

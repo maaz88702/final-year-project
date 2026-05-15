@@ -4,7 +4,7 @@ const router = require("express").Router();
 router.get("/", semester_get)
 router.get("/:semesterid",semester_id)
 router.post("/add",semester_add)
-router.get("/delete/:_id",semester_delete)
+router.delete("/delete/:_id",semester_delete)
 router.put("/update/:_id",semester_update) 
 
 module.exports = router;
