@@ -5,6 +5,8 @@ import {
   Paper,
   Typography,
   Button,
+  CircularProgress,
+  Box,
 } from "@mui/material";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -15,8 +17,13 @@ const TeacherDashboard = () => {
   const baseURL = "http://localhost:3000";
   const navigate = useNavigate();
 
-  // ================= JWT =================
+  const [loading, setLoading] = useState(true);
+  const [assignments, setAssignments] = useState([]);
+  const [submissions, setSubmissions] = useState([]);
+  const [gradedCount, setGradedCount] = useState(0);
+
   const token = localStorage.getItem("jwt");
+
   let teacherId = "";
 
   if (token) {
@@ -24,7 +31,7 @@ const TeacherDashboard = () => {
       const decoded = jwtDecode(token);
       teacherId = decoded.id || decoded._id;
     } catch (err) {
-      console.error("Invalid token", err);
+      console.error("Invalid Token", err);
     }
   }
 
@@ -36,92 +43,162 @@ const TeacherDashboard = () => {
     }
   }, [token, navigate]);
 
-  // ================= STATES =================
-  const [assignments, setAssignments] = useState([]);
-  const [submissions, setSubmissions] = useState([]);
-  const [gradedCount, setGradedCount] = useState(0);
-
-  // ================= FETCH DATA =================
+  // ================= FETCH DASHBOARD =================
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDashboard = async () => {
       try {
-        const [assignRes, submitRes] = await Promise.all([
+        setLoading(true);
+
+        const [assignRes, submitRes, gradeRes] = await Promise.all([
           axios.get(`${baseURL}/api/assignmentPosted`, {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }),
-          axios.get(`${baseURL}/api/assignmentSubmitted`, {
-            headers: { Authorization: `Bearer ${token}` },
+
+          axios.get(`${baseURL}/api/assignmentsubmitted`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+
+          axios.get(`${baseURL}/api/assignmentgrade`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }),
         ]);
-// console.log("Assignments:", assignRes.data);
-console.log("Submissions:", submitRes.data);
-        // filter teacher assignments
+
+        // ================= TEACHER ASSIGNMENTS =================
+
         const teacherAssignments = assignRes.data.filter(
-          (a) => String(a.teacherId?._id || a.teacherId) === teacherId
+          (assignment) =>
+            String(
+              assignment.teacherId?._id || assignment.teacherId
+            ) === String(teacherId)
         );
 
         setAssignments(teacherAssignments);
 
-        // submissions related to teacher assignments
-        const teacherSubmissions = submitRes.data.filter((s) =>
-          teacherAssignments.some(
-            (a) =>
-              String(a._id) ===
-              String(s.assignmentId?._id || s.assignmentId)
-          )
+        // ================= TEACHER SUBMISSIONS =================
+
+        const teacherSubmissions = submitRes.data.filter(
+          (submission) =>
+            teacherAssignments.some(
+              (assignment) =>
+                String(assignment._id) ===
+                String(
+                  submission.assignmentId?._id ||
+                    submission.assignmentId
+                )
+            )
         );
 
         setSubmissions(teacherSubmissions);
 
-        // graded count
-        const graded = teacherSubmissions.filter(
-          (s) => s.marks && s.marks > 0
-        ).length;
+        // ================= GRADED COUNT =================
 
-        setGradedCount(graded);
+        const teacherGrades = gradeRes.data.filter((grade) =>
+          teacherAssignments.some(
+            (assignment) =>
+              String(assignment._id) ===
+              String(
+                grade.assignmentId?._id ||
+                  grade.assignmentId
+              )
+          )
+        );
+
+        setGradedCount(teacherGrades.length);
 
       } catch (error) {
         console.error(error);
         toast.error("Failed to load dashboard");
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (token && teacherId) fetchData();
+    if (token && teacherId) {
+      fetchDashboard();
+    }
   }, [token, teacherId]);
 
+  // ================= LOADER =================
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          height: "80vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   // ================= UI =================
+
   return (
-      <>
-    
     <Container maxWidth="lg">
-      <Typography variant="h4" sx={{ mt: 4, mb: 3 }} fontWeight="bold">
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        sx={{ mt: 4, mb: 4 }}
+      >
         Teacher Dashboard
       </Typography>
 
       {/* KPI CARDS */}
+
       <Grid container spacing={3}>
-        <Grid size={4}>
+        <Grid item xs={12} md={4}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6">Assignments</Typography>
-            <Typography variant="h4">
+            <Typography variant="h6">
+              Assignments
+            </Typography>
+
+            <Typography
+              variant="h3"
+              color="primary"
+              fontWeight="bold"
+            >
               {assignments.length}
             </Typography>
           </Paper>
         </Grid>
 
-        <Grid size={4}>
+        <Grid item xs={12} md={4}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6">Submissions</Typography>
-            <Typography variant="h4">
+            <Typography variant="h6">
+              Submissions
+            </Typography>
+
+            <Typography
+              variant="h3"
+              color="success.main"
+              fontWeight="bold"
+            >
               {submissions.length}
             </Typography>
           </Paper>
         </Grid>
 
-        <Grid size={4}>
+        <Grid item xs={12} md={4}>
           <Paper sx={{ p: 3 }}>
-            <Typography variant="h6">Graded</Typography>
-            <Typography variant="h4">
+            <Typography variant="h6">
+              Graded
+            </Typography>
+
+            <Typography
+              variant="h3"
+              color="secondary"
+              fontWeight="bold"
+            >
               {gradedCount}
             </Typography>
           </Paper>
@@ -129,30 +206,39 @@ console.log("Submissions:", submitRes.data);
       </Grid>
 
       {/* ACTION BUTTONS */}
+
       <Grid container spacing={2} sx={{ mt: 4 }}>
-        <Grid>
+        <Grid item>
           <Button
             variant="contained"
-            onClick={() => navigate("/teacher/addassignment")}
+            onClick={() =>
+              navigate("/teacher/addassignment")
+            }
           >
             Add Assignment
           </Button>
         </Grid>
 
-        <Grid>
+        <Grid item>
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => navigate("/teacher/AssignmentSubmittedList")}
+            onClick={() =>
+              navigate(
+                "/teacher/AssignmentSubmittedList"
+              )
+            }
           >
             View Submissions
           </Button>
         </Grid>
 
-        <Grid>
+        <Grid item>
           <Button
             variant="outlined"
-            onClick={() => navigate("/teacher/add-grade")}
+            onClick={() =>
+              navigate("/teacher/add-grade")
+            }
           >
             Grade Assignments
           </Button>
@@ -160,44 +246,72 @@ console.log("Submissions:", submitRes.data);
       </Grid>
 
       {/* RECENT SUBMISSIONS */}
-      <Typography variant="h5" size={{ mt: 5 }}>
+
+      <Typography
+        variant="h5"
+        fontWeight="bold"
+        sx={{ mt: 5 }}
+      >
         Recent Submissions
       </Typography>
 
-      {submissions.slice(0, 5).map((s) => (
-        <Paper key={s._id} sx={{ p: 2, mt: 2 }}>
+      {submissions.length === 0 ? (
+        <Paper sx={{ p: 3, mt: 2 }}>
           <Typography>
-            Student: {s.studentId?.studentName || "Unknown"}
+            No submissions found.
           </Typography>
-
-          <Typography>
-            Assignment: {s.assignmentId?.title || "N/A"}
-          </Typography>
-
-          <Typography>
-            Marks: {s.marks || 0}
-          </Typography>
-
-          <Button
-            size="small"
-            sx={{ mt: 1 }}
-            onClick={() =>
-              navigate(`/teacher/AssignmentGradeBySubmissionId/${s._id}`, {
-                state: {
-                  assignmentId:
-                    s.assignmentId?._id || s.assignmentId,
-                  studentId:
-                    s.studentId?._id || s.studentId,
-                },
-              })
-            }
-          >
-            Grade
-          </Button>
         </Paper>
-      ))}
+      ) : (
+        submissions.slice(0, 5).map((submission) => (
+          <Paper
+            key={submission._id}
+            sx={{ p: 2, mt: 2 }}
+          >
+            <Typography>
+              <strong>Student:</strong>{" "}
+              {submission.studentId?.studentName ||
+                "Unknown"}
+            </Typography>
+
+            <Typography>
+              <strong>Assignment:</strong>{" "}
+              {submission.assignmentId?.title ||
+                "N/A"}
+            </Typography>
+
+            <Typography>
+              <strong>Submitted:</strong>{" "}
+              {new Date(
+                submission.createdAt
+              ).toLocaleDateString()}
+            </Typography>
+
+            <Button
+              size="small"
+              sx={{ mt: 1 }}
+              onClick={() =>
+                navigate(
+                  `/teacher/AssignmentGradeBySubmissionId/${submission._id}`,
+                  {
+                    state: {
+                      assignmentId:
+                        submission.assignmentId?._id ||
+                        submission.assignmentId,
+
+                      studentId:
+                        submission.studentId?._id ||
+                        submission.studentId,
+                    },
+                  }
+                )
+              }
+            >
+              View / Grade
+            </Button>
+          </Paper>
+        ))
+      )}
     </Container>
-    </>
   );
 };
 

@@ -208,7 +208,7 @@ const AttendanceView = () => {
         (item.attendance?.filter(
           (a) =>
             a.status ===
-            "Present"
+            "present"
         ).length || 0),
       0
     );
@@ -220,7 +220,7 @@ const AttendanceView = () => {
         (item.attendance?.filter(
           (a) =>
             a.status ===
-            "Absent"
+            "absent"
         ).length || 0),
       0
     );
@@ -585,7 +585,7 @@ const AttendanceView = () => {
                           a
                         ) =>
                           a.status ===
-                          "Present"
+                          "present"
                       ).length || 0;
 
                     const absent =
@@ -594,7 +594,7 @@ const AttendanceView = () => {
                           a
                         ) =>
                           a.status ===
-                          "Absent"
+                          "absent"
                       ).length || 0;
 
                     return (

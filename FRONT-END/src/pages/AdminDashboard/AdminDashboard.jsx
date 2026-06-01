@@ -492,7 +492,7 @@ const token = localStorage.getItem("jwt");
                       mt: 1,
                     }}
                   >
-                    {notice.description ||
+                    {notice.message ||
                       notice.notice ||
                       "No description"}
                   </Typography>

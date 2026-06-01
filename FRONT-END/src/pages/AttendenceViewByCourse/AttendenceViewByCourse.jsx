@@ -155,7 +155,7 @@ const AttendanceViewByCourse = () => {
 
               if (
                 att.status ===
-                "Present"
+                "present"
               ) {
                 student.present += 1;
               } else {
