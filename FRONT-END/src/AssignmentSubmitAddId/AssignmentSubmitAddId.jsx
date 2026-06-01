@@ -161,7 +161,7 @@ const AssignmentSubmitAdd = () => {
       !allowedTypes.includes(file.type)
     ) {
       toast.error(
-        "Only PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX and images allowed"
+        "Only PDF allowed"
       );
 
       return;

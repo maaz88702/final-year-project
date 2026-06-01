@@ -46,10 +46,11 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"],
+    methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
 );
+// app.options("*", cors());
 
 // Body Parsers (FIX: Removed duplicate bodyParser.json() to prevent stream errors)
 app.use(express.json({ limit: "50mb" }));
@@ -98,6 +99,7 @@ const attendanceRoute = require("./routes/attendence.route.js");
 const adminRoute = require("./routes/admin.route.js");
 const notificationRoute = require("./routes/notification.route.js");
 const notificationSettingRoute = require("./routes/notificationSetting.route.js");
+const assignmentViewRoute = require("./routes/assignmentView.route.js");
 
 // ================= API ROUTES MAPPING =================
 app.use("/api", homeRoute);
@@ -113,6 +115,7 @@ app.use("/api/attendance", attendanceRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/notification", notificationRoute);
 app.use("/api/notification-settings", notificationSettingRoute);
+app.use("/api/assignment-record-view", assignmentViewRoute);
 
 // ================= START SERVER =================
 // Use server.listen (not app.listen) so Socket.io works

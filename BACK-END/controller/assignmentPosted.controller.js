@@ -220,15 +220,15 @@ const assignmentPosted_add =
             finalSemesterId,
         });
 
-      console.log(
-        "✅ Students Found:",
-        students.length
-      );
+      // console.log(
+      //   "✅ Students Found:",
+      //   students.length
+      // );
 
-      console.log(
-        "✅ Students:",
-        students
-      );
+      // console.log(
+      //   "✅ Students:",
+      //   students
+      // );
 
       // ======================================================
       // CREATE NOTIFICATIONS
@@ -252,20 +252,20 @@ const assignmentPosted_add =
             })
           );
 
-        console.log(
-          "✅ Notifications to Save:",
-          notifications
-        );
+        // console.log(
+        //   "✅ Notifications to Save:",
+        //   notifications
+        // );
 
         const savedNotifications =
           await Notification.insertMany(
             notifications
           );
 
-        console.log(
-          "✅ Notifications Saved:",
-          savedNotifications.length
-        );
+        // console.log(
+        //   "✅ Notifications Saved:",
+        //   savedNotifications.length
+        // );
 
         // ======================================================
         // SOCKET.IO
@@ -283,13 +283,13 @@ const assignmentPosted_add =
           }
         );
 
-        console.log(
-          "✅ Socket Notifications Sent"
-        );
+        // console.log(
+        //   "✅ Socket Notifications Sent"
+        // );
       } else {
-        console.log(
-          "⚠ No students found for this semester"
-        );
+        // console.log(
+        //   "⚠ No students found for this semester"
+        // );
       }
 
       // ======================================================
@@ -348,7 +348,7 @@ const assignmentPosted_delete =
         data: deletedAssignment,
       });
     } catch (error) {
-      console.error(error);
+      // console.error(error);
 
       res.status(500).send({
         success: false,

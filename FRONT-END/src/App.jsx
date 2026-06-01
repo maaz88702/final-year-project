@@ -42,6 +42,8 @@ import SemesterAdd from "./pages/SemesterAdd/SemesterAdd";
 import SemesterView from "./pages/SemesterView/SemesterView";
 import SemesterUpdate from "./pages/SemesterUpdate/SemesterUpdate";
 import SemesterSingleView from "./pages/SemesterSingleView/SemesterSingleView";
+import AssignmentRecord from "./pages/AssignmentRecord/AssignmentRecord";
+import AssignmentRecordView from "./pages/AssignmentRecordView/AssignmentRecordView";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -99,6 +101,8 @@ function App() {
           <Route path="attendanceview" element={<AttendanceView />} />
           <Route path="attendanceview/:courseId" element={<AttendanceViewByCourse />} />
           <Route path="AssignmentGradeBySubmissionId/:submissionId" element={<AssignmentGradeById />} />
+          <Route path="assignmentrecord" element={<AssignmentRecord />} />
+          <Route path="assignment-record-view/:id" element={<AssignmentRecordView />} />
        
           {/* <Route path="/update-grade/:id" element={<UpdateGrade />} /> */}
         </Route>

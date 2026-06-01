@@ -237,7 +237,7 @@ const StudentDashboard = () => {
                             size="small"
                             onClick={() =>
                               window.open(
-                                `${baseURL}/uploads/${submission.file}`,
+                                `${baseURL}/${submission.file}`,
                                 "_blank"
                               )
                             }
@@ -253,7 +253,7 @@ const StudentDashboard = () => {
                           <Button
                             variant="outlined"
                             size="small"
-                            href={`${baseURL}/uploads/${submission.file}`}
+                            href={`${baseURL}/${submission.file}`}
                             download
                           >
                             Download
