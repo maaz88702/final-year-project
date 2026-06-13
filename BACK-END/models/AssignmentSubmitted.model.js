@@ -17,7 +17,11 @@ const assignmentSubmittedSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
-   
+   status: {
+      type: String,
+      enum: ["ungraded", "graded"],
+      default: "ungraded"
+    },
     marks: {
       type: Number,
       default: 0

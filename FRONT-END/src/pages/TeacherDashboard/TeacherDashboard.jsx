@@ -87,14 +87,19 @@ const TeacherDashboard = () => {
         );
         setAssignments(teacherAssignments);
 
-        // ================= TEACHER SUBMISSIONS =================
-        const teacherSubmissions = submitRes.data.filter((submission) =>
-          teacherAssignments.some(
+        // ================= TEACHER UNGRADED SUBMISSIONS =================
+        // Updated filter logic: Match teacher's assignments AND screen out records marked as "graded"
+        const teacherSubmissions = submitRes.data.filter((submission) => {
+          const isBelongsToTeacher = teacherAssignments.some(
             (assignment) =>
               String(assignment._id) ===
               String(submission.assignmentId?._id || submission.assignmentId)
-          )
-        );
+          );
+          
+          const isUngraded = submission.status !== "graded";
+
+          return isBelongsToTeacher && isUngraded;
+        });
         setSubmissions(teacherSubmissions);
 
         // ================= GRADED COUNT =================
@@ -150,7 +155,7 @@ const TeacherDashboard = () => {
 
       {/* KPI CARDS */}
       <Grid container spacing={3} sx={{ mb: 5 }}>
-        <Grid size={{ xs: 12, sm: 4 }}>
+        <Grid item xs={12} sm={4}>
           <Paper
             elevation={0}
             sx={{
@@ -167,7 +172,7 @@ const TeacherDashboard = () => {
           >
             <Box>
               <Typography variant="subtitle2" color="text.secondary" fontWeight="600">
-                Assignments
+                Assignments posted
               </Typography>
               <Typography variant="h3" fontWeight="bold" sx={{ mt: 1, color: "primary.main" }}>
                 {assignments.length}
@@ -179,7 +184,7 @@ const TeacherDashboard = () => {
           </Paper>
         </Grid>
 
-        <Grid size={{ xs: 12, sm: 4 }}>
+        <Grid item xs={12} sm={4}>
           <Paper
             elevation={0}
             sx={{
@@ -196,7 +201,7 @@ const TeacherDashboard = () => {
           >
             <Box>
               <Typography variant="subtitle2" color="text.secondary" fontWeight="600">
-                Submissions
+                Pending Submissions
               </Typography>
               <Typography variant="h3" fontWeight="bold" sx={{ mt: 1, color: "success.main" }}>
                 {submissions.length}
@@ -208,7 +213,7 @@ const TeacherDashboard = () => {
           </Paper>
         </Grid>
 
-        <Grid size={{ xs: 12, sm: 4 }}>
+        <Grid item xs={12} sm={4}>
           <Paper
             elevation={0}
             sx={{
@@ -244,7 +249,7 @@ const TeacherDashboard = () => {
           Quick Actions
         </Typography>
         <Grid container spacing={2}>
-          <Grid size={{ xs: 12, sm: 4 }}>
+          <Grid item xs={12} sm={4}>
             <Button
               fullWidth
               variant="contained"
@@ -256,7 +261,7 @@ const TeacherDashboard = () => {
               Add Assignment
             </Button>
           </Grid>
-          <Grid size={{ xs: 12, sm: 4 }}>
+          <Grid item xs={12} sm={4}>
             <Button
               fullWidth
               variant="contained"
@@ -269,7 +274,7 @@ const TeacherDashboard = () => {
               View Submissions
             </Button>
           </Grid>
-          <Grid size={{ xs: 12, sm: 4 }}>
+          <Grid item xs={12} sm={4}>
             <Button
               fullWidth
               variant="outlined"
@@ -284,16 +289,16 @@ const TeacherDashboard = () => {
         </Grid>
       </Box>
 
-      {/* RECENT SUBMISSIONS AREA */}
+      {/* RECENT SUBMISSIONS AREA (NOW EXCLUSIVELY UNGRADED) */}
       <Box>
         <Typography variant="h5" fontWeight="bold" sx={{ mb: 2 }}>
-          Recent Submissions
+          Ungraded Submissions Pending Review
         </Typography>
 
         {submissions.length === 0 ? (
           <Paper elevation={0} sx={{ p: 4, textAlign: "center", borderRadius: 3, border: "1px dashed", borderColor: "divider" }}>
             <Typography color="text.secondary" variant="body1">
-              No submissions records found.
+              All submitted assignments have been successfully graded! No items pending review.
             </Typography>
           </Paper>
         ) : (
@@ -330,7 +335,7 @@ const TeacherDashboard = () => {
                 </Stack>
 
                 <Stack 
-                  direction={{ xs: "row", sm: "row" }} 
+                  direction="row" 
                   alignItems="center" 
                   justifyContent="space-between" 
                   sx={{ width: { xs: "100%", sm: "auto" }, gap: 3 }}
@@ -352,7 +357,7 @@ const TeacherDashboard = () => {
                     variant="text"
                     color="primary"
                     endIcon={<ChevronRightIcon />}
-                    fontWeight="600"
+                    sx={{ fontWeight: "600" }}
                     onClick={() =>
                       navigate(
                         `/teacher/AssignmentGradeBySubmissionId/${submission._id}`,

@@ -1,5 +1,6 @@
 const AssignmentGrade = require("../models/AssignmentGrade.model");
 const Notification = require("../models/Notification.model");
+const mongoose = require("mongoose");
 
 // ==========================================
 // GET ALL GRADES
@@ -105,7 +106,8 @@ const assignmentGrade_add = async (req, res) => {
       obtainmarks,
       details,
     } = req.body;
-console.log("GRADE ADD BODY:", req.body);
+    console.log("GRADE ADD BODY:", req.body);
+
     // ================= VALIDATION =================
     if (!assignmentId || !studentId || obtainmarks === undefined) {
       return res.status(400).json({
@@ -145,12 +147,16 @@ console.log("GRADE ADD BODY:", req.body);
 
     const savedData = await newGrade.save();
 
-    // ================= DELETE FROM SUBMITTED MODEL =================
-    // Once graded, the submission record is no longer needed in the pending pool
-    await mongoose.model("AssignmentSubmitted").findOneAndDelete({ 
-      assignmentId, 
-      studentId 
-    });
+    // ================= UPDATE SUBMITTED MODEL STATUS INSTEAD OF DELETING =================
+    // Switch status to "graded" and mirror the obtained marks inside the submission profile
+    await mongoose.model("AssignmentSubmitted").findOneAndUpdate(
+      { assignmentId, studentId },
+      { 
+        status: "graded",
+        marks: obtainmarks 
+      },
+      { new: true } // Returns the modified document if needed
+    );
 
     // ================= NOTIFICATION =================
     await Notification.create({
@@ -162,7 +168,7 @@ console.log("GRADE ADD BODY:", req.body);
     });
 
     res.status(201).json({
-      message: "Assignment grade added successfully and submission updated",
+      message: "Assignment grade added successfully and submission updated to graded",
       data: savedData,
     });
   } catch (error) {
