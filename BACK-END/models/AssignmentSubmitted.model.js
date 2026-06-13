@@ -17,6 +17,7 @@ const assignmentSubmittedSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+   
     marks: {
       type: Number,
       default: 0

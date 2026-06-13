@@ -15,6 +15,7 @@ import {
   CircularProgress,
   Stack,
 } from "@mui/material";
+not showing submittedAssignment
 
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -97,6 +98,7 @@ const AssignmentGradeAdd = () => {
   const [assignments, setAssignments] = useState([]);
   const [students, setStudents] = useState([]);
   const [grades, setGrades] = useState([]);
+  const [submissions, setSubmissions] = useState([]);
 
   const [filteredStudents, setFilteredStudents] = useState([]);
 
@@ -104,11 +106,8 @@ const AssignmentGradeAdd = () => {
   const [selectedStudent, setSelectedStudent] = useState("");
 
   const [details, setDetails] = useState([]);
-
   const [totalMarks, setTotalMarks] = useState(0);
-
   const [submittedAssignment, setSubmittedAssignment] = useState(null);
-
   const [pdfPages, setPdfPages] = useState(0);
 
   // ================= FETCH DATA =================
@@ -117,34 +116,30 @@ const AssignmentGradeAdd = () => {
       try {
         setLoading(true);
 
-        const [assignRes, studentRes, gradeRes] = await Promise.all([
+        const [assignRes, studentRes, gradeRes, submissionRes] = await Promise.all([
           axios.get(`${baseURL}/api/assignmentPosted`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }),
-
           axios.get(`${baseURL}/api/student`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }),
-
           axios.get(`${baseURL}/api/assignmentgrade`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get(`${baseURL}/api/assignmentsubmitted`, {
+            headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
-
+        console.log("students", studentRes.data);
+console.log("submissions", submissionRes.data);
         const teacherAssignments = assignRes.data.filter(
-          (a) =>
-            String(a.teacherId?._id || a.teacherId) === String(teacherId)
+          (a) => String(a.teacherId?._id || a.teacherId) === String(teacherId)
         );
 
         setAssignments(teacherAssignments);
         setStudents(studentRes.data);
         setGrades(gradeRes.data);
+        setSubmissions(submissionRes.data);
       } catch (error) {
         toast.error("Failed to load data");
       } finally {
@@ -157,39 +152,63 @@ const AssignmentGradeAdd = () => {
     }
   }, [token, teacherId]);
 
-  // ================= FILTER STUDENTS =================
+  // ================= FILTER STUDENTS (FIXED ID PARSING) =================
   useEffect(() => {
-    if (!selectedAssignment) return;
+    if (!selectedAssignment) {
+      setFilteredStudents([]);
+      return;
+    }
 
     const assignment = assignments.find(
       (a) => String(a._id) === String(selectedAssignment)
     );
 
-    if (!assignment) return;
+    if (!assignment) {
+      setFilteredStudents([]);
+      return;
+    }
 
-    const semesterStudents = students.filter(
-      (s) =>
-        String(s.semester?._id || s.semester) ===
-        String(assignment.semesterId?._id || assignment.semesterId)
-    );
+    // Match Semester Safely
+    const semesterStudents = students.filter((student) => {
+      const studentSemesterId = student.semester?._id || student.semester;
+      const assignmentSemesterId = assignment.semesterId?._id || assignment.semesterId;
+      return String(studentSemesterId) === String(assignmentSemesterId);
+    });
 
+    // Safely parse nested submission IDs
+    const submittedStudentIds = submissions
+      .filter((submission) => {
+        const subAssignmentId = submission.assignmentId?._id || submission.assignmentId;
+        return String(subAssignmentId) === String(selectedAssignment);
+      })
+      .map((submission) => {
+        return String(submission.studentId?._id || submission.studentId);
+      });
+
+    // Safely parse nested grade IDs
     const gradedStudentIds = grades
-      .filter(
-        (g) =>
-          String(g.assignmentId?._id || g.assignmentId) ===
-          String(selectedAssignment)
-      )
-      .map((g) => String(g.studentId?._id || g.studentId));
+      .filter((grade) => {
+        const gradeAssignmentId = grade.assignmentId?._id || grade.assignmentId;
+        return String(gradeAssignmentId) === String(selectedAssignment);
+      })
+      .map((grade) => {
+        return String(grade.studentId?._id || grade.studentId);
+      });
 
-    setFilteredStudents(
-      semesterStudents.filter(
-        (s) => !gradedStudentIds.includes(String(s._id))
-      )
+    // Student must be in the submissions pool AND not already graded
+    const eligibleStudents = semesterStudents.filter(
+      (student) =>
+        submittedStudentIds.includes(String(student._id)) &&
+        !gradedStudentIds.includes(String(student._id))
     );
 
+    setFilteredStudents(eligibleStudents);
+    
+    // Reset tracking states when assignment changes
     setSelectedStudent("");
     setSubmittedAssignment(null);
-  }, [selectedAssignment, assignments, students, grades]);
+    setPdfPages(0); 
+  }, [selectedAssignment, assignments, students, grades, submissions]);
 
   // ================= LOAD QUESTIONS =================
   useEffect(() => {
@@ -209,6 +228,7 @@ const AssignmentGradeAdd = () => {
           ...rubric,
           selectedLevel: "",
           selectedMarks: 0,
+          rubricIndex: rubric._id
         })),
       }))
     );
@@ -216,59 +236,47 @@ const AssignmentGradeAdd = () => {
     setTotalMarks(0);
   }, [selectedAssignment, assignments]);
 
-  // ================= FETCH SUBMITTED FILE =================
+  // ================= FETCH SUBMITTED FILE (FIXED ID PARSING) =================
   useEffect(() => {
     const fetchSubmission = async () => {
       if (!selectedAssignment || !selectedStudent) {
         setSubmittedAssignment(null);
+        setPdfPages(0);
         return;
       }
 
       try {
-        const res = await axios.get(
-          `${baseURL}/api/assignmentsubmitted`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const found = submissions.find((item) => {
+          const itemAssignmentId = item.assignmentId?._id || item.assignmentId;
+          const itemStudentId = item.studentId?._id || item.studentId;
+          
+          return String(itemAssignmentId) === String(selectedAssignment) &&
+                 String(itemStudentId) === String(selectedStudent);
+        });
 
-        const found = res.data.find(
-          (item) =>
-            String(item.assignmentId?._id || item.assignmentId) ===
-              String(selectedAssignment) &&
-            String(item.studentId?._id || item.studentId) ===
-              String(selectedStudent)
-        );
-
-        setSubmittedAssignment(found || null);
+        if (found) {
+          setSubmittedAssignment(found);
+        } else {
+          setSubmittedAssignment(null);
+          setPdfPages(0);
+        }
       } catch (error) {
         toast.error("Error loading submission");
       }
     };
 
     fetchSubmission();
-  }, [selectedAssignment, selectedStudent, token]);
+  }, [selectedAssignment, selectedStudent, submissions]);
 
   // ================= HANDLE RUBRIC =================
-  const handleRubricSelection = (
-    qIndex,
-    rubricIndex,
-    subRubric
-  ) => {
+  const handleRubricSelection = (qIndex, rubricIndex, subRubric) => {
     const updated = [...details];
-
-    updated[qIndex].rubrics[rubricIndex].selectedLevel =
-      subRubric.level;
-
-    updated[qIndex].rubrics[rubricIndex].selectedMarks =
-      Number(subRubric.marks || 0);
+    updated[qIndex].rubrics[rubricIndex].selectedLevel = subRubric.level;
+    updated[qIndex].rubrics[rubricIndex].selectedMarks = Number(subRubric.marks || 0);
 
     setDetails(updated);
 
     let total = 0;
-
     updated.forEach((question) => {
       question.rubrics.forEach((rubric) => {
         total += Number(rubric.selectedMarks || 0);
@@ -280,102 +288,68 @@ const AssignmentGradeAdd = () => {
 
   // ================= SUBMIT =================
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!selectedAssignment || !selectedStudent) {
-    return toast.error("Select student and assignment");
-  }
+    if (!selectedAssignment || !selectedStudent) {
+      return toast.error("Select student and assignment");
+    }
 
-  try {
+    try {
+      const formattedDetails = [];
 
-    const formattedDetails = [];
-
-    details.forEach((d) => {
-
-      d.rubrics.forEach((r) => {
-
-        if (r.selectedLevel) {
-
-          formattedDetails.push({
-            question: d.question,
-            rubric: r.condition,
-            level: r.selectedLevel,
-            marks: Number(r.selectedMarks || 0),
-          });
-
-        }
-
+      details.forEach((d) => {
+        d.rubrics.forEach((r) => {
+          if (r.selectedLevel) {
+            formattedDetails.push({
+              question: d.question,
+              rubric: r.condition,
+              level: r.selectedLevel,
+              marks: Number(r.selectedMarks || 0),
+            });
+          }
+        });
       });
 
-    });
+      const payload = {
+        assignmentId: selectedAssignment,
+        studentId: selectedStudent,
+        obtainmarks: totalMarks,
+        details: formattedDetails,
+      };
 
-    const payload = {
-      assignmentId: selectedAssignment,
-      studentId: selectedStudent,
-      obtainmarks: totalMarks,
-      details: formattedDetails,
-    };
+      await axios.post(`${baseURL}/api/assignmentgrade/add`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-    console.log("Submitting payload:", payload);
+      toast.success("Graded successfully");
 
-    await axios.post(
-      `${baseURL}/api/assignmentgrade/add`,
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+      setFilteredStudents((prev) =>
+        prev.filter((s) => String(s._id) !== String(selectedStudent))
+      );
 
-    toast.success("Graded successfully");
+      setSelectedStudent("");
+      setSubmittedAssignment(null);
+      setPdfPages(0);
+      setDetails([]);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to submit grade");
+    }
+  };
 
-    setFilteredStudents((prev) =>
-      prev.filter(
-        (s) => String(s._id) !== String(selectedStudent)
-      )
-    );
-
-    setSelectedStudent("");
-    setSubmittedAssignment(null);
-    setDetails([]);
-
-  } catch (error) {
-
-    console.error(error);
-
-    toast.error("Failed to submit grade");
-  }
-};
-
-  // ================= LOADING =================
   if (loading) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          mt: 5,
-        }}
-      >
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
         <CircularProgress />
       </Box>
     );
   }
 
-  // ================= UI =================
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        width: "100vw",
-        display: "flex",
-        overflow: "hidden",
-        bgcolor: "#f5f5f5",
-      }}
-    >
+    <Box sx={{ height: "100vh", width: "100vw", display: "flex", overflow: "hidden", bgcolor: "#f5f5f5" }}>
       <Grid container sx={{ height: "100%" }}>
-        {/* LEFT SIDE */}
+        
+        {/* LEFT SIDE FORM CONTROL */}
         <Grid
           size={{ xs: 12, md: 7.2 }}
           sx={{
@@ -386,11 +360,7 @@ const AssignmentGradeAdd = () => {
             bgcolor: "white",
           }}
         >
-          <Typography
-            variant="h5"
-            fontWeight="bold"
-            gutterBottom
-          >
+          <Typography variant="h5" fontWeight="bold" gutterBottom>
             Grading Details
           </Typography>
 
@@ -404,9 +374,7 @@ const AssignmentGradeAdd = () => {
                   fullWidth
                   label="Assignment"
                   value={selectedAssignment}
-                  onChange={(e) =>
-                    setSelectedAssignment(e.target.value)
-                  }
+                  onChange={(e) => setSelectedAssignment(e.target.value)}
                 >
                   {assignments.map((a) => (
                     <MenuItem key={a._id} value={a._id}>
@@ -422,21 +390,17 @@ const AssignmentGradeAdd = () => {
                   fullWidth
                   label="Student"
                   value={selectedStudent}
-                  onChange={(e) =>
-                    setSelectedStudent(e.target.value)
-                  }
+                  onChange={(e) => setSelectedStudent(e.target.value)}
                   disabled={!selectedAssignment}
                 >
                   {filteredStudents.length > 0 ? (
-                    filteredStudents.map((s) => (
-                      <MenuItem key={s._id} value={s._id}>
-                        {s.studentName} ({s.rollNo})
+                    filteredStudents.map((student) => (
+                      <MenuItem key={student._id} value={student._id}>
+                        {student.studentName} ({student.rollNo})
                       </MenuItem>
                     ))
                   ) : (
-                    <MenuItem disabled>
-                      No ungraded students
-                    </MenuItem>
+                    <MenuItem disabled>No submitted assignments available</MenuItem>
                   )}
                 </TextField>
               </Grid>
@@ -446,24 +410,12 @@ const AssignmentGradeAdd = () => {
           {selectedStudent && details.length > 0 ? (
             <form onSubmit={handleSubmit}>
               {details.map((q, qIndex) => (
-                <Paper
-                  key={qIndex}
-                  variant="outlined"
-                  sx={{
-                    p: 3,
-                    mb: 3,
-                    borderRadius: 2,
-                  }}
-                >
-                  <Typography
-                    variant="subtitle1"
-                    fontWeight="bold"
-                    color="secondary"
-                  >
+                <Paper key={qIndex} variant="outlined" sx={{ p: 3, mb: 3, borderRadius: 2 }}>
+                  <Typography variant="subtitle1" fontWeight="bold" color="secondary" component="div">
                     Question {qIndex + 1}
                   </Typography>
 
-                  <Typography variant="body1" sx={{ mb: 2 }}>
+                  <Typography variant="body1" sx={{ mb: 2, mt: 1 }}>
                     {q.question}
                   </Typography>
 
@@ -478,50 +430,31 @@ const AssignmentGradeAdd = () => {
                         borderLeft: "4px solid #1976d2",
                       }}
                     >
-                      <Typography
-                        variant="body2"
-                        fontWeight="bold"
-                      >
+                      <Typography variant="body2" fontWeight="bold" sx={{ mb: 1 }}>
                         {rubric.condition}
                       </Typography>
 
                       <RadioGroup
                         value={rubric.selectedLevel}
                         onChange={(e) => {
-                          const sub =
-                            rubric.subRubrics.find(
-                              (s) =>
-                                s.level === e.target.value
-                            );
-
-                          handleRubricSelection(
-                            qIndex,
-                            rIndex,
-                            sub
-                          );
+                          const sub = rubric.subRubrics.find((s) => s.level === e.target.value);
+                          handleRubricSelection(qIndex, rIndex, sub);
                         }}
                       >
                         <Grid container>
-                          {rubric.subRubrics?.map(
-                            (sr, srIndex) => (
-                              <Grid
-                                size={{ xs: 12, sm: 6 }}
-                                key={srIndex}
-                              >
-                                <FormControlLabel
-                                  value={sr.level}
-                                  control={
-                                    <Radio size="small" />
-                                  }
-                                  label={
-                                    <Typography variant="body2">
-                                      {`${sr.level} (${sr.marks} marks)`}
-                                    </Typography>
-                                  }
-                                />
-                              </Grid>
-                            )
-                          )}
+                          {rubric.subRubrics?.map((sr, srIndex) => (
+                            <Grid size={{ xs: 12, sm: 6 }} key={srIndex}>
+                              <FormControlLabel
+                                value={sr.level}
+                                control={<Radio size="small" />}
+                                label={
+                                  <Typography variant="body2">
+                                    {`${sr.level} (${sr.marks} marks)`}
+                                  </Typography>
+                                }
+                              />
+                            </Grid>
+                          ))}
                         </Grid>
                       </RadioGroup>
                     </Box>
@@ -529,6 +462,7 @@ const AssignmentGradeAdd = () => {
                 </Paper>
               ))}
 
+              {/* BOTTOM CONTROL CONTAINER */}
               <Paper
                 elevation={3}
                 sx={{
@@ -542,42 +476,25 @@ const AssignmentGradeAdd = () => {
                   zIndex: 10,
                 }}
               >
-                <Typography variant="h6">
+                {/* FIX: Set component to 'div' to eliminate nested block hydration conflicts */}
+                <Typography variant="h6" component="div">
                   Total Marks:
-                  <Chip
-                    label={totalMarks}
-                    color="primary"
-                    sx={{ ml: 1, fontWeight: "bold" }}
-                  />
+                  <Chip label={totalMarks} color="primary" sx={{ ml: 1, fontWeight: "bold" }} />
                 </Typography>
 
-                <Button
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  sx={{ px: 5 }}
-                >
+                <Button type="submit" variant="contained" size="large" sx={{ px: 5 }}>
                   Submit Grade
                 </Button>
               </Paper>
             </form>
           ) : (
-            <Box
-              sx={{
-                mt: 10,
-                textAlign: "center",
-                color: "text.secondary",
-              }}
-            >
-              <Typography>
-                Please select an assignment and student to
-                load the rubric.
-              </Typography>
+            <Box sx={{ mt: 10, textAlign: "center", color: "text.secondary" }}>
+              <Typography>Please select an assignment and student to load the rubric.</Typography>
             </Box>
           )}
         </Grid>
 
-        {/* RIGHT SIDE PDF */}
+        {/* RIGHT SIDE PDF DISPLAY PANEL */}
         <Grid
           size={{ xs: 12, md: 4.8 }}
           sx={{
@@ -591,6 +508,7 @@ const AssignmentGradeAdd = () => {
           }}
         >
           <PdfViewer
+            key={`${selectedAssignment}-${selectedStudent}`}
             submittedAssignment={submittedAssignment}
             baseURL={baseURL}
             setPdfPages={setPdfPages}

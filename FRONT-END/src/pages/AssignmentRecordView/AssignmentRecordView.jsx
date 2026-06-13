@@ -132,12 +132,36 @@ const AssignmentRecordView = () => {
         </Typography>
         <Divider sx={{ mb: 3 }} />
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}><Typography><strong>Student Name:</strong> {student.studentName || "N/A"}</Typography></Grid>
-          <Grid item xs={12} md={6}><Typography><strong>Roll No:</strong> {student.rollNo || "N/A"}</Typography></Grid>
-          <Grid item xs={12} md={6}><Typography><strong>Course:</strong> {assignment.courseId?.courseTitle || "N/A"}</Typography></Grid>
-          <Grid item xs={12} md={6}><Typography><strong>Total Marks:</strong> <Chip label={assignment.totalMarks || 0} color="primary" /></Typography></Grid>
-          <Grid item xs={12} md={6}><Typography><strong>Obtained Marks:</strong> <Chip label={record.obtainmarks || 0} color="success" /></Typography></Grid>
-          <Grid item xs={12} md={6}><Typography><strong>Percentage:</strong> <Chip label={`${percentage}%`} color={percentage >= 50 ? "success" : "error"} /></Typography></Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography component="div">
+              <strong>Student Name:</strong> {student.studentName || "N/A"}
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography component="div">
+              <strong>Roll No:</strong> {student.rollNo || "N/A"}
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography component="div">
+              <strong>Course:</strong> {assignment.courseId?.courseTitle || "N/A"}
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography component="div">
+              <strong>Total Marks:</strong> <Chip label={assignment.totalMarks || 0} color="primary" />
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography component="div">
+              <strong>Obtained Marks:</strong> <Chip label={record.obtainmarks || 0} color="success" />
+            </Typography>
+          </Grid>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography component="div">
+              <strong>Percentage:</strong> <Chip label={`${percentage}%`} color={percentage >= 50 ? "success" : "error"} />
+            </Typography>
+          </Grid>
         </Grid>
       </Paper>
 
@@ -149,7 +173,7 @@ const AssignmentRecordView = () => {
           <Typography sx={{ mb: 1 }}><strong>Question:</strong> {detail.question}</Typography>
           <Typography sx={{ mb: 1 }}><strong>Rubric:</strong> {detail.rubric}</Typography>
           <Typography sx={{ mb: 1 }}><strong>Level:</strong> {detail.level}</Typography>
-          <Typography><strong>Marks:</strong> <Chip label={detail.marks} color="secondary" /></Typography>
+          <Typography component="div"><strong>Marks:</strong> <Chip label={detail.marks} color="secondary" /></Typography>
         </Paper>
       ))}
 

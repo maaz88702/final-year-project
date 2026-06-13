@@ -4,17 +4,20 @@ const AssignmentSubmitted = require('../models/AssignmentSubmitted.model');
 
 const assignmentSubmitted_get = async (req, res) => {
   try {
+    // Included 'semester' in the student projection string 
+    // so the frontend can read it if needed!
     const assignmentSubmittedData = await AssignmentSubmitted.find()
-      .populate("studentId", "studentName rollNo")
-      .populate("assignmentId", "title");
-    res.send(assignmentSubmittedData)
+      .populate("studentId", "studentName rollNo semester")
+      .populate("assignmentId", "title semesterId");
+      
+    res.status(200).send(assignmentSubmittedData);
   } catch (error) {
     res.status(500).json({
-      message: "Failed",
+      message: "Failed to fetch submitted assignments",
       error: error.message
     });
   }
-}
+};
 
 const assignmentSubmitted_id = async (req, res) => {
   try {

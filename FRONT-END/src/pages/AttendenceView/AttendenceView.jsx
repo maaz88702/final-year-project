@@ -26,204 +26,109 @@ import {
 } from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
 import axios from "axios";
-
 import { toast } from "react-toastify";
-
 import { useNavigate } from "react-router-dom";
 
 const AttendanceView = () => {
-  const baseURL =
-    "http://localhost:3000";
-
-  const token =
-    localStorage.getItem("jwt");
-
-  const navigate =
-    useNavigate();
+  const baseURL = "http://localhost:3000";
+  const token = localStorage.getItem("jwt");
+  const navigate = useNavigate();
 
   // ================= STATES =================
-  const [loading, setLoading] =
-    useState(false);
-
-  const [attendanceData, setAttendanceData] =
-    useState([]);
-
-  const [search, setSearch] =
-    useState("");
-
-  const [semesterFilter, setSemesterFilter] =
-    useState("");
-
-  const [courseFilter, setCourseFilter] =
-    useState("");
+  const [loading, setLoading] = useState(false);
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [search, setSearch] = useState("");
+  const [semesterFilter, setSemesterFilter] = useState("");
+  const [courseFilter, setCourseFilter] = useState("");
 
   // ================= FETCH ATTENDANCE =================
   useEffect(() => {
-    const fetchAttendance =
-      async () => {
-        try {
-          setLoading(true);
-
-          const res =
-            await axios.get(
-              `${baseURL}/api/attendance`,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
-
-          setAttendanceData(
-            res.data
-          );
-
-        } catch (error) {
-          console.error(error);
-
-          toast.error(
-            "Failed to load attendance"
-          );
-        } finally {
-          setLoading(false);
-        }
-      };
+    const fetchAttendance = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${baseURL}/api/attendance`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setAttendanceData(res.data);
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to load attendance");
+      } finally {
+        setLoading(false);
+      }
+    };
 
     fetchAttendance();
   }, [token]);
 
   // ================= UNIQUE COURSES =================
-  const uniqueCourses =
-    useMemo(() => {
-      const map =
-        new Map();
-
-      attendanceData.forEach(
-        (item) => {
-          if (
-            item.courseId?._id
-          ) {
-            map.set(
-              item.courseId._id,
-              item.courseId
-                ?.courseTitle
-            );
-          }
-        }
-      );
-
-      return Array.from(
-        map.entries()
-      );
-    }, [attendanceData]);
+  const uniqueCourses = useMemo(() => {
+    const map = new Map();
+    attendanceData.forEach((item) => {
+      if (item.courseId?._id) {
+        map.set(item.courseId._id, item.courseId?.courseTitle);
+      }
+    });
+    return Array.from(map.entries());
+  }, [attendanceData]);
 
   // ================= UNIQUE SEMESTERS =================
-  const uniqueSemesters =
-    useMemo(() => {
-      const semesters =
-        attendanceData.map(
-          (item) =>
-            item.semesterId
-              ?.semester
-        );
-
-      return [
-        ...new Set(
-          semesters.filter(
-            Boolean
-          )
-        ),
-      ];
-    }, [attendanceData]);
+  const uniqueSemesters = useMemo(() => {
+    const semesters = attendanceData.map((item) => item.semesterId?.semester);
+    return [...new Set(semesters.filter(Boolean))];
+  }, [attendanceData]);
 
   // ================= FILTER DATA =================
-  const filteredData =
-    attendanceData.filter(
-      (item) => {
-        const course =
-          item.courseId
-            ?.courseTitle || "";
+  const filteredData = attendanceData.filter((item) => {
+    const course = item.courseId?.courseTitle || "";
+    const semester = item.semesterId?.semester || "";
 
-        const semester =
-          item.semesterId
-            ?.semester || "";
+    const searchMatch =
+      course.toLowerCase().includes(search.toLowerCase()) ||
+      semester.toLowerCase().includes(search.toLowerCase());
 
-        const searchMatch =
-          course
-            .toLowerCase()
-            .includes(
-              search.toLowerCase()
-            ) ||
-          semester
-            .toLowerCase()
-            .includes(
-              search.toLowerCase()
-            );
+    const semesterMatch = semesterFilter ? semester === semesterFilter : true;
+    const courseMatch = courseFilter
+      ? String(item.courseId?._id) === String(courseFilter)
+      : true;
 
-        const semesterMatch =
-          semesterFilter
-            ? semester ===
-              semesterFilter
-            : true;
+    return searchMatch && semesterMatch && courseMatch;
+  });
 
-        const courseMatch =
-          courseFilter
-            ? String(
-                item
-                  .courseId
-                  ?._id
-              ) ===
-              String(
-                courseFilter
-              )
-            : true;
+  // ================= STATS (OVERALL SUMMARIES) =================
+  const totalRecords = filteredData.length;
 
-        return (
-          searchMatch &&
-          semesterMatch &&
-          courseMatch
-        );
-      }
-    );
+  const totalStudents = filteredData.reduce(
+    (acc, item) => acc + (item.attendance?.length || 0),
+    0
+  );
 
-  // ================= STATS =================
-  const totalRecords =
-    filteredData.length;
+  const totalPresent = filteredData.reduce(
+    (acc, item) =>
+      acc + (item.attendance?.filter((a) => a.status === "present").length || 0),
+    0
+  );
 
-  const totalStudents =
-    filteredData.reduce(
-      (acc, item) =>
-        acc +
-        (item.attendance
-          ?.length || 0),
-      0
-    );
+  const totalLeave = filteredData.reduce(
+    (acc, item) =>
+      acc + (item.attendance?.filter((a) => a.status === "leave").length || 0),
+    0
+  );
 
-  const totalPresent =
-    filteredData.reduce(
-      (acc, item) =>
-        acc +
-        (item.attendance?.filter(
-          (a) =>
-            a.status ===
-            "present"
-        ).length || 0),
-      0
-    );
+  const totalAbsent = filteredData.reduce(
+    (acc, item) =>
+      acc + (item.attendance?.filter((a) => a.status === "absent").length || 0),
+    0
+  );
 
-  const totalAbsent =
-    filteredData.reduce(
-      (acc, item) =>
-        acc +
-        (item.attendance?.filter(
-          (a) =>
-            a.status ===
-            "absent"
-        ).length || 0),
-      0
-    );
+  // Global attendance calculation: (Present + Leave) / Total Students * 100
+  const globalPercentage = useMemo(() => {
+    if (totalStudents === 0) return 0;
+    return Math.round(((totalPresent + totalLeave) / totalStudents) * 100);
+  }, [totalStudents, totalPresent, totalLeave]);
 
   // ================= LOADING =================
   if (loading) {
@@ -231,8 +136,7 @@ const AttendanceView = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent:
-            "center",
+          justifyContent: "center",
           alignItems: "center",
           height: "100vh",
         }}
@@ -245,470 +149,221 @@ const AttendanceView = () => {
   // ================= UI =================
   return (
     <Box sx={{ p: 3 }}>
-      <Paper
-        sx={{
-          p: 3,
-          borderRadius: 4,
-        }}
-      >
+      <Paper sx={{ p: 3, borderRadius: 4 }}>
         {/* HEADER */}
-        <Typography
-          variant="h4"
-          fontWeight="bold"
-        >
+        <Typography variant="h4" fontWeight="bold">
           Attendance Dashboard
         </Typography>
 
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ mt: 1 }}
-        >
-          Manage and review
-          course attendance
-          records
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          Manage and review course attendance records
         </Typography>
 
         {/* STATS */}
-        <Grid
-          container
-          spacing={2}
-          sx={{ mt: 3 }}
-        >
-          <Grid
-            size={{
-              xs: 12,
-              md: 3,
-            }}
-          >
-            <Paper
-              elevation={2}
-              sx={{
-                p: 2,
-                borderRadius: 3,
-              }}
-            >
-              <Typography
-                variant="body2"
-                color="text.secondary"
-              >
+        <Grid container spacing={2} sx={{ mt: 3 }}>
+          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+            <Paper elevation={2} sx={{ p: 2, borderRadius: 3 }}>
+              <Typography variant="body2" color="text.secondary">
                 Total Records
               </Typography>
-
-              <Typography
-                variant="h5"
-                fontWeight="bold"
-              >
+              <Typography variant="h5" fontWeight="bold">
                 {totalRecords}
               </Typography>
             </Paper>
           </Grid>
 
-          <Grid
-            size={{
-              xs: 12,
-              md: 3,
-            }}
-          >
-            <Paper
-              elevation={2}
-              sx={{
-                p: 2,
-                borderRadius: 3,
-              }}
-            >
-              <Typography
-                variant="body2"
-                color="text.secondary"
-              >
-                Students
-              </Typography>
-
-              <Typography
-                variant="h5"
-                fontWeight="bold"
-              >
-                {totalStudents}
-              </Typography>
-            </Paper>
-          </Grid>
-
-          <Grid
-            size={{
-              xs: 12,
-              md: 3,
-            }}
-          >
-            <Paper
-              elevation={2}
-              sx={{
-                p: 2,
-                borderRadius: 3,
-              }}
-            >
-              <Typography
-                variant="body2"
-                color="text.secondary"
-              >
+          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+            <Paper elevation={2} sx={{ p: 2, borderRadius: 3 }}>
+              <Typography variant="body2" color="text.secondary">
                 Present
               </Typography>
-
-              <Typography
-                variant="h5"
-                fontWeight="bold"
-                color="green"
-              >
+              <Typography variant="h5" fontWeight="bold" color="green">
                 {totalPresent}
               </Typography>
             </Paper>
           </Grid>
 
-          <Grid
-            size={{
-              xs: 12,
-              md: 3,
-            }}
-          >
-            <Paper
-              elevation={2}
-              sx={{
-                p: 2,
-                borderRadius: 3,
-              }}
-            >
-              <Typography
-                variant="body2"
-                color="text.secondary"
-              >
+          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+            <Paper elevation={2} sx={{ p: 2, borderRadius: 3 }}>
+              <Typography variant="body2" color="text.secondary">
+                Leave
+              </Typography>
+              <Typography variant="h5" fontWeight="bold" color="warning.main">
+                {totalLeave}
+              </Typography>
+            </Paper>
+          </Grid>
+
+          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+            <Paper elevation={2} sx={{ p: 2, borderRadius: 3 }}>
+              <Typography variant="body2" color="text.secondary">
                 Absent
               </Typography>
-
-              <Typography
-                variant="h5"
-                fontWeight="bold"
-                color="error"
-              >
+              <Typography variant="h5" fontWeight="bold" color="error">
                 {totalAbsent}
+              </Typography>
+            </Paper>
+          </Grid>
+
+          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+            <Paper elevation={2} sx={{ p: 2, borderRadius: 3, bgcolor: "primary.light", color: "primary.contrastText" }}>
+              <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                Avg Attendance (P+L)
+              </Typography>
+              <Typography variant="h5" fontWeight="bold">
+                {globalPercentage}%
               </Typography>
             </Paper>
           </Grid>
         </Grid>
 
         {/* FILTERS */}
-        <Grid
-          container
-          spacing={2}
-          sx={{ mt: 3, mb: 3 }}
-        >
-          <Grid
-            size={{
-              xs: 12,
-              md: 4,
-            }}
-          >
+        <Grid container spacing={2} sx={{ mt: 3, mb: 3 }}>
+          <Grid size={{ xs:12, md:4 }}>
             <TextField
               fullWidth
               label="Search"
               placeholder="Search course or semester"
               value={search}
-              onChange={(e) =>
-                setSearch(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setSearch(e.target.value)}
             />
           </Grid>
 
-          <Grid
-            size={{
-              xs: 12,
-              md: 4,
-            }}
-          >
+          <Grid size={{ xs:12, md:4 }}>
             <TextField
               select
               fullWidth
               label="Filter Semester"
-              value={
-                semesterFilter
-              }
-              onChange={(e) =>
-                setSemesterFilter(
-                  e.target.value
-                )
-              }
+              value={semesterFilter}
+              onChange={(e) => setSemesterFilter(e.target.value)}
             >
-              <MenuItem value="">
-                All Semesters
-              </MenuItem>
-
-              {uniqueSemesters.map(
-                (
-                  semester,
-                  index
-                ) => (
-                  <MenuItem
-                    key={
-                      index
-                    }
-                    value={
-                      semester
-                    }
-                  >
-                    {
-                      semester
-                    }
-                  </MenuItem>
-                )
-              )}
+              <MenuItem value="">All Semesters</MenuItem>
+              {uniqueSemesters.map((semester, index) => (
+                <MenuItem key={index} value={semester}>
+                  {semester}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
 
-          <Grid
-            size={{
-              xs: 12,
-              md: 4,
-            }}
-          >
+          <Grid size={{ xs:12, md:4 }}>
             <TextField
               select
               fullWidth
               label="Filter Course"
-              value={
-                courseFilter
-              }
-              onChange={(e) =>
-                setCourseFilter(
-                  e.target.value
-                )
-              }
+              value={courseFilter}
+              onChange={(e) => setCourseFilter(e.target.value)}
             >
-              <MenuItem value="">
-                All Courses
-              </MenuItem>
-
-              {uniqueCourses.map(
-                (
-                  course,
-                  index
-                ) => (
-                  <MenuItem
-                    key={
-                      index
-                    }
-                    value={
-                      course[0]
-                    }
-                  >
-                    {
-                      course[1]
-                    }
-                  </MenuItem>
-                )
-              )}
+              <MenuItem value="">All Courses</MenuItem>
+              {uniqueCourses.map((course, index) => (
+                <MenuItem key={index} value={course[0]}>
+                  {course[1]}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
         </Grid>
 
         {/* TABLE */}
-        <TableContainer
-          component={Paper}
-          elevation={2}
-          sx={{
-            borderRadius: 3,
-          }}
-        >
+        <TableContainer component={Paper} elevation={2} sx={{ borderRadius: 3 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  <strong>
-                    #
-                  </strong>
-                </TableCell>
-
-                <TableCell>
-                  <strong>
-                    Date
-                  </strong>
-                </TableCell>
-
-                <TableCell>
-                  <strong>
-                    Course
-                  </strong>
-                </TableCell>
-
-                <TableCell>
-                  <strong>
-                    Semester
-                  </strong>
-                </TableCell>
-
-                <TableCell>
-                  <strong>
-                    Total
-                  </strong>
-                </TableCell>
-
-                <TableCell>
-                  <strong>
-                    Present
-                  </strong>
-                </TableCell>
-
-                <TableCell>
-                  <strong>
-                    Absent
-                  </strong>
-                </TableCell>
-
-                <TableCell align="center">
-                  <strong>
-                    Action
-                  </strong>
-                </TableCell>
+                <TableCell><strong>#</strong></TableCell>
+                <TableCell><strong>Date</strong></TableCell>
+                <TableCell><strong>Course</strong></TableCell>
+                <TableCell><strong>Semester</strong></TableCell>
+                <TableCell><strong>Total</strong></TableCell>
+                <TableCell><strong>Present</strong></TableCell>
+                <TableCell><strong>Leave</strong></TableCell>
+                <TableCell><strong>Absent</strong></TableCell>
+                <TableCell><strong>Attendance % (P+L)</strong></TableCell>
+                <TableCell align="center"><strong>Action</strong></TableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
-              {filteredData.length >
-              0 ? (
-                filteredData.map(
-                  (
-                    item,
-                    index
-                  ) => {
-                    const present =
-                      item.attendance?.filter(
-                        (
-                          a
-                        ) =>
-                          a.status ===
-                          "present"
-                      ).length || 0;
+              {filteredData.length > 0 ? (
+                filteredData.map((item, index) => {
+                  const total = item.attendance?.length || 0;
+                  
+                  const present = item.attendance?.filter(
+                    (a) => a.status === "present"
+                  ).length || 0;
 
-                    const absent =
-                      item.attendance?.filter(
-                        (
-                          a
-                        ) =>
-                          a.status ===
-                          "absent"
-                      ).length || 0;
+                  const leave = item.attendance?.filter(
+                    (a) => a.status === "leave"
+                  ).length || 0;
 
-                    return (
-                      <TableRow
-                        key={
-                          item._id
-                        }
-                        hover
-                      >
-                        <TableCell>
-                          {index +
-                            1}
-                        </TableCell>
+                  const absent = item.attendance?.filter(
+                    (a) => a.status === "absent"
+                  ).length || 0;
 
-                        <TableCell>
-                          {new Date(
-                            item.date
-                          ).toLocaleDateString()}
-                        </TableCell>
+                  // Row Attendance calculation: ((Present + Leave) / Total) * 100
+                  const rowPercentage = total > 0 ? Math.round(((present + leave) / total) * 100) : 0;
 
-                        <TableCell>
-                          <Stack
-                            direction="row"
-                            spacing={1}
-                            alignItems="center"
+                  return (
+                    <TableRow key={item._id} hover>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>
+                        {new Date(item.date).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell>
+                        <Stack direction="row" spacing={1} alignItems="center">
+                          <Avatar>
+                            {item.courseId?.courseTitle?.charAt(0)}
+                          </Avatar>
+                          <Typography fontWeight="600">
+                            {item.courseId?.courseTitle}
+                          </Typography>
+                        </Stack>
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          label={item.semesterId?.semester}
+                          color="primary"
+                          size="small"
+                        />
+                      </TableCell>
+                      <TableCell>{total}</TableCell>
+                      <TableCell>
+                        <Chip label={present} color="success" size="small" />
+                      </TableCell>
+                      <TableCell>
+                        <Chip label={leave} color="warning" size="small" />
+                      </TableCell>
+                      <TableCell>
+                        <Chip label={absent} color="error" size="small" />
+                      </TableCell>
+                      <TableCell>
+                        <Typography 
+                          fontWeight="bold" 
+                          color={rowPercentage >= 75 ? "success.main" : "error.main"}
+                        >
+                          {rowPercentage}%
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Tooltip title="View Details">
+                          <Button
+                            variant="contained"
+                            size="small"
+                            startIcon={<VisibilityIcon />}
+                            onClick={() =>
+                              navigate(`/teacher/attendanceview/${item.courseId?._id}`)
+                            }
                           >
-                            <Avatar>
-                              {item
-                                .courseId
-                                ?.courseTitle?.charAt(
-                                  0
-                                )}
-                            </Avatar>
-
-                            <Typography fontWeight="600">
-                              {
-                                item
-                                  .courseId
-                                  ?.courseTitle
-                              }
-                            </Typography>
-                          </Stack>
-                        </TableCell>
-
-                        <TableCell>
-                          <Chip
-                            label={
-                              item
-                                .semesterId
-                                ?.semester
-                            }
-                            color="primary"
-                            size="small"
-                          />
-                        </TableCell>
-
-                        <TableCell>
-                          {
-                            item
-                              .attendance
-                              ?.length
-                          }
-                        </TableCell>
-
-                        <TableCell>
-                          <Chip
-                            label={
-                              present
-                            }
-                            color="success"
-                            size="small"
-                          />
-                        </TableCell>
-
-                        <TableCell>
-                          <Chip
-                            label={
-                              absent
-                            }
-                            color="error"
-                            size="small"
-                          />
-                        </TableCell>
-
-                        <TableCell align="center">
-                          <Tooltip title="View Details">
-                            <Button
-                              variant="contained"
-                              size="small"
-                              startIcon={
-                                <VisibilityIcon />
-                              }
-                              onClick={() =>
-                                navigate(
-                                  `/teacher/attendanceview/${item.courseId?._id}`
-                                )
-                              }
-                            >
-                              View
-                            </Button>
-                          </Tooltip>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                )
+                            View
+                          </Button>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
               ) : (
                 <TableRow>
-                  <TableCell
-                    colSpan={8}
-                    align="center"
-                  >
-                    No attendance
-                    records found
+                  <TableCell colSpan={10} align="center">
+                    No attendance records found
                   </TableCell>
                 </TableRow>
               )}

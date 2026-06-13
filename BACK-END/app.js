@@ -41,33 +41,33 @@ io.on("connection", (socket) => {
 // ================= GLOBAL MIDDLEWARES =================
 app.use(morgan("dev"));
 
-// Simplified CORS setup (replaces the manual header block)
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-  })
-);
-// app.options("*", cors());
+// ================= PRIORITY STATIC FILE HEADERS (FIXED CORS & IDM) =================
+// This must run before the global cors() package to intercept the preflight options cleanly
+app.use("/uploads", (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "unsafe-none");
 
-// Body Parsers (FIX: Removed duplicate bodyParser.json() to prevent stream errors)
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+  // Force IDM and other download plugins to let the browser read it inline
+  if (req.url.toLowerCase().endsWith(".pdf")) {
+    res.setHeader("Content-Disposition", "inline");
+  }
 
-// ================= SERVING STATIC FILES =================
-// Fixed positioning: Static files are served with specific headers for PDF/Office viewing
+  // Answer preflight checks instantly for static files
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+// Serve the assets folder right after injecting headers
 app.use(
   "/uploads",
   express.static(path.join(__dirname, "uploads"), {
     setHeaders: (res, filePath) => {
-      res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-      res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-      res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
-      res.setHeader("Cross-Origin-Embedder-Policy", "unsafe-none");
-
-      // Auto-set Content-Type based on extension
       const ext = path.extname(filePath).toLowerCase();
       const mimeTypes = {
         ".pdf": "application/pdf",
@@ -78,12 +78,27 @@ app.use(
         ".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
         ".ppt": "application/vnd.ms-powerpoint",
       };
+
       if (mimeTypes[ext]) {
         res.setHeader("Content-Type", mimeTypes[ext]);
       }
     },
   })
 );
+
+// ================= STANDARD ROUTE CORS =================
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  })
+);
+
+// Body Parsers
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
 // ================= ROUTES IMPORT =================
 const homeRoute = require("./routes/home.route");
@@ -118,7 +133,6 @@ app.use("/api/notification-settings", notificationSettingRoute);
 app.use("/api/assignment-record-view", assignmentViewRoute);
 
 // ================= START SERVER =================
-// Use server.listen (not app.listen) so Socket.io works
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

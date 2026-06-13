@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+// updateing grade and add status remaingin in backend and frontend in teacher assignment list and assignment grade update page
 import {
   Container,
   Paper,
@@ -74,8 +75,7 @@ const AssignmentSubmittedList = () => {
 
       const teacherAssignmentIds = teacherAssignments.map((a) => String(a._id));
 
-      // 2. Identify submission IDs that have already been graded
-      // Checks both populated items and raw string properties safely
+      // 2. Identify submission IDs that have already been graded via the grade collection
       const gradedSubmissionIds = gradeRes.data.map((grade) => 
         String(grade.submissionId?._id || grade.submissionId || "")
       );
@@ -85,9 +85,14 @@ const AssignmentSubmittedList = () => {
         const belongsToTeacher = teacherAssignmentIds.includes(
           String(submission.assignmentId?._id || submission.assignmentId)
         );
-        const isAlreadyGraded = gradedSubmissionIds.includes(String(submission._id));
 
-        return belongsToTeacher && !isAlreadyGraded;
+        // Check 1: Is it in the graded collection?
+        const hasGradeDocument = gradedSubmissionIds.includes(String(submission._id));
+        
+        // Check 2: Does the schema fields already have marks assigned (marks > 0)?
+        const hasMarksAssigned = submission.marks && submission.marks > 0;
+
+        return belongsToTeacher && !hasGradeDocument && !hasMarksAssigned;
       });
 
       setData(ungradedTeacherSubmissions);
@@ -185,7 +190,7 @@ const AssignmentSubmittedList = () => {
 
         {/* FILTER */}
         <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid item size={{ xs: 12 }}>
+          <Grid size={{ xs: 12 }}>
             <TextField
               select
               fullWidth

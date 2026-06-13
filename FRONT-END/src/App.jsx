@@ -44,6 +44,10 @@ import SemesterUpdate from "./pages/SemesterUpdate/SemesterUpdate";
 import SemesterSingleView from "./pages/SemesterSingleView/SemesterSingleView";
 import AssignmentRecord from "./pages/AssignmentRecord/AssignmentRecord";
 import AssignmentRecordView from "./pages/AssignmentRecordView/AssignmentRecordView";
+import TeacherAssignmentList from "./pages/TeacherAssignmentList/TeacherAssignmentList";
+import ViewAssignment from "./pages/ViewAssignment/ViewAssignment";
+import EditAssignment from "./pages/EditAssignment/EditAssignment";
+import AssignmentGradeUpdate from "./pages/AssignmentGradeUpdate/AssignmentGradeUpdate";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -103,8 +107,10 @@ function App() {
           <Route path="AssignmentGradeBySubmissionId/:submissionId" element={<AssignmentGradeById />} />
           <Route path="assignmentrecord" element={<AssignmentRecord />} />
           <Route path="assignment-record-view/:id" element={<AssignmentRecordView />} />
-       
-          {/* <Route path="/update-grade/:id" element={<UpdateGrade />} /> */}
+          <Route path="teacherassignmentlist" element={<TeacherAssignmentList />} />
+          <Route path="view-assignment/:id" element={<ViewAssignment />} />
+          <Route path="edit-assignment/:_id" element={<EditAssignment />} />
+          <Route path="update-grade/:gradeId" element={<AssignmentGradeUpdate />} />
         </Route>
 
         {/* CATCH-ALL ROUTE */}

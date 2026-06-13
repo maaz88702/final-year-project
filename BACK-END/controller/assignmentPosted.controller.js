@@ -359,9 +359,47 @@ const assignmentPosted_delete =
     }
   };
 
+  // ======================================================
+// UPDATE ASSIGNMENT
+// ======================================================
+const assignmentPosted_update = async (req, res) => {
+  try {
+    const id = req.params._id;
+
+    let totalMarks = 0;
+
+    req.body.assignmentDetails.forEach((question) => {
+      question.rubrics.forEach((rubric) => {
+        totalMarks += Number(rubric.marks || 0);
+      });
+    });
+
+    const updatedAssignment =
+      await AssignmentPosted.findByIdAndUpdate(
+        id,
+        {
+          ...req.body,
+          totalMarks,
+        },
+        { new: true }
+      );
+
+    res.status(200).json({
+      success: true,
+      data: updatedAssignment,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   assignmentPosted_get,
   assignmentPostedById,
   assignmentPosted_add,
+  assignmentPosted_update,
   assignmentPosted_delete,
 };

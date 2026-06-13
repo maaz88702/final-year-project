@@ -28,10 +28,10 @@ const assignmentGrade_get = async (req, res) => {
           "_id studentName rollNo email"
         );
 
-    console.log(
-      "assignmentGradeData",
-      assignmentGradeData
-    );
+    // console.log(
+    //   "assignmentGradeData",
+    //   assignmentGradeData
+    // );
 
     res.status(200).json(
       assignmentGradeData
@@ -50,69 +50,54 @@ const assignmentGrade_get = async (req, res) => {
 // ==========================================
 // GET SINGLE GRADE
 // ==========================================
-const assignmentGrade_Id =
-  async (req, res) => {
-    try {
-      const {
-        assignmentgradeid,
-      } = req.params;
+const assignmentGrade_Id = async (req, res) => {
+  try {
+    const { assignmentgradeid } = req.params;
 
-      const assignmentGradeById =
-        await AssignmentGrade.findById(
-          assignmentgradeid
-        )
-          .populate({
-            path: "assignmentId",
-            populate: [
-              {
-                path: "teacherId",
-                select:
-                  "_id teacherName",
-              },
-              {
-                path: "courseId",
-                select:
-                  "_id courseTitle",
-              },
-            ],
-          })
-          .populate(
-            "studentId",
-            "_id studentName rollNo email"
-          );
-
-      if (
-        !assignmentGradeById
-      ) {
-        return res
-          .status(404)
-          .json({
-            message:
-              "Assignment grade not found",
-          });
-      }
-
-      res.status(200).json(
-        assignmentGradeById
+    // Fetch the grade record and deeply populate its relational mappings
+    const assignmentGradeById = await AssignmentGrade.findById(assignmentgradeid)
+      .populate({
+        path: "assignmentId",
+        populate: [
+          {
+            path: "teacherId",
+            select: "_id teacherName",
+          },
+          {
+            path: "courseId",
+            select: "_id courseTitle",
+          },
+        ],
+      })
+      .populate(
+        "studentId",
+        "_id studentName rollNo email"
       );
-    } catch (error) {
-      console.error(error);
 
-      res.status(500).json({
-        message:
-          "Failed to fetch assignment grade",
-        error: error.message,
+    // ================= VALIDATION =================
+    if (!assignmentGradeById) {
+      return res.status(404).json({
+        message: "Assignment grade not found",
       });
     }
-  };
 
+    // Return the graded data object cleanly to the client interface
+    res.status(200).json(assignmentGradeById);
+  } catch (error) {
+    console.error("FETCH GRADE ERROR:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch assignment grade",
+      error: error.message,
+    });
+  }
+};
 // ==========================================
 // ADD GRADE
 // ==========================================
-const assignmentGrade_add = async (
-  req,
-  res
-) => {
+// const mongoose = require("mongoose");
+
+const assignmentGrade_add = async (req, res) => {
   try {
     const {
       assignmentId,
@@ -120,98 +105,74 @@ const assignmentGrade_add = async (
       obtainmarks,
       details,
     } = req.body;
-
-    console.log(
-      "GRADE BODY:",
-      req.body
-    );
-
+console.log("GRADE ADD BODY:", req.body);
     // ================= VALIDATION =================
-    if (
-      !assignmentId ||
-      !studentId ||
-      obtainmarks === undefined
-    ) {
+    if (!assignmentId || !studentId || obtainmarks === undefined) {
       return res.status(400).json({
-        message:
-          "assignmentId, studentId and obtainmarks are required",
+        message: "assignmentId, studentId and obtainmarks are required",
       });
     }
 
-    if (
-      !Array.isArray(details) ||
-      details.length === 0
-    ) {
+    if (!Array.isArray(details) || details.length === 0) {
       return res.status(400).json({
-        message:
-          "details must be a non-empty array",
+        message: "details must be a non-empty array",
       });
     }
 
     // ================= DUPLICATE CHECK =================
-    const existing =
-      await AssignmentGrade.findOne({
-        assignmentId,
-        studentId,
-      });
-
+    const existing = await AssignmentGrade.findOne({ assignmentId, studentId });
     if (existing) {
       return res.status(400).json({
-        message:
-          "This student has already been graded for this assignment",
+        message: "This student has already been graded for this assignment",
       });
     }
 
     // ================= FORMAT DETAILS =================
-    const formattedDetails =
-      details.map((d) => ({
-        question: d.question,
-        rubric: d.rubric,
-        level: d.level,
-        marks: Number(d.marks),
-      }));
+    const formattedDetails = details.map((d) => ({
+      question: d.question,
+      rubric: d.rubric,
+      level: d.level,
+      marks: Number(d.marks),
+    }));
 
-    // ================= SAVE =================
-    const newGrade =
-      new AssignmentGrade({
-        assignmentId,
-        studentId,
-        obtainmarks,
-        details: formattedDetails,
-      });
+    // ================= SAVE GRADE =================
+    const newGrade = new AssignmentGrade({
+      assignmentId,
+      studentId,
+      obtainmarks,
+      details: formattedDetails,
+    });
 
-    const savedData =
-      await newGrade.save();
+    const savedData = await newGrade.save();
+
+    // ================= DELETE FROM SUBMITTED MODEL =================
+    // Once graded, the submission record is no longer needed in the pending pool
+    await mongoose.model("AssignmentSubmitted").findOneAndDelete({ 
+      assignmentId, 
+      studentId 
+    });
 
     // ================= NOTIFICATION =================
     await Notification.create({
       userId: studentId,
       userModel: "Student",
       title: "Assignment Graded",
-      message:
-        "Your assignment has been graded",
+      message: "Your assignment has been graded",
       type: "grade",
     });
 
     res.status(201).json({
-      message:
-        "Assignment grade added successfully",
+      message: "Assignment grade added successfully and submission updated",
       data: savedData,
     });
   } catch (error) {
-    console.error(
-      "GRADE ERROR:",
-      error
-    );
-
+    console.error("GRADE ERROR:", error);
     res.status(500).json({
-      message:
-        "Error while adding assignment grade",
+      message: "Error while adding assignment grade",
       error: error.message,
     });
   }
 };
-
 // ==========================================
 // DELETE GRADE
 // ==========================================
@@ -259,7 +220,7 @@ const assignmentGrade_update =
     try {
       const { _id } =
         req.params;
-
+console.log("GRADE UPDATE BODY:", req.body);
       const {
         assignmentId,
         studentId,
@@ -286,44 +247,27 @@ const assignmentGrade_update =
       }
 
       // ================= FORMAT DETAILS =================
-      const formattedDetails =
-        details.map((d) => ({
-          question:
-            d.question,
+      // ================= FIXED BACKEND CONTROLLER FORMAT DETAILS =================
+const formattedDetails = details.map((d) => ({
+  question: d.question,
+  
+  // Maps values to match the sub-schema expectations perfectly!
+  rubric: d.rubricCondition || d.rubric || "", 
+  level: d.selectedLevel || d.level || "",
+  marks: Number(d.obtainedMarks !== undefined ? d.obtainedMarks : (d.marks || 0)),
 
-          rubricCondition:
-            d.rubricCondition,
-
-          fullMarks:
-            Number(
-              d.fullMarks
-            ) || 0,
-
-          obtainedMarks:
-            Number(
-              d.obtainedMarks
-            ) || 0,
-
-          selectedLevel:
-            d.selectedLevel ||
-            "",
-
-          subRubrics:
-            Array.isArray(
-              d.subRubrics
-            )
-              ? d.subRubrics.map(
-                  (sr) => ({
-                    level:
-                      sr.level,
-                    marks:
-                      Number(
-                        sr.marks
-                      ) || 0,
-                  })
-                )
-              : [],
-        }));
+  // Included below just in case your frontend tracks extra fields locally
+  fullMarks: Number(d.fullMarks) || 0,
+  selectedLevel: d.selectedLevel || d.level || "",
+  obtainedMarks: Number(d.obtainedMarks !== undefined ? d.obtainedMarks : (d.marks || 0)),
+  rubricCondition: d.rubricCondition || d.rubric || "",
+  subRubrics: Array.isArray(d.subRubrics)
+    ? d.subRubrics.map((sr) => ({
+        level: sr.level,
+        marks: Number(sr.marks) || 0,
+      }))
+    : [],
+}));
 
       // ================= UPDATE =================
       const updatedData =
