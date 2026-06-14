@@ -9,8 +9,10 @@ import {
   Stack,
   Chip,
   Button,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
-import { Edit } from "@mui/icons-material";
+import { Edit, Search, Assignment, Person } from "@mui/icons-material";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +23,10 @@ const StudentGrades = () => {
 
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // 🌟 NEW STATE FOR FILTERS
+  const [studentFilter, setStudentFilter] = useState("");
+  const [assignmentFilter, setAssignmentFilter] = useState("");
 
   // ================= TOKEN =================
   const token = localStorage.getItem("jwt");
@@ -67,7 +73,6 @@ const StudentGrades = () => {
   }, [token, teacherId]);
 
   // ================= HELPER: GROUP DETAILS BY QUESTION =================
-  // This removes duplicate question titles and nests their rubrics cleanly under them!
   const groupDetailsByQuestion = (details) => {
     if (!details || !Array.isArray(details)) return [];
     
@@ -90,6 +95,22 @@ const StudentGrades = () => {
     return Object.values(groups);
   };
 
+  // ================= 🌟 DYNAMIC FILTER LOGIC =================
+  const filteredGrades = grades.filter((grade) => {
+    const studentName = grade.studentId?.studentName || "";
+    const assignmentTitle = grade.assignmentId?.title || "";
+
+    const matchesStudent = studentName
+      .toLowerCase()
+      .includes(studentFilter.toLowerCase());
+
+    const matchesAssignment = assignmentTitle
+      .toLowerCase()
+      .includes(assignmentFilter.toLowerCase());
+
+    return matchesStudent && matchesAssignment;
+  });
+
   // ================= LOADING =================
   if (loading) {
     return (
@@ -106,24 +127,79 @@ const StudentGrades = () => {
         Students Grades
       </Typography>
 
-      {grades.length === 0 ? (
-        <Paper sx={{ p: 3 }}>
-          <Typography>No grades found</Typography>
+      {/* ================= 🌟 FILTER CONTROL DASHBOARD ================= */}
+      <Paper 
+        elevation={0} 
+        sx={{ 
+          p: 2, 
+          mb: 4, 
+          borderRadius: 3, 
+          border: "1px solid", 
+          borderColor: "divider",
+          bgcolor: "background.neutral" 
+        }}
+      >
+        <Typography variant="subtitle2" fontWeight="700" color="text.secondary" sx={{ mb: 1.5 }}>
+          Filter Evaluation Records
+        </Typography>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <TextField
+            fullWidth
+            size="small"
+            label="Search Student"
+            placeholder="Type student name..."
+            value={studentFilter}
+            onChange={(e) => setStudentFilter(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Person fontSize="small" color="action" />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            fullWidth
+            size="small"
+            label="Search Assignment"
+            placeholder="Type assignment title..."
+            value={assignmentFilter}
+            onChange={(e) => setAssignmentFilter(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Assignment fontSize="small" color="action" />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Stack>
+      </Paper>
+
+      {/* ================= LIST ITEMS ================= */}
+      {filteredGrades.length === 0 ? (
+        <Paper sx={{ p: 4, textAlign: "center", borderRadius: 3, border: "1px dashed", borderColor: "divider" }}>
+          <Typography color="text.secondary">
+            No grading profiles match your search filters.
+          </Typography>
         </Paper>
       ) : (
-        grades.map((grade) => {
+        filteredGrades.map((grade) => {
           const maxPossibleAssignmentMarks = grade.assignmentId?.totalMarks || 0;
-          // ✅ Process the flat details into grouped questions with sub-rubrics
           const groupedQuestions = groupDetailsByQuestion(grade.details);
 
           return (
             <Paper
               key={grade._id}
+              elevation={0}
               sx={{
                 p: 3,
                 mb: 3,
                 borderRadius: 3,
-                boxShadow: 2,
+                border: "1px solid",
+                borderColor: "divider",
+                transition: "box-shadow 0.2s",
+                "&:hover": { boxShadow: 3 }
               }}
             >
               {/* ================= HEADER ================= */}
@@ -162,7 +238,7 @@ const StudentGrades = () => {
                 color="text.secondary"
                 sx={{ mt: 0.5 }}
               >
-                Student: {grade.studentId?.studentName || "Unknown"} ({grade.studentId?.rollNo || "N/A"})
+                Student: <strong>{grade.studentId?.studentName || "Unknown"}</strong> ({grade.studentId?.rollNo || "N/A"})
               </Typography>
 
               {/* ================= COURSE ================= */}
@@ -185,16 +261,15 @@ const StudentGrades = () => {
                       mb: 2,
                       p: 1.5,
                       borderRadius: 2,
-                      bgcolor: "#fefefe",
-                      border: "1px solid #f0f0f0"
+                      bgcolor: "action.hover",
+                      border: "1px solid",
+                      borderColor: "divider"
                     }}
                   >
-                    {/* Unique Question Title */}
                     <Typography variant="body2" fontWeight="bold" color="primary.dark">
                       Q{qIndex + 1}: {qGroup.questionText}
                     </Typography>
 
-                    {/* Nested Rubrics applied to this specific question */}
                     <Box sx={{ pl: 2, mt: 0.5 }}>
                       {qGroup.rubricsList.map((rItem, rIndex) => (
                         <Box
@@ -204,7 +279,8 @@ const StudentGrades = () => {
                             justifyContent: "space-between",
                             alignItems: "center",
                             py: 0.5,
-                            borderBottom: rIndex !== qGroup.rubricsList.length - 1 ? "1px dotted #e0e0e0" : "none"
+                            borderBottom: rIndex !== qGroup.rubricsList.length - 1 ? "1px dotted" : "none",
+                            borderColor: "divider"
                           }}
                         >
                           <Box>
