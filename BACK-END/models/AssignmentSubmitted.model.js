@@ -13,22 +13,35 @@ const assignmentSubmittedSchema = new mongoose.Schema(
       required: true
     },
     file: {
-      type: String,
+      type: String, // Path or URL to the file
       required: true,
       trim: true
-    },
-   status: {
-      type: String,
-      enum: ["ungraded", "graded"],
-      default: "ungraded"
     },
     marks: {
       type: Number,
       default: 0
-      // marks will be initialy 0 and updated later by teacher
+    },
+    status: {
+      type: String,
+      enum: ["ungraded", "graded"],
+      default: "ungraded"
+    },
+    // 🌟 UPDATED DETECTOR FIELDS
+    detectionStatus: {
+      type: String,
+      enum: ["pending", "completed", "failed"],
+      default: "pending"
+    },
+    aiPercentage: {
+      type: Number,
+      default: 0 // e.g., 45 means 45% AI written
+    },
+    plagiarismPercentage: {
+      type: Number,
+      default: 0 // e.g., 12 means 12% matches other sources
     }
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("AssignmentSubmitted", assignmentSubmittedSchema,"assignmentSubmitted");
+module.exports = mongoose.model("AssignmentSubmitted", assignmentSubmittedSchema, "assignmentSubmitted");

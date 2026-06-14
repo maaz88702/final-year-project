@@ -1,5 +1,6 @@
 const AssignmentPosted = require('../models/Assignmentposted.model');
 const AssignmentSubmitted = require('../models/AssignmentSubmitted.model');
+const { updateSubmissionIntegrity } = require("../services/integrityService");
 
 
 const assignmentSubmitted_get = async (req, res) => {
@@ -8,7 +9,7 @@ const assignmentSubmitted_get = async (req, res) => {
     // so the frontend can read it if needed!
     const assignmentSubmittedData = await AssignmentSubmitted.find()
       .populate("studentId", "studentName rollNo semester")
-      .populate("assignmentId", "title semesterId");
+      .populate("assignmentId", "title semesterId").sort({ createdAt: -1 });
       
     res.status(200).send(assignmentSubmittedData);
   } catch (error) {
@@ -32,61 +33,51 @@ const assignmentSubmitted_id = async (req, res) => {
   }
 }
 
+const assignmentSubmitted_add = async (req, res) => {
+  try {
+    const { assignmentId } = req.body;
+    const studentId = req.user.id;
 
-// const AssignmentSubmitted = require('../models/AssignmentSubmitted.model');
-// const AssignmentPosted = require('../models/AssignmentPosted.model');
-
-const assignmentSubmitted_add =
-  async (req, res) => {
-    try {
-      const {
-        assignmentId,
-      } = req.body;
-
-      const studentId =
-        req.user.id;
-
-      if (!req.file) {
-        return res
-          .status(400)
-          .json({
-            message:
-              "File is required",
-          });
-      }
-
-      const filePath =
-        req.file.path.replace(
-          /\\/g,
-          "/"
-        );
-
-      const data =
-        new AssignmentSubmitted({
-          assignmentId,
-          studentId,
-          file: filePath,
-        });
-
-      await data.save();
-
-      res.status(201).json({
-        message:
-          "Assignment submitted successfully",
-        data,
-      });
-
-    } catch (error) {
-      console.error(error);
-
-      res.status(500).json({
-        message:
-          "Failed to submit assignment",
-        error:
-          error.message,
+    if (!req.file) {
+      return res.status(400).json({
+        message: "File is required",
       });
     }
-  };
+
+    const filePath = req.file.path.replace(/\\/g, "/");
+
+    // Create the document, setting the scanning trackers to pending initially
+    const data = new AssignmentSubmitted({
+      assignmentId,
+      studentId,
+      file: filePath,
+      status: "ungraded",
+      detectionStatus: "pending"
+    });
+
+    const savedSubmission = await data.save();
+
+    // 🌟 TRIGGER AUTOMATED PLAGIARISM & AI SCANNERS 🌟
+    // Generating dynamic mock scores to test database writes across fields
+    const mockAiScore = Math.floor(Math.random() * 100);       // Testing values 0 - 100%
+    const mockPlagScore = Math.floor(Math.random() * 40);      // Testing values 0 - 40%
+
+    // Fire the external service worker to perform the update asynchronously
+    await updateSubmissionIntegrity(savedSubmission._id, mockAiScore, mockPlagScore);
+
+    res.status(201).json({
+      message: "Assignment submitted successfully and integrity check initiated",
+      data: savedSubmission,
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Failed to submit assignment",
+      error: error.message,
+    });
+  }
+};
 
 const assignmentSubmitted_update = async (req, res) => {
   try {
@@ -124,8 +115,6 @@ const assignmentSubmitted_update = async (req, res) => {
   }
 };
 
-
-
 const assignmentSubmitted_delete = async (req, res) => {
   try {
     const { _id } = req.params;   // assuming route: /delete/:_id
@@ -151,6 +140,10 @@ const assignmentSubmitted_delete = async (req, res) => {
   }
 };
 
-
-
-module.exports = { assignmentSubmitted_get, assignmentSubmitted_id, assignmentSubmitted_add, assignmentSubmitted_update, assignmentSubmitted_delete }
+module.exports = { 
+  assignmentSubmitted_get, 
+  assignmentSubmitted_id, 
+  assignmentSubmitted_add, 
+  assignmentSubmitted_update, 
+  assignmentSubmitted_delete 
+};

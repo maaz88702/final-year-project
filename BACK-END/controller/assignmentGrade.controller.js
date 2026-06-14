@@ -27,7 +27,7 @@ const assignmentGrade_get = async (req, res) => {
         .populate(
           "studentId",
           "_id studentName rollNo email"
-        );
+        ).sort({ createdAt: -1 });
 
     // console.log(
     //   "assignmentGradeData",

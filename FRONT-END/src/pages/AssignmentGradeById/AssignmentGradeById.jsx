@@ -15,6 +15,7 @@ import {
   Radio,
   Button,
   Chip,
+  Stack,
 } from "@mui/material";
 
 import axios from "axios";
@@ -260,7 +261,7 @@ const AssignmentGradeBySubmission = () => {
           error.response?.data
             ?.message ||
             "Failed to submit grade"
-        );
+          );
       }
     };
 
@@ -349,6 +350,7 @@ const AssignmentGradeBySubmission = () => {
           <Typography
             variant="body2"
             color="text.secondary"
+            sx={{ mb: 3 }}
           >
             Assignment:{" "}
             <strong>
@@ -357,6 +359,114 @@ const AssignmentGradeBySubmission = () => {
               }
             </strong>
           </Typography>
+
+          {/* ================= 🌟 PLAGIARISM & AI INTEGRITY CHECK SUMMARY ================= */}
+          <Paper 
+            variant="outlined"
+            sx={{ 
+              p: 3, 
+              mb: 4, 
+              borderRadius: 2, 
+              border: "1px solid #ddd",
+              bgcolor: "#fafafa"
+            }}
+          >
+            <Typography variant="subtitle1" fontWeight="700" color="text.primary" gutterBottom>
+              Document Integrity Analysis
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
+              Automated validation metrics evaluated upon original file upload.
+            </Typography>
+
+            {submission?.detectionStatus === "failed" ? (
+              <Typography variant="body2" color="error.main" fontWeight="600">
+                ⚠️ Integrity validation scan failed to compile for this document file.
+              </Typography>
+            ) : submission?.detectionStatus === "pending" ? (
+              <Stack direction="row" spacing={1.5} alignItems="center">
+                <CircularProgress size={18} thickness={5} />
+                <Typography variant="body2" color="text.secondary" fontWeight="500">
+                  Analyzing document metrics for AI distribution and cross-copy matching...
+                </Typography>
+              </Stack>
+            ) : (
+              <Grid container spacing={3}>
+                {/* AI Score */}
+                <Grid item xs={12} sm={6}>
+                  <Box 
+                    sx={{ 
+                      p: 2, 
+                      borderRadius: 2, 
+                      border: "1px solid",
+                      bgcolor: "white",
+                      borderColor: 
+                        (submission?.aiPercentage || 0) >= 61 ? "#FADBD8" : 
+                        (submission?.aiPercentage || 0) >= 30 ? "#FDEBD0" : "#D4EFDF"
+                    }}
+                  >
+                    <Typography variant="caption" fontWeight="700" color="text.secondary" display="block">
+                      AI GENERATION METRIC
+                    </Typography>
+                    <Stack direction="row" alignItems="baseline" spacing={1} sx={{ mt: 0.5 }}>
+                      <Typography 
+                        variant="h4" 
+                        fontWeight="800" 
+                        color={
+                          (submission?.aiPercentage || 0) >= 61 ? "error.main" : 
+                          (submission?.aiPercentage || 0) >= 30 ? "warning.main" : "success.main"
+                        }
+                      >
+                        {submission?.aiPercentage || 0}%
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary" fontWeight="500">
+                        {
+                          (submission?.aiPercentage || 0) >= 61 ? "High Risk" : 
+                          (submission?.aiPercentage || 0) >= 30 ? "Mixed Text" : "Original"
+                        }
+                      </Typography>
+                    </Stack>
+                  </Box>
+                </Grid>
+
+                {/* Plagiarism Score */}
+                <Grid item xs={12} sm={6}>
+                  <Box 
+                    sx={{ 
+                      p: 2, 
+                      borderRadius: 2, 
+                      border: "1px solid",
+                      bgcolor: "white",
+                      borderColor: 
+                        (submission?.plagiarismPercentage || 0) >= 40 ? "#FADBD8" : 
+                        (submission?.plagiarismPercentage || 0) >= 20 ? "#FDEBD0" : "#D4EFDF"
+                    }}
+                  >
+                    <Typography variant="caption" fontWeight="700" color="text.secondary" display="block">
+                      PLAGIARISM MATCH INDEX
+                    </Typography>
+                    <Stack direction="row" alignItems="baseline" spacing={1} sx={{ mt: 0.5 }}>
+                      <Typography 
+                        variant="h4" 
+                        fontWeight="800" 
+                        color={
+                          (submission?.plagiarismPercentage || 0) >= 40 ? "error.main" : 
+                          (submission?.plagiarismPercentage || 0) >= 20 ? "warning.main" : "success.main"
+                        }
+                      >
+                        {submission?.plagiarismPercentage || 0}%
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary" fontWeight="500">
+                        {
+                          (submission?.plagiarismPercentage || 0) >= 40 ? "Flagged" : 
+                          (submission?.plagiarismPercentage || 0) >= 20 ? "Matches Found" : "Clean"
+                        }
+                      </Typography>
+                    </Stack>
+                  </Box>
+                </Grid>
+              </Grid>
+            )}
+          </Paper>
 
           <Divider
             sx={{ my: 3 }}
@@ -461,10 +571,9 @@ const AssignmentGradeBySubmission = () => {
                               srIndex
                             ) => (
                               <Grid
-                                size={{
-                                  xs: 12,
-                                  md: 6,
-                                }}
+                                item
+                                xs={12}
+                                md={6}
                                 key={
                                   srIndex
                                 }

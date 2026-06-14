@@ -15,7 +15,6 @@ import {
   CircularProgress,
   Stack,
 } from "@mui/material";
-// not showing submittedAssignment
 
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -130,8 +129,7 @@ const AssignmentGradeAdd = () => {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
-        console.log("students", studentRes.data);
-console.log("submissions", submissionRes.data);
+
         const teacherAssignments = assignRes.data.filter(
           (a) => String(a.teacherId?._id || a.teacherId) === String(teacherId)
         );
@@ -152,7 +150,7 @@ console.log("submissions", submissionRes.data);
     }
   }, [token, teacherId]);
 
-  // ================= FILTER STUDENTS (FIXED ID PARSING) =================
+  // ================= FILTER STUDENTS =================
   useEffect(() => {
     if (!selectedAssignment) {
       setFilteredStudents([]);
@@ -168,34 +166,26 @@ console.log("submissions", submissionRes.data);
       return;
     }
 
-    // Match Semester Safely
     const semesterStudents = students.filter((student) => {
       const studentSemesterId = student.semester?._id || student.semester;
       const assignmentSemesterId = assignment.semesterId?._id || assignment.semesterId;
       return String(studentSemesterId) === String(assignmentSemesterId);
     });
 
-    // Safely parse nested submission IDs
     const submittedStudentIds = submissions
       .filter((submission) => {
         const subAssignmentId = submission.assignmentId?._id || submission.assignmentId;
         return String(subAssignmentId) === String(selectedAssignment);
       })
-      .map((submission) => {
-        return String(submission.studentId?._id || submission.studentId);
-      });
+      .map((submission) => String(submission.studentId?._id || submission.studentId));
 
-    // Safely parse nested grade IDs
     const gradedStudentIds = grades
       .filter((grade) => {
         const gradeAssignmentId = grade.assignmentId?._id || grade.assignmentId;
         return String(gradeAssignmentId) === String(selectedAssignment);
       })
-      .map((grade) => {
-        return String(grade.studentId?._id || grade.studentId);
-      });
+      .map((grade) => String(grade.studentId?._id || grade.studentId));
 
-    // Student must be in the submissions pool AND not already graded
     const eligibleStudents = semesterStudents.filter(
       (student) =>
         submittedStudentIds.includes(String(student._id)) &&
@@ -203,8 +193,6 @@ console.log("submissions", submissionRes.data);
     );
 
     setFilteredStudents(eligibleStudents);
-    
-    // Reset tracking states when assignment changes
     setSelectedStudent("");
     setSubmittedAssignment(null);
     setPdfPages(0); 
@@ -236,7 +224,7 @@ console.log("submissions", submissionRes.data);
     setTotalMarks(0);
   }, [selectedAssignment, assignments]);
 
-  // ================= FETCH SUBMITTED FILE (FIXED ID PARSING) =================
+  // ================= FETCH SUBMITTED FILE =================
   useEffect(() => {
     const fetchSubmission = async () => {
       if (!selectedAssignment || !selectedStudent) {
@@ -409,6 +397,116 @@ console.log("submissions", submissionRes.data);
 
           {selectedStudent && details.length > 0 ? (
             <form onSubmit={handleSubmit}>
+              
+              {/* ================= 🌟 PLAGIARISM & AI INTEGRITY CHECK SUMMARY ================= */}
+              <Paper 
+                variant="outlined"
+                sx={{ 
+                  p: 3, 
+                  mb: 4, 
+                  borderRadius: 2, 
+                  border: "1px solid #ddd",
+                  bgcolor: "#fafafa"
+                }}
+              >
+                <Typography variant="subtitle1" fontWeight="700" color="text.primary" gutterBottom>
+                  Document Integrity Analysis
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
+                  Automated validation metrics evaluated upon original file upload.
+                </Typography>
+
+                {submittedAssignment?.detectionStatus === "failed" ? (
+                  <Typography variant="body2" color="error.main" fontWeight="600">
+                    ⚠️ Integrity validation scan failed to compile for this document file.
+                  </Typography>
+                ) : submittedAssignment?.detectionStatus === "pending" ? (
+                  <Stack direction="row" spacing={1.5} alignItems="center">
+                    <CircularProgress size={18} thickness={5} />
+                    <Typography variant="body2" color="text.secondary" fontWeight="500">
+                      Analyzing document metrics for AI distribution and cross-copy matching...
+                    </Typography>
+                  </Stack>
+                ) : (
+                  <Grid container spacing={3}>
+                    {/* AI Distribution Metrics */}
+                    <Grid size={{ xs: 12, sm: 6 }}>
+                      <Box 
+                        sx={{ 
+                          p: 2, 
+                          borderRadius: 2, 
+                          border: "1px solid",
+                          bgcolor: "white",
+                          borderColor: 
+                            (submittedAssignment?.aiPercentage || 0) >= 61 ? "#FADBD8" : 
+                            (submittedAssignment?.aiPercentage || 0) >= 30 ? "#FDEBD0" : "#D4EFDF"
+                        }}
+                      >
+                        <Typography variant="caption" fontWeight="700" color="text.secondary" display="block">
+                          AI GENERATION METRIC
+                        </Typography>
+                        <Stack direction="row" alignItems="baseline" spacing={1} sx={{ mt: 0.5 }}>
+                          <Typography 
+                            variant="h4" 
+                            fontWeight="800" 
+                            color={
+                              (submittedAssignment?.aiPercentage || 0) >= 61 ? "error.main" : 
+                              (submittedAssignment?.aiPercentage || 0) >= 30 ? "warning.main" : "success.main"
+                            }
+                          >
+                            {submittedAssignment?.aiPercentage || 0}%
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary" fontWeight="500">
+                            {
+                              (submittedAssignment?.aiPercentage || 0) >= 61 ? "High Risk" : 
+                              (submittedAssignment?.aiPercentage || 0) >= 30 ? "Mixed Text" : "Original"
+                            }
+                          </Typography>
+                        </Stack>
+                      </Box>
+                    </Grid>
+
+                    {/* Plagiarism Distribution Metrics */}
+                    <Grid size={{ xs: 12, sm: 6 }}>
+                      <Box 
+                        sx={{ 
+                          p: 2, 
+                          borderRadius: 2, 
+                          border: "1px solid",
+                          bgcolor: "white",
+                          borderColor: 
+                            (submittedAssignment?.plagiarismPercentage || 0) >= 40 ? "#FADBD8" : 
+                            (submittedAssignment?.plagiarismPercentage || 0) >= 20 ? "#FDEBD0" : "#D4EFDF"
+                        }}
+                      >
+                        <Typography variant="caption" fontWeight="700" color="text.secondary" display="block">
+                          PLAGIARISM MATCH INDEX
+                        </Typography>
+                        <Stack direction="row" alignItems="baseline" spacing={1} sx={{ mt: 0.5 }}>
+                          <Typography 
+                            variant="h4" 
+                            fontWeight="800" 
+                            color={
+                              (submittedAssignment?.plagiarismPercentage || 0) >= 40 ? "error.main" : 
+                              (submittedAssignment?.plagiarismPercentage || 0) >= 20 ? "warning.main" : "success.main"
+                            }
+                          >
+                            {submittedAssignment?.plagiarismPercentage || 0}%
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary" fontWeight="500">
+                            {
+                              (submittedAssignment?.plagiarismPercentage || 0) >= 40 ? "Flagged" : 
+                              (submittedAssignment?.plagiarismPercentage || 0) >= 20 ? "Matches Found" : "Clean"
+                            }
+                          </Typography>
+                        </Stack>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                )}
+              </Paper>
+
+              {/* ================= RUBRIC EVALUATION LIST ================= */}
               {details.map((q, qIndex) => (
                 <Paper key={qIndex} variant="outlined" sx={{ p: 3, mb: 3, borderRadius: 2 }}>
                   <Typography variant="subtitle1" fontWeight="bold" color="secondary" component="div">
@@ -476,7 +574,6 @@ console.log("submissions", submissionRes.data);
                   zIndex: 10,
                 }}
               >
-                {/* FIX: Set component to 'div' to eliminate nested block hydration conflicts */}
                 <Typography variant="h6" component="div">
                   Total Marks:
                   <Chip label={totalMarks} color="primary" sx={{ ml: 1, fontWeight: "bold" }} />
