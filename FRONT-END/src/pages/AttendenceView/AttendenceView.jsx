@@ -26,6 +26,7 @@ import {
 } from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import DownloadIcon from "@mui/icons-material/Download"; // 🌟 Added for CSV download action
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -129,6 +130,62 @@ const AttendanceView = () => {
     if (totalStudents === 0) return 0;
     return Math.round(((totalPresent + totalLeave) / totalStudents) * 100);
   }, [totalStudents, totalPresent, totalLeave]);
+
+  // ================= 🌟 CSV DOWNLOAD LOGIC 🌟 =================
+  const handleDownloadCSV = (record) => {
+    try {
+      const courseTitle = record.courseId?.courseTitle || "Course";
+      const semesterName = record.semesterId?.semester || "Semester";
+      const recordDate = new Date(record.date).toLocaleDateString().replace(/\//g, "-");
+
+      // 1. Setup the structural CSV headers and meta rows
+      let csvContent = "data:text/csv;charset=utf-8,";
+      
+      // Metadata Header Rows
+      csvContent += `Course Name,${courseTitle.replace(/,/g, " ")}\n`;
+      csvContent += `Semester,${semesterName.replace(/,/g, " ")}\n`;
+      csvContent += `Session Date,${new Date(record.date).toLocaleDateString()}\n\n`;
+      
+      // Main Data Table Headers
+      csvContent += "Serial No,Student Name,Roll Number,Attendance Status\n";
+
+      // 2. Loop through student arrays and parse individual rows
+      if (record.attendance && record.attendance.length > 0) {
+        record.attendance.forEach((studentRow, idx) => {
+          const sName = studentRow.studentId?.studentName || "N/A";
+          const sRoll = studentRow.studentId?.rollNo || "N/A";
+          const sStatus = studentRow.status || "N/A";
+
+          // Format strings carefully to avoid column break corruption from stray commas
+          const cleanedName = sName.replace(/,/g, " ");
+          const cleanedRoll = sRoll.replace(/,/g, " ");
+          const cleanedStatus = sStatus.toUpperCase();
+
+          csvContent += `${idx + 1},${cleanedName},${cleanedRoll},${cleanedStatus}\n`;
+        });
+      } else {
+        csvContent += ",No attendance data matched for this course sheet\n";
+      }
+
+      // 3. Complete structural browser initialization download link assignment
+      const encodedUri = encodeURI(csvContent);
+      const tempLink = document.createElement("a");
+      tempLink.setAttribute("href", encodedUri);
+      
+      // Create clean file naming standard structure
+      const filename = `${courseTitle.replace(/\s+/g, "_")}_${semesterName.replace(/\s+/g, "_")}_Attendance_${recordDate}.csv`;
+      tempLink.setAttribute("download", filename);
+      
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      
+      toast.success("CSV Downloaded successfully");
+    } catch (err) {
+      console.error("CSV compilation crash context: ", err);
+      toast.error("Failed to generate CSV download matrix sheet context raw file format");
+    }
+  };
 
   // ================= LOADING =================
   if (loading) {
@@ -278,7 +335,7 @@ const AttendanceView = () => {
                 <TableCell><strong>Leave</strong></TableCell>
                 <TableCell><strong>Absent</strong></TableCell>
                 <TableCell><strong>Attendance % (P+L)</strong></TableCell>
-                <TableCell align="center"><strong>Action</strong></TableCell>
+                <TableCell align="center"><strong>Actions</strong></TableCell>
               </TableRow>
             </TableHead>
 
@@ -344,18 +401,33 @@ const AttendanceView = () => {
                         </Typography>
                       </TableCell>
                       <TableCell align="center">
-                        <Tooltip title="View Details">
-                          <Button
-                            variant="contained"
-                            size="small"
-                            startIcon={<VisibilityIcon />}
-                            onClick={() =>
-                              navigate(`/teacher/attendanceview/${item.courseId?._id}`)
-                            }
-                          >
-                            View
-                          </Button>
-                        </Tooltip>
+                        {/* 🌟 ACTION BUTTONS GROUP */}
+                        <Stack direction="row" spacing={1} justifyContent="center">
+                          <Tooltip title="View Details">
+                            <Button
+                              variant="contained"
+                              size="small"
+                              startIcon={<VisibilityIcon />}
+                              onClick={() =>
+                                navigate(`/teacher/attendanceview/${item._id}`)
+                              }
+                            >
+                              View
+                            </Button>
+                          </Tooltip>
+
+                          <Tooltip title="Download Attendance Record Report CSV">
+                            <Button
+                              variant="outlined"
+                              color="secondary"
+                              size="small"
+                              startIcon={<DownloadIcon />}
+                              onClick={() => handleDownloadCSV(item)}
+                            >
+                              CSV
+                            </Button>
+                          </Tooltip>
+                        </Stack>
                       </TableCell>
                     </TableRow>
                   );

@@ -48,6 +48,7 @@ import TeacherAssignmentList from "./pages/TeacherAssignmentList/TeacherAssignme
 import ViewAssignment from "./pages/ViewAssignment/ViewAssignment";
 import EditAssignment from "./pages/EditAssignment/EditAssignment";
 import AssignmentGradeUpdate from "./pages/AssignmentGradeUpdate/AssignmentGradeUpdate";
+import AttendanceDetailsView from "./pages/AttendanceDetailsView/AttendanceDetailsView";
 const NotFound = () => <h1>404 - Page Not Found</h1>;
 
 function App() {
@@ -103,7 +104,8 @@ function App() {
           <Route path="dashboard" element={<TeacherDashboard />} />
           <Route path="attendance" element={<AttendanceMark />} />
           <Route path="attendanceview" element={<AttendanceView />} />
-          <Route path="attendanceview/:courseId" element={<AttendanceViewByCourse />} />
+          {/* <Route path="attendanceview/:courseId" element={<AttendanceViewByCourse />} /> */}
+          <Route path="attendanceview/:id" element={<AttendanceDetailsView />} />
           <Route path="AssignmentGradeBySubmissionId/:submissionId" element={<AssignmentGradeById />} />
           <Route path="assignmentrecord" element={<AssignmentRecord />} />
           <Route path="assignment-record-view/:id" element={<AssignmentRecordView />} />

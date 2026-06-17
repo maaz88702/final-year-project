@@ -4,6 +4,7 @@ const {
   markAttendance,
   getAttendance,
   getStudentAttendance,
+  attendenceByIdView,
 } = require("../controller/attendence.controller");
 
 const authMiddleware = require("../middleware/auth.middleware");
@@ -36,5 +37,7 @@ router.get(
   roleMiddleware(["student"]),
   getStudentAttendance
 );
+
+router.get("/:id",  attendenceByIdView);
 
 module.exports = router;

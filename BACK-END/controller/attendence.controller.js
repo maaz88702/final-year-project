@@ -129,8 +129,31 @@ const getStudentAttendance = async (req, res) => {
   }
 };
 
+const attendenceByIdView=async (req, res) => {
+  try {
+    console.log("Fetching attendance record with ID:", req.params.id);
+    const record = await Attendance.findById(req.params.id)
+      .populate("semesterId", "semester") // Grabs semester name
+      .populate("courseId", "courseTitle") // Grabs course title
+      .populate({
+        path: "attendance.studentId", // 🌟 Deeply populates the nested array
+        select: "studentName rollNo", // Only fetches necessary fields
+      });
+console.log("Fetched attendance record:", record);
+    if (!record) {
+      return res.status(404).json({ message: "Attendance record not found" });
+    }
+
+    res.json(record);
+  } catch (error) {
+    console.error("Error fetching single attendance record:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+}
+
 module.exports = {
   markAttendance,
   getAttendance,
   getStudentAttendance,
+  attendenceByIdView
 };
