@@ -82,6 +82,7 @@ function App() {
           <Route path="semesterview" element={<SemesterView />} />
           <Route path="semesterview/:id" element={<SemesterSingleView />} />
           <Route path="semesterupdate/:id" element={<SemesterUpdate />} />
+          
         </Route>
 
         {/* STUDENT ROUTE */}
@@ -113,6 +114,7 @@ function App() {
           <Route path="view-assignment/:id" element={<ViewAssignment />} />
           <Route path="edit-assignment/:_id" element={<EditAssignment />} />
           <Route path="update-grade/:gradeId" element={<AssignmentGradeUpdate />} />
+          <Route path="/teacher/course-attendance/:courseId" element={<AttendanceViewByCourse />} />
         </Route>
 
         {/* CATCH-ALL ROUTE */}

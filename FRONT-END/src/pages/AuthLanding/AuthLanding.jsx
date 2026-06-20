@@ -47,7 +47,7 @@ const AuthLanding = () => {
         {/* Cards */}
         <Grid container spacing={3}>
           {/* Teacher Login */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={6}
               sx={{
@@ -87,7 +87,7 @@ const AuthLanding = () => {
           </Grid>
 
           {/* Student Login */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Paper
               elevation={6}
               sx={{
@@ -130,7 +130,7 @@ const AuthLanding = () => {
             </Paper>
           </Grid>
 
-        
+
         </Grid>
       </Container>
     </Box>

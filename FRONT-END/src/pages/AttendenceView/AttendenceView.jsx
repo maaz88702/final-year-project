@@ -26,7 +26,8 @@ import {
 } from "@mui/material";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import DownloadIcon from "@mui/icons-material/Download"; // 🌟 Added for CSV download action
+import DownloadIcon from "@mui/icons-material/Download"; 
+import AssessmentIcon from "@mui/icons-material/Assessment"; // 🌟 Imported for Course Analytics button icon
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -125,38 +126,30 @@ const AttendanceView = () => {
     0
   );
 
-  // Global attendance calculation: (Present + Leave) / Total Students * 100
   const globalPercentage = useMemo(() => {
     if (totalStudents === 0) return 0;
     return Math.round(((totalPresent + totalLeave) / totalStudents) * 100);
   }, [totalStudents, totalPresent, totalLeave]);
 
-  // ================= 🌟 CSV DOWNLOAD LOGIC 🌟 =================
+  // ================= CSV DOWNLOAD LOGIC =================
   const handleDownloadCSV = (record) => {
     try {
       const courseTitle = record.courseId?.courseTitle || "Course";
       const semesterName = record.semesterId?.semester || "Semester";
       const recordDate = new Date(record.date).toLocaleDateString().replace(/\//g, "-");
 
-      // 1. Setup the structural CSV headers and meta rows
       let csvContent = "data:text/csv;charset=utf-8,";
-      
-      // Metadata Header Rows
       csvContent += `Course Name,${courseTitle.replace(/,/g, " ")}\n`;
       csvContent += `Semester,${semesterName.replace(/,/g, " ")}\n`;
       csvContent += `Session Date,${new Date(record.date).toLocaleDateString()}\n\n`;
-      
-      // Main Data Table Headers
       csvContent += "Serial No,Student Name,Roll Number,Attendance Status\n";
 
-      // 2. Loop through student arrays and parse individual rows
       if (record.attendance && record.attendance.length > 0) {
         record.attendance.forEach((studentRow, idx) => {
           const sName = studentRow.studentId?.studentName || "N/A";
           const sRoll = studentRow.studentId?.rollNo || "N/A";
           const sStatus = studentRow.status || "N/A";
 
-          // Format strings carefully to avoid column break corruption from stray commas
           const cleanedName = sName.replace(/,/g, " ");
           const cleanedRoll = sRoll.replace(/,/g, " ");
           const cleanedStatus = sStatus.toUpperCase();
@@ -167,12 +160,10 @@ const AttendanceView = () => {
         csvContent += ",No attendance data matched for this course sheet\n";
       }
 
-      // 3. Complete structural browser initialization download link assignment
       const encodedUri = encodeURI(csvContent);
       const tempLink = document.createElement("a");
       tempLink.setAttribute("href", encodedUri);
       
-      // Create clean file naming standard structure
       const filename = `${courseTitle.replace(/\s+/g, "_")}_${semesterName.replace(/\s+/g, "_")}_Attendance_${recordDate}.csv`;
       tempLink.setAttribute("download", filename);
       
@@ -183,27 +174,18 @@ const AttendanceView = () => {
       toast.success("CSV Downloaded successfully");
     } catch (err) {
       console.error("CSV compilation crash context: ", err);
-      toast.error("Failed to generate CSV download matrix sheet context raw file format");
+      toast.error("Failed to generate CSV");
     }
   };
 
-  // ================= LOADING =================
   if (loading) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
         <CircularProgress />
       </Box>
     );
   }
 
-  // ================= UI =================
   return (
     <Box sx={{ p: 3 }}>
       <Paper sx={{ p: 3, borderRadius: 4 }}>
@@ -218,65 +200,65 @@ const AttendanceView = () => {
 
         {/* STATS */}
         <Grid container spacing={2} sx={{ mt: 3 }}>
-          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
             <Paper elevation={2} sx={{ p: 2, borderRadius: 3 }}>
-              <Typography variant="body2" color="text.secondary">
-                Total Records
-              </Typography>
-              <Typography variant="h5" fontWeight="bold">
-                {totalRecords}
-              </Typography>
+              <Typography variant="body2" color="text.secondary">Total Records</Typography>
+              <Typography variant="h5" fontWeight="bold">{totalRecords}</Typography>
             </Paper>
           </Grid>
-
-          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
             <Paper elevation={2} sx={{ p: 2, borderRadius: 3 }}>
-              <Typography variant="body2" color="text.secondary">
-                Present
-              </Typography>
-              <Typography variant="h5" fontWeight="bold" color="green">
-                {totalPresent}
-              </Typography>
+              <Typography variant="body2" color="text.secondary">Present</Typography>
+              <Typography variant="h5" fontWeight="bold" color="green">{totalPresent}</Typography>
             </Paper>
           </Grid>
-
-          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
             <Paper elevation={2} sx={{ p: 2, borderRadius: 3 }}>
-              <Typography variant="body2" color="text.secondary">
-                Leave
-              </Typography>
-              <Typography variant="h5" fontWeight="bold" color="warning.main">
-                {totalLeave}
-              </Typography>
+              <Typography variant="body2" color="text.secondary">Leave</Typography>
+              <Typography variant="h5" fontWeight="bold" color="warning.main">{totalLeave}</Typography>
             </Paper>
           </Grid>
-
-          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
             <Paper elevation={2} sx={{ p: 2, borderRadius: 3 }}>
-              <Typography variant="body2" color="text.secondary">
-                Absent
-              </Typography>
-              <Typography variant="h5" fontWeight="bold" color="error">
-                {totalAbsent}
-              </Typography>
+              <Typography variant="body2" color="text.secondary">Absent</Typography>
+              <Typography variant="h5" fontWeight="bold" color="error">{totalAbsent}</Typography>
             </Paper>
           </Grid>
-
-          <Grid size={{ xs:12, sm:6, md:2.4 }}>
+          <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
             <Paper elevation={2} sx={{ p: 2, borderRadius: 3, bgcolor: "primary.light", color: "primary.contrastText" }}>
-              <Typography variant="body2" sx={{ opacity: 0.9 }}>
-                Avg Attendance (P+L)
-              </Typography>
-              <Typography variant="h5" fontWeight="bold">
-                {globalPercentage}%
-              </Typography>
+              <Typography variant="body2" sx={{ opacity: 0.9 }}>Avg Attendance (P+L)</Typography>
+              <Typography variant="h5" fontWeight="bold">{globalPercentage}%</Typography>
             </Paper>
           </Grid>
         </Grid>
 
+        {/* 🌟 NEW: COURSE ANALYTICS SHORTCUT BUTTONS BOX */}
+        {uniqueCourses.length > 0 && (
+          <Box sx={{ mt: 4, p: 2, bgcolor: "grey.50", borderRadius: 3, border: "1px dashed", borderColor: "grey.300" }}>
+            <Typography variant="subtitle2" fontWeight="bold" color="text.secondary" sx={{ mb: 1.5 }}>
+              Course Analytics Summaries:
+            </Typography>
+            <Stack direction="row" spacing={1.5} flexWrap="wrap" useFlexGap>
+              {uniqueCourses.map((course) => (
+                <Button
+                  key={course[0]}
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  startIcon={<AssessmentIcon />}
+                  onClick={() => navigate(`/teacher/course-attendance/${course[0]}`)}
+                  sx={{ borderRadius: 2, bgcolor: "white", textTransform: "none", fontWeight: 600 }}
+                >
+                  {course[1]}
+                </Button>
+              ))}
+            </Stack>
+          </Box>
+        )}
+
         {/* FILTERS */}
         <Grid container spacing={2} sx={{ mt: 3, mb: 3 }}>
-          <Grid size={{ xs:12, md:4 }}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               fullWidth
               label="Search"
@@ -286,7 +268,7 @@ const AttendanceView = () => {
             />
           </Grid>
 
-          <Grid size={{ xs:12, md:4 }}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               select
               fullWidth
@@ -303,7 +285,7 @@ const AttendanceView = () => {
             </TextField>
           </Grid>
 
-          <Grid size={{ xs:12, md:4 }}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <TextField
               select
               fullWidth
@@ -343,80 +325,47 @@ const AttendanceView = () => {
               {filteredData.length > 0 ? (
                 filteredData.map((item, index) => {
                   const total = item.attendance?.length || 0;
-                  
-                  const present = item.attendance?.filter(
-                    (a) => a.status === "present"
-                  ).length || 0;
-
-                  const leave = item.attendance?.filter(
-                    (a) => a.status === "leave"
-                  ).length || 0;
-
-                  const absent = item.attendance?.filter(
-                    (a) => a.status === "absent"
-                  ).length || 0;
-
-                  // Row Attendance calculation: ((Present + Leave) / Total) * 100
+                  const present = item.attendance?.filter((a) => a.status === "present").length || 0;
+                  const leave = item.attendance?.filter((a) => a.status === "leave").length || 0;
+                  const absent = item.attendance?.filter((a) => a.status === "absent").length || 0;
                   const rowPercentage = total > 0 ? Math.round(((present + leave) / total) * 100) : 0;
 
                   return (
                     <TableRow key={item._id} hover>
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell>
-                        {new Date(item.date).toLocaleDateString()}
-                      </TableCell>
+                      <TableCell>{new Date(item.date).toLocaleDateString()}</TableCell>
                       <TableCell>
                         <Stack direction="row" spacing={1} alignItems="center">
-                          <Avatar>
-                            {item.courseId?.courseTitle?.charAt(0)}
-                          </Avatar>
-                          <Typography fontWeight="600">
-                            {item.courseId?.courseTitle}
-                          </Typography>
+                          <Avatar>{item.courseId?.courseTitle?.charAt(0)}</Avatar>
+                          <Typography fontWeight="600">{item.courseId?.courseTitle}</Typography>
                         </Stack>
                       </TableCell>
                       <TableCell>
-                        <Chip
-                          label={item.semesterId?.semester}
-                          color="primary"
-                          size="small"
-                        />
+                        <Chip label={item.semesterId?.semester} color="primary" size="small" />
                       </TableCell>
                       <TableCell>{total}</TableCell>
+                      <TableCell><Chip label={present} color="success" size="small" /></TableCell>
+                      <TableCell><Chip label={leave} color="warning" size="small" /></TableCell>
+                      <TableCell><Chip label={absent} color="error" size="small" /></TableCell>
                       <TableCell>
-                        <Chip label={present} color="success" size="small" />
-                      </TableCell>
-                      <TableCell>
-                        <Chip label={leave} color="warning" size="small" />
-                      </TableCell>
-                      <TableCell>
-                        <Chip label={absent} color="error" size="small" />
-                      </TableCell>
-                      <TableCell>
-                        <Typography 
-                          fontWeight="bold" 
-                          color={rowPercentage >= 75 ? "success.main" : "error.main"}
-                        >
+                        <Typography fontWeight="bold" color={rowPercentage >= 75 ? "success.main" : "error.main"}>
                           {rowPercentage}%
                         </Typography>
                       </TableCell>
                       <TableCell align="center">
-                        {/* 🌟 ACTION BUTTONS GROUP */}
                         <Stack direction="row" spacing={1} justifyContent="center">
-                          <Tooltip title="View Details">
+                          <Tooltip title="View Session Sheet Details">
                             <Button
                               variant="contained"
                               size="small"
                               startIcon={<VisibilityIcon />}
-                              onClick={() =>
-                                navigate(`/teacher/attendanceview/${item._id}`)
-                              }
+                              onClick={() => navigate(`/teacher/attendanceview/${item._id}`)}
                             >
                               View
                             </Button>
                           </Tooltip>
 
-                          <Tooltip title="Download Attendance Record Report CSV">
+                          <Tooltip title="Download CSV Report">
                             <Button
                               variant="outlined"
                               color="secondary"
@@ -434,9 +383,7 @@ const AttendanceView = () => {
                 })
               ) : (
                 <TableRow>
-                  <TableCell colSpan={10} align="center">
-                    No attendance records found
-                  </TableCell>
+                  <TableCell colSpan={10} align="center">No attendance records found</TableCell>
                 </TableRow>
               )}
             </TableBody>

@@ -1,0 +1,528 @@
+[{
+  "_id": {
+    "$oid": "6a1c7cb338668ebff1c9fa3d"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "courseId": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "date": {
+    "$date": "2026-05-30T19:00:00.000Z"
+  },
+  "attendance": [
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc8427e"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7cb338668ebff1c9fa3e"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc84289"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7cb338668ebff1c9fa3f"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69cd571ee02f4374630b4c7c"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7cb338668ebff1c9fa40"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69f0f223c6e736da04cefeff"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7cb338668ebff1c9fa41"
+      }
+    }
+  ],
+  "summary": {
+    "totalStudents": 4,
+    "present": 4,
+    "absent": 0,
+    "leave": 0,
+    "percentage": 100
+  },
+  "createdAt": {
+    "$date": "2026-05-31T18:23:47.664Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T18:23:47.664Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1c7ccf38668ebff1c9fa6a"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "courseId": {
+    "$oid": "69e4ce311d1612bc61f2d6af"
+  },
+  "date": {
+    "$date": "2026-05-30T19:00:00.000Z"
+  },
+  "attendance": [
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc8427e"
+      },
+      "status": "absent",
+      "_id": {
+        "$oid": "6a1c7ccf38668ebff1c9fa6b"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc84289"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7ccf38668ebff1c9fa6c"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69cd571ee02f4374630b4c7c"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7ccf38668ebff1c9fa6d"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69f0f223c6e736da04cefeff"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7ccf38668ebff1c9fa6e"
+      }
+    }
+  ],
+  "summary": {
+    "totalStudents": 4,
+    "present": 3,
+    "absent": 1,
+    "leave": 0,
+    "percentage": 75
+  },
+  "createdAt": {
+    "$date": "2026-05-31T18:24:15.968Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T18:24:15.968Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1c7d1238668ebff1c9faf7"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "courseId": {
+    "$oid": "69de60f6e74b2637281772b9"
+  },
+  "date": {
+    "$date": "2026-05-30T19:00:00.000Z"
+  },
+  "attendance": [
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc8427e"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7d1238668ebff1c9faf8"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc84289"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7d1238668ebff1c9faf9"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69cd571ee02f4374630b4c7c"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7d1238668ebff1c9fafa"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69f0f223c6e736da04cefeff"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1c7d1238668ebff1c9fafb"
+      }
+    }
+  ],
+  "summary": {
+    "totalStudents": 4,
+    "present": 4,
+    "absent": 0,
+    "leave": 0,
+    "percentage": 100
+  },
+  "createdAt": {
+    "$date": "2026-05-31T18:25:22.815Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T18:25:22.815Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1d0cbca27bd93cb2b1500a"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "courseId": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "date": {
+    "$date": "2026-05-31T19:00:00.000Z"
+  },
+  "attendance": [
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc8427e"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1d0cbca27bd93cb2b1500b"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc84289"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1d0cbca27bd93cb2b1500c"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69cd571ee02f4374630b4c7c"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1d0cbca27bd93cb2b1500d"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69f0f223c6e736da04cefeff"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1d0cbca27bd93cb2b1500e"
+      }
+    }
+  ],
+  "summary": {
+    "totalStudents": 4,
+    "present": 4,
+    "absent": 0,
+    "leave": 0,
+    "percentage": 100
+  },
+  "createdAt": {
+    "$date": "2026-06-01T04:38:20.886Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T04:38:20.886Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1d0e65a27bd93cb2b1515b"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "courseId": {
+    "$oid": "69de60f6e74b2637281772b9"
+  },
+  "date": {
+    "$date": "2026-05-31T19:00:00.000Z"
+  },
+  "attendance": [
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc8427e"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1d0e65a27bd93cb2b1515c"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc84289"
+      },
+      "status": "absent",
+      "_id": {
+        "$oid": "6a1d0e65a27bd93cb2b1515d"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69cd571ee02f4374630b4c7c"
+      },
+      "status": "leave",
+      "_id": {
+        "$oid": "6a1d0e65a27bd93cb2b1515e"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69f0f223c6e736da04cefeff"
+      },
+      "status": "absent",
+      "_id": {
+        "$oid": "6a1d0e65a27bd93cb2b1515f"
+      }
+    }
+  ],
+  "summary": {
+    "totalStudents": 4,
+    "present": 1,
+    "absent": 2,
+    "leave": 1,
+    "percentage": 25
+  },
+  "createdAt": {
+    "$date": "2026-06-01T04:45:25.407Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T04:45:25.407Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1d0f70a27bd93cb2b1525c"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "courseId": {
+    "$oid": "69e4ce311d1612bc61f2d6af"
+  },
+  "date": {
+    "$date": "2026-05-31T19:00:00.000Z"
+  },
+  "attendance": [
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc8427e"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1d0f70a27bd93cb2b1525d"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc84289"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1d0f70a27bd93cb2b1525e"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69cd571ee02f4374630b4c7c"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1d0f70a27bd93cb2b1525f"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69f0f223c6e736da04cefeff"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a1d0f70a27bd93cb2b15260"
+      }
+    }
+  ],
+  "summary": {
+    "totalStudents": 4,
+    "present": 4,
+    "absent": 0,
+    "leave": 0,
+    "percentage": 100
+  },
+  "createdAt": {
+    "$date": "2026-06-01T04:49:52.229Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T04:49:52.229Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4fa0b4bdecc63622a030"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "courseId": {
+    "$oid": "69de60f6e74b2637281772b9"
+  },
+  "date": {
+    "$date": "2026-06-13T19:00:00.000Z"
+  },
+  "attendance": [
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc8427e"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a2e4fa0b4bdecc63622a031"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc84289"
+      },
+      "status": "absent",
+      "_id": {
+        "$oid": "6a2e4fa0b4bdecc63622a032"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69cd571ee02f4374630b4c7c"
+      },
+      "status": "leave",
+      "_id": {
+        "$oid": "6a2e4fa0b4bdecc63622a033"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69f0f223c6e736da04cefeff"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a2e4fa0b4bdecc63622a034"
+      }
+    }
+  ],
+  "summary": {
+    "totalStudents": 4,
+    "present": 2,
+    "absent": 1,
+    "leave": 1,
+    "percentage": 50
+  },
+  "createdAt": {
+    "$date": "2026-06-14T06:52:16.152Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:52:16.152Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a32373f0fb4bf13990f38f4"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "courseId": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "date": {
+    "$date": "2026-06-16T19:00:00.000Z"
+  },
+  "attendance": [
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc8427e"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a32373f0fb4bf13990f38f5"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "696c96075a15757d2cc84289"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a32373f0fb4bf13990f38f6"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69cd571ee02f4374630b4c7c"
+      },
+      "status": "absent",
+      "_id": {
+        "$oid": "6a32373f0fb4bf13990f38f7"
+      }
+    },
+    {
+      "studentId": {
+        "$oid": "69f0f223c6e736da04cefeff"
+      },
+      "status": "present",
+      "_id": {
+        "$oid": "6a32373f0fb4bf13990f38f8"
+      }
+    }
+  ],
+  "summary": {
+    "totalStudents": 4,
+    "present": 3,
+    "absent": 1,
+    "leave": 0,
+    "percentage": 75
+  },
+  "createdAt": {
+    "$date": "2026-06-17T05:57:19.688Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-17T05:57:19.688Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,68 @@
+[{
+  "_id": {
+    "$oid": "6a1d1060a27bd93cb2b1538a"
+  },
+  "title": "exam",
+  "message": "exam will be starting on monday 15-june-2026",
+  "expiryDate": {
+    "$date": "2026-06-15T00:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2026-06-01T04:53:52.109Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T04:53:52.109Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1d11ffa27bd93cb2b1544f"
+  },
+  "title": "notice",
+  "message": "this is another notice",
+  "expiryDate": {
+    "$date": "2026-05-17T00:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2026-06-01T05:00:47.873Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T05:00:47.873Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1d157ba27bd93cb2b15484"
+  },
+  "title": "summer holidays",
+  "message": "summer holidays will be started from 25-june-2026 to 25-july-2026 ",
+  "expiryDate": {
+    "$date": "2026-06-25T00:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2026-06-01T05:15:39.542Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T05:15:39.542Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1d15eba27bd93cb2b154a7"
+  },
+  "title": "examination fees",
+  "message": "pay your examination fees",
+  "expiryDate": {
+    "$date": "2026-06-23T00:00:00.000Z"
+  },
+  "createdAt": {
+    "$date": "2026-06-01T05:17:31.438Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T05:17:31.438Z"
+  },
+  "__v": 0
+}]

@@ -155,7 +155,7 @@ const TeacherDashboard = () => {
 
       {/* KPI CARDS */}
       <Grid container spacing={3} sx={{ mb: 5 }}>
-        <Grid item xs={12} sm={4}>
+        <Grid size={{xs:12,sm:4}}>
           <Paper
             elevation={0}
             sx={{
@@ -184,7 +184,7 @@ const TeacherDashboard = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} sm={4}>
+        <Grid size={{xs:12,sm:4}} >
           <Paper
             elevation={0}
             sx={{
@@ -213,7 +213,7 @@ const TeacherDashboard = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} sm={4}>
+        <Grid size={{xs:12,sm:4}}>
           <Paper
             elevation={0}
             sx={{
@@ -249,7 +249,7 @@ const TeacherDashboard = () => {
           Quick Actions
         </Typography>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
+          <Grid size={{xs:12,sm:4}}>
             <Button
               fullWidth
               variant="contained"
@@ -261,7 +261,7 @@ const TeacherDashboard = () => {
               Add Assignment
             </Button>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid size={{xs:12,sm:4}}>
             <Button
               fullWidth
               variant="contained"
@@ -274,7 +274,7 @@ const TeacherDashboard = () => {
               View Submissions
             </Button>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid size={{xs:12,sm:4}}>
             <Button
               fullWidth
               variant="outlined"

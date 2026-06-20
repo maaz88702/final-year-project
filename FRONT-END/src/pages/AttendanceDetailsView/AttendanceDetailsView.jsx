@@ -158,13 +158,13 @@ const AttendanceDetailsView = () => {
               <Typography variant="h5" fontWeight="bold">{stats.leave}</Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={2.4}>
+          <Grid size={{xs: 12, sm: 6, md: 2.4}}>
             <Paper elevation={1} sx={{ p: 2, borderRadius: 3, bgcolor: "error.light", color: "error.contrastText" }}>
               <Typography variant="body2" sx={{ opacity: 0.9 }}>Absent</Typography>
               <Typography variant="h5" fontWeight="bold">{stats.absent}</Typography>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6} md={2.4}>
+          <Grid size={{xs: 12, sm: 6, md: 2.4}}>
             <Paper elevation={1} sx={{ p: 2, borderRadius: 3, bgcolor: "primary.main", color: "primary.contrastText" }}>
               <Typography variant="body2" sx={{ opacity: 0.9 }}>Session Attendance %</Typography>
               <Typography variant="h5" fontWeight="bold">{stats.ratio}%</Typography>

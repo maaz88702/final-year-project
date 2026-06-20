@@ -102,7 +102,7 @@ const SignUp_student = () => {
               localStorage.setItem("jwt", res.data.token)
               // setMessage(res.data.message);
               toast.success(res.data.message);
-              navigation("/");
+              navigation("/student/dashboard");
             } catch (err) {
               toast.error(err.response?.data?.message || "Something went wrong");
               // setError(err.response?.data?.message || "Something went wrong");

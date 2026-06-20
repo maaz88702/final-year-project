@@ -1,0 +1,190 @@
+[{
+  "_id": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "semester": "2",
+  "courses": [
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b0"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b1"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b2"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b3"
+    },
+    {
+      "$oid": "69e4ce311d1612bc61f2d6af"
+    },
+    {
+      "$oid": "69539fd96022d3b1f34bfedc"
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-05-14T18:03:08.733Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6953a1206022d3b1f34bfeee"
+  },
+  "semester": "5",
+  "courses": [
+    {
+      "$oid": "695388e9fa29b4e8dc1b38ac"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38ad"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38ae"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38af"
+    },
+    {
+      "$oid": "69539fd96022d3b1f34bfed5"
+    },
+    {
+      "$oid": "69539fd96022d3b1f34bfed6"
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-05-14T18:03:19.192Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6953a1206022d3b1f34bfeef"
+  },
+  "semester": "6",
+  "courses": [
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b0"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b1"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b2"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b3"
+    },
+    {
+      "$oid": "69e4ce311d1612bc61f2d6af"
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-05-14T18:03:50.238Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6953a1206022d3b1f34bfef0"
+  },
+  "semester": "7",
+  "courses": [
+    {
+      "$oid": "695388e9fa29b4e8dc1b38ac"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38ad"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38ae"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38af"
+    },
+    {
+      "$oid": "69539fd96022d3b1f34bfed8"
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-05-14T18:08:21.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6953a1206022d3b1f34bfef1"
+  },
+  "semester": "8",
+  "courses": [
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b0"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b1"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b2"
+    },
+    {
+      "$oid": "695388e9fa29b4e8dc1b38b3"
+    },
+    {
+      "$oid": "69539fd96022d3b1f34bfedc"
+    }
+  ],
+  "updatedAt": {
+    "$date": "2026-05-14T18:03:32.289Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69676d240f1abf45055c8ece"
+  },
+  "semester": "Fall 2026",
+  "courses": [
+    {
+      "$oid": "65ab23f9c9a2b123456789ab"
+    },
+    {
+      "$oid": "65ab23f9c9a2b123456789ac"
+    },
+    {
+      "$oid": "69de60f6e74b2637281772b9"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-01-14T10:17:08.428Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-14T18:08:13.304Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a060c640f5e6fa1932c9a7c"
+  },
+  "semester": "1",
+  "courses": [
+    {
+      "$oid": "69539fd96022d3b1f34bfed4"
+    },
+    {
+      "$oid": "69539fd96022d3b1f34bfed7"
+    },
+    {
+      "$oid": "69539fd96022d3b1f34bfed8"
+    },
+    {
+      "$oid": "69539fd96022d3b1f34bfed9"
+    },
+    {
+      "$oid": "6a0603800f5e6fa1932c9903"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-05-14T17:54:44.794Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-14T17:54:44.794Z"
+  },
+  "__v": 0
+}]

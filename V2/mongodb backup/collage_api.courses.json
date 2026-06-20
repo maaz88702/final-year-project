@@ -1,0 +1,220 @@
+[{
+  "_id": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "courseTitle": "Physics Basics",
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "createdAt": {
+    "$date": "2026-04-14T15:44:54.199Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-14T15:44:54.199Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69539fd96022d3b1f34bfed5"
+  },
+  "courseTitle": "Chemistry Fundamentals",
+  "teacher": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeef"
+  },
+  "teacherId": {
+    "$oid": "6968f2b3c8b1daaacf04fd18"
+  },
+  "updatedAt": {
+    "$date": "2026-05-14T17:32:08.685Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69539fd96022d3b1f34bfed6"
+  },
+  "courseTitle": "Biology Essentials",
+  "teacher": {
+    "$oid": "696c90045254e711d7a67ffe"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeee"
+  },
+  "teacherId": {
+    "$oid": "6968f2b3c8b1daaacf04fd18"
+  },
+  "updatedAt": {
+    "$date": "2026-05-14T17:33:01.651Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69539fd96022d3b1f34bfed7"
+  },
+  "courseTitle": "English Literature",
+  "teacher": {
+    "$oid": "6650a1f1c8a4a12345670102"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeee"
+  },
+  "teacherId": {
+    "$oid": "6650a1f1c8a4a12345670107"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T04:56:00.185Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69539fd96022d3b1f34bfed8"
+  },
+  "courseTitle": "History and Civilization",
+  "teacher": {
+    "$oid": "6650a1f1c8a4a12345670104"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "teacherId": {
+    "$oid": "6650a1f1c8a4a12345670104"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T04:56:09.266Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69539fd96022d3b1f34bfed9"
+  },
+  "courseTitle": "Computer Science Intro",
+  "teacher": {
+    "$oid": "696c90045254e711d7a67ffe"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeef"
+  },
+  "teacherId": {
+    "$oid": "6650a1f1c8a4a12345670103"
+  },
+  "updatedAt": {
+    "$date": "2026-05-14T17:33:41.662Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69539fd96022d3b1f34bfeda"
+  },
+  "courseTitle": "Art and Design",
+  "teacher": {
+    "$oid": "6650a1f1c8a4a12345670108"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeee"
+  },
+  "teacherId": {
+    "$oid": "6650a1f1c8a4a12345670104"
+  },
+  "updatedAt": {
+    "$date": "2026-05-14T17:50:11.968Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69539fd96022d3b1f34bfedb"
+  },
+  "courseTitle": "Advanced Mathematics",
+  "teacher": {
+    "$oid": "6650a1f1c8a4a12345670101"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeef"
+  },
+  "teacherId": {
+    "$oid": "69676703fd4d63d3a37edb9b"
+  },
+  "updatedAt": {
+    "$date": "2026-06-01T04:55:46.696Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69539fd96022d3b1f34bfedc"
+  },
+  "courseTitle": "Modern Physics",
+  "teacher": {
+    "$oid": "6650a1f1c8a4a12345670103"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfef0"
+  },
+  "teacherId": {
+    "$oid": "6650a1f1c8a4a12345670108"
+  },
+  "updatedAt": {
+    "$date": "2026-05-14T17:49:55.057Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69de60f6e74b2637281772b9"
+  },
+  "courseTitle": "Data Structures",
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "createdAt": {
+    "$date": "2026-04-14T15:44:54.199Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-14T15:44:54.199Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69e4ce311d1612bc61f2d6af"
+  },
+  "courseTitle": "Basics",
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "createdAt": {
+    "$date": "2026-04-14T15:44:54.199Z"
+  },
+  "updatedAt": {
+    "$date": "2026-04-14T15:44:54.199Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a0603800f5e6fa1932c9903"
+  },
+  "courseTitle": "software project management",
+  "teacherId": {
+    "$oid": "6650a1f1c8a4a12345670106"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeef"
+  },
+  "createdAt": {
+    "$date": "2026-05-14T17:16:48.504Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-14T17:21:39.672Z"
+  },
+  "__v": 0
+}]

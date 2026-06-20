@@ -1,0 +1,355 @@
+[{
+  "_id": {
+    "$oid": "6650a1f1c8a4a12345670103"
+  },
+  "teacherName": "Usman Ali kha",
+  "email": "usman.ali@school.com",
+  "password": "$2b$10$txW5bb7hUC40hgo5sF9Q8.xowsHf4hGndbtL/EuuAfyqtHny/yBEO",
+  "createdAt": {
+    "$date": "2025-01-15T08:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:03:40.213Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6650a1f1c8a4a12345670104"
+  },
+  "teacherName": "Ayesha Malik",
+  "email": "ayesha.malik@school.com",
+  "password": "Ayesha@123",
+  "createdAt": {
+    "$date": "2025-01-18T10:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-18T10:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6650a1f1c8a4a12345670106"
+  },
+  "teacherName": "Hina Shah",
+  "email": "hina.shah@school.com",
+  "password": "Hina@123",
+  "createdAt": {
+    "$date": "2025-01-22T11:30:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-22T11:30:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6650a1f1c8a4a12345670107"
+  },
+  "teacherName": "Faisal Ahmed",
+  "email": "faisal.ahmed@school.com",
+  "password": "Faisal@123",
+  "createdAt": {
+    "$date": "2025-01-24T08:15:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-24T08:15:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6650a1f1c8a4a12345670108"
+  },
+  "teacherName": "Nida Farooq",
+  "email": "nida.farooq@school.com",
+  "password": "Nida@123",
+  "createdAt": {
+    "$date": "2025-01-26T10:20:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2025-01-26T10:20:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "69676703fd4d63d3a37edb9b"
+  },
+  "teacherName": "Ahmed Raza",
+  "email": "ahmed.raza@gmail.com",
+  "password": "123456",
+  "createdAt": {
+    "$date": "2026-01-14T09:50:59.557Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-14T09:50:59.557Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6968f2b3c8b1daaacf04fd18"
+  },
+  "teacherName": "ahmad raza",
+  "email": "ahmad@raza.com",
+  "password": "$2b$10$7bsGon/uKO6PI4vAb6sxaupgBKJ2CGBkHGpg6AFy/v/zt/MbDp6oO",
+  "createdAt": {
+    "$date": "2026-01-15T13:59:15.174Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-15T13:59:15.174Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "696c90585254e711d7a68001"
+  },
+  "teacherName": "ahmad raza",
+  "email": "sdfsdfsdf@gmail.com",
+  "password": "$2b$10$GTsvfXotlPwffyS0TGXIl.4x7351i05rUOBbBtD9RCN6B12fD6YP.",
+  "createdAt": {
+    "$date": "2026-01-18T07:48:40.469Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-18T07:48:40.469Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "teacherName": "teacher",
+  "email": "teacher@gmail.com",
+  "password": "$2b$10$tUnLds17Kw/oaN7NFuly4Oos7krATGMLRG1qgknacrhy9MDo6knyy",
+  "createdAt": {
+    "$date": "2026-03-28T11:00:46.826Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-28T11:00:46.826Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa29e88799b743862cb213"
+  },
+  "teacherName": "teacherasd",
+  "email": "hackerzbook@gmail.com",
+  "password": "$2b$10$P4uiqFHf1lPpXENj9EHV6.HOoYA7FEkDFdI8dw/./7.Brb153S9yK",
+  "createdAt": {
+    "$date": "2026-05-05T17:33:28.956Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T17:33:28.956Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa2aa38799b743862cb216"
+  },
+  "teacherName": "ahmad razasdf",
+  "email": "sdfasss@gmail.com",
+  "password": "$2b$10$oCqhFbjbdl/GKPORlXau.eMYqTgVhDUQ0E4EuASIoMtalERmBljQq",
+  "createdAt": {
+    "$date": "2026-05-05T17:36:35.314Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T17:36:35.314Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa368d8799b743862cb4fb"
+  },
+  "teacherName": "ahkkkdds",
+  "email": "khsdkfh@gmail.com",
+  "password": "$2b$10$L7KkASWUEkx8E/ZLWQuTVOrLaO8p4uLbHsoOQQ99k9OHMPcE7BoHK",
+  "createdAt": {
+    "$date": "2026-05-05T18:27:25.937Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:27:25.937Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa389009a3d1865c8e321a"
+  },
+  "teacherName": "fdsfsdfdsf",
+  "email": "sdfdf@gmail.cm",
+  "password": "$2b$10$Hbyp7dspn1A3WG66GvoN/eV7/os.Kragl16e.BXZCLetizbGcq7xC",
+  "createdAt": {
+    "$date": "2026-05-05T18:36:00.757Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:36:00.757Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa38a409a3d1865c8e321d"
+  },
+  "teacherName": "fdsfsdfdsf dd",
+  "email": "sdfdf@gmail.com",
+  "password": "$2b$10$WqIfl6jLCFG.2W8oavFOm.nzeNdF3mcqIaqVdO81K/mUuK/6PVJ/6",
+  "createdAt": {
+    "$date": "2026-05-05T18:36:20.424Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:36:20.424Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa38b709a3d1865c8e3221"
+  },
+  "teacherName": "fdsfvcx",
+  "email": "sdfggddf@gmail.com",
+  "password": "$2b$10$kyA8esZIEzBbKBj2l/4JMOrIV/ec3wW3lxhdh2Rei8v0KgiVdli0u",
+  "createdAt": {
+    "$date": "2026-05-05T18:36:39.726Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:36:39.726Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa391c09a3d1865c8e3225"
+  },
+  "teacherName": "fdsfvcxfdfd",
+  "email": "sdfggddsf@gmail.com",
+  "password": "$2b$10$PmDyyYg1C6P1s3dmgkfOieqSrDO76GpPFqlrUTg0kXReddoIFaDbu",
+  "createdAt": {
+    "$date": "2026-05-05T18:38:20.500Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:38:20.500Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa393109a3d1865c8e3228"
+  },
+  "teacherName": "fdsfvcxfdfdb",
+  "email": "sdfggbddsf@gmail.com",
+  "password": "$2b$10$YYDXLF6dv.DZW/usIJySo.ak7LsRvEdqFpj3rgvnZfvgytGWzN7BW",
+  "createdAt": {
+    "$date": "2026-05-05T18:38:41.626Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:38:41.626Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa3a31090e7be4487806dc"
+  },
+  "teacherName": "fdsfvcxfdfdbs",
+  "email": "sdfggbddsf@gmail.coms",
+  "password": "$2b$10$mDoUItMTC.ryP2OgoTngcuL0zrKy7UAIzvD.GBHa42UpI4F2536IS",
+  "createdAt": {
+    "$date": "2026-05-05T18:42:57.635Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:42:57.635Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa3a41090e7be4487806df"
+  },
+  "teacherName": "fdsfvcxfdfdbsd",
+  "email": "sdfggbddsf@gmdail.coms",
+  "password": "$2b$10$YJHd9QUPYoMEQi0zSVljiuOZRFlrL5JLaYtegwWruF0wytYCzPI9W",
+  "createdAt": {
+    "$date": "2026-05-05T18:43:13.652Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:43:13.652Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa3a64090e7be4487806e2"
+  },
+  "teacherName": "ffffd",
+  "email": "fffd@sdf.clm",
+  "password": "$2b$10$11uK7B3p.twylSPnJFm3Y.mzQHVNqdH2XC7ip1CiVcYUn.xRzoPOm",
+  "createdAt": {
+    "$date": "2026-05-05T18:43:48.394Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:43:48.394Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa3aa1090e7be4487806e6"
+  },
+  "teacherName": "ffffd",
+  "email": "fffd@sdf.clms",
+  "password": "$2b$10$wSORQg8tHB0merCfjo9arOZOqXFxZslA6ch4FgnvhLu.uRsFpoUwa",
+  "createdAt": {
+    "$date": "2026-05-05T18:44:49.793Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:44:49.793Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa3bed0e4f7233d7c5533f"
+  },
+  "teacherName": "ffffddfc",
+  "email": "fffd@sdf.clmn",
+  "password": "$2b$10$UoUSdR9WR22IO/kIbuXcpOM85guTo1g0V.miLe3L/7goQAaaVhrve",
+  "createdAt": {
+    "$date": "2026-05-05T18:50:21.163Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:50:21.163Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69fa3cc6036d4462625594f8"
+  },
+  "teacherName": "ffffddfcn",
+  "email": "fffd@sdf.lmn",
+  "password": "$2b$10$mbFPnA/XzR84ZOxwYu.YlOkohokAY/z7gRQjkiKHbtv0XCHqW00Km",
+  "createdAt": {
+    "$date": "2026-05-05T18:53:58.720Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-05T18:53:58.720Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a06bb1f5d5155163594a51f"
+  },
+  "teacherName": "ali khan",
+  "email": "ali@gmail.com",
+  "password": "$2b$10$S56aL/N9OmS8L9nQTS0tUu5tcixgbKRhmF3HAi6XC6YrMV9P8l.wC",
+  "createdAt": {
+    "$date": "2026-05-15T06:20:15.440Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-15T06:20:15.440Z"
+  },
+  "__v": 0
+}]

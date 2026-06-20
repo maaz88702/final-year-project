@@ -1,0 +1,240 @@
+[{
+  "_id": {
+    "$oid": "6a2d947fbd629fac685315f0"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "assignmentId": {
+    "$oid": "6a2d9447bd629fac685315c9"
+  },
+  "file": "uploads/1781372031370-The Entrepreneurial Marketing Plan.pdf",
+  "status": "graded",
+  "marks": 4,
+  "createdAt": {
+    "$date": "2026-06-13T17:33:51.406Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:34:23.144Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e439a75a48c4e7750badc"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "assignmentId": {
+    "$oid": "6a2e432a75a48c4e7750b9c7"
+  },
+  "file": "uploads/1781416858575-The Simplified Archetypes of Entrepreneurship.pdf",
+  "status": "graded",
+  "marks": 4.5,
+  "createdAt": {
+    "$date": "2026-06-14T06:00:58.609Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:09:20.800Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e43a475a48c4e7750bade"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "assignmentId": {
+    "$oid": "6a1c771038668ebff1c9f4bb"
+  },
+  "file": "uploads/1781416868235-The Archetypes of Entrepreneurship.pdf",
+  "status": "graded",
+  "marks": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:01:08.275Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:01:08.275Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e43b075a48c4e7750bae0"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "assignmentId": {
+    "$oid": "6a25245c9b1830621b4ff40b"
+  },
+  "file": "uploads/1781416880210-1778393193051-1777891111453-Maaz_Khan_Europass_CV (1).pdf",
+  "status": "graded",
+  "marks": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:01:20.217Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:01:20.217Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e43bb75a48c4e7750bae2"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "assignmentId": {
+    "$oid": "6a1c755938668ebff1c9f3b9"
+  },
+  "file": "uploads/1781416891857-web.pdf",
+  "status": "graded",
+  "marks": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:01:31.877Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:01:31.877Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e444975a48c4e7750bb9d"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "assignmentId": {
+    "$oid": "6a1c755938668ebff1c9f3b9"
+  },
+  "file": "uploads/1781417033934-1778393193051-1777891111453-Maaz_Khan_Europass_CV (1).pdf",
+  "status": "graded",
+  "marks": 17.5,
+  "createdAt": {
+    "$date": "2026-06-14T06:03:53.944Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:05:21.392Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e447b75a48c4e7750bc07"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "assignmentId": {
+    "$oid": "6a2e432a75a48c4e7750b9c7"
+  },
+  "file": "uploads/1781417083750-web.pdf",
+  "status": "graded",
+  "marks": 6.5,
+  "createdAt": {
+    "$date": "2026-06-14T06:04:43.760Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:08:58.960Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e453075a48c4e7750bd1b"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "assignmentId": {
+    "$oid": "6a1c771038668ebff1c9f4bb"
+  },
+  "file": "uploads/1781417264305-web.pdf",
+  "status": "graded",
+  "marks": 3.5,
+  "createdAt": {
+    "$date": "2026-06-14T06:07:44.313Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:09:43.318Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4ceab4bdecc636229db9"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "assignmentId": {
+    "$oid": "6a2e4cbbb4bdecc636229d94"
+  },
+  "file": "uploads/1781419242771-The Simplified Archetypes of Entrepreneurship.pdf",
+  "marks": 7,
+  "status": "graded",
+  "detectionStatus": "completed",
+  "aiPercentage": 90,
+  "plagiarismPercentage": 2,
+  "createdAt": {
+    "$date": "2026-06-14T06:40:42.809Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:41:05.842Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4d4fb4bdecc636229e45"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "assignmentId": {
+    "$oid": "6a2e4cbbb4bdecc636229d94"
+  },
+  "file": "uploads/1781419343500-The Simplified Archetypes of Entrepreneurship.pdf",
+  "marks": 3.5,
+  "status": "graded",
+  "detectionStatus": "completed",
+  "aiPercentage": 62,
+  "plagiarismPercentage": 25,
+  "createdAt": {
+    "$date": "2026-06-14T06:42:23.540Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:43:07.382Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4e33b4bdecc636229ef0"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "assignmentId": {
+    "$oid": "6a2e4e1db4bdecc636229ebc"
+  },
+  "file": "uploads/1781419571241-1778393193051-1777891111453-Maaz_Khan_Europass_CV (1).pdf",
+  "marks": 2.5,
+  "status": "graded",
+  "detectionStatus": "completed",
+  "aiPercentage": 81,
+  "plagiarismPercentage": 19,
+  "createdAt": {
+    "$date": "2026-06-14T06:46:11.254Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:50:56.913Z"
+  },
+  "__v": 0
+}]

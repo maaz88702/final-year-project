@@ -1,0 +1,756 @@
+[{
+  "_id": {
+    "$oid": "6a1c755938668ebff1c9f3b9"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-06-25",
+  "totalMarks": 25,
+  "title": "data structure and algorithm",
+  "assignmentDetails": [
+    {
+      "ques": "what is data structure",
+      "rubrics": [
+        {
+          "condition": "definition",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        },
+        {
+          "condition": "examples",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        },
+        {
+          "condition": "condition 3",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ques": "define stack",
+      "rubrics": [
+        {
+          "condition": "definition",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        },
+        {
+          "condition": "examples",
+          "marks": 5,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 5
+            },
+            {
+              "level": "50%",
+              "marks": 2.5
+            },
+            {
+              "level": "25%",
+              "marks": 1.25
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ques": "this is quetion 3",
+      "rubrics": [
+        {
+          "condition": "this is ruberic",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-05-31T17:52:25.924Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-11T15:49:58.637Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1c771038668ebff1c9f4bb"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-06-17",
+  "totalMarks": 5,
+  "title": "what is difference between ram and rom",
+  "assignmentDetails": [
+    {
+      "ques": "definition",
+      "rubrics": [
+        {
+          "condition": "abbrevations",
+          "marks": 2,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 2
+            },
+            {
+              "level": "50%",
+              "marks": 1
+            },
+            {
+              "level": "25%",
+              "marks": 0.5
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        },
+        {
+          "condition": "examples",
+          "marks": 3,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 3
+            },
+            {
+              "level": "50%",
+              "marks": 1.5
+            },
+            {
+              "level": "25%",
+              "marks": 0.75
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-05-31T17:59:44.995Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-11T16:00:42.923Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1e7bb6b34320be0aa7144f"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-06-10",
+  "totalMarks": 9,
+  "title": "database",
+  "assignmentDetails": [
+    {
+      "ques": "what is database",
+      "rubrics": [
+        {
+          "condition": "definition",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        },
+        {
+          "condition": "example",
+          "marks": 5,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 5
+            },
+            {
+              "level": "50%",
+              "marks": 2.5
+            },
+            {
+              "level": "25%",
+              "marks": 1.25
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-02T06:44:07.012Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-02T06:44:07.012Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a25245c9b1830621b4ff40b"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-06-24",
+  "totalMarks": 4,
+  "title": "assignment",
+  "assignmentDetails": [
+    {
+      "ques": "finaly year project",
+      "rubrics": [
+        {
+          "condition": "student-teacher interaction",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-07T07:57:16.242Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-07T07:57:16.242Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2d9447bd629fac685315c9"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69de60f6e74b2637281772b9"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-06-25",
+  "totalMarks": 4,
+  "title": "data structure",
+  "assignmentDetails": [
+    {
+      "ques": "data define",
+      "rubrics": [
+        {
+          "condition": "define",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        },
+        {
+          "condition": "example",
+          "marks": 0,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 0
+            },
+            {
+              "level": "50%",
+              "marks": 0
+            },
+            {
+              "level": "25%",
+              "marks": 0
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-13T17:32:55.835Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:32:55.835Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e431575a48c4e7750b9bf"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-06-10",
+  "totalMarks": 39,
+  "title": "title of assignment",
+  "assignmentDetails": [
+    {
+      "ques": "assignment q1",
+      "rubrics": [
+        {
+          "condition": "ruberic1",
+          "marks": 10,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 10
+            },
+            {
+              "level": "50%",
+              "marks": 5
+            },
+            {
+              "level": "25%",
+              "marks": 2.5
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        },
+        {
+          "condition": "ruberic 2",
+          "marks": 29,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 29
+            },
+            {
+              "level": "50%",
+              "marks": 14.5
+            },
+            {
+              "level": "25%",
+              "marks": 7.25
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T05:58:45.343Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:58:45.343Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e432a75a48c4e7750b9c7"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69e4ce311d1612bc61f2d6af"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-06-24",
+  "totalMarks": 9,
+  "title": "sdf",
+  "assignmentDetails": [
+    {
+      "ques": "sdf",
+      "rubrics": [
+        {
+          "condition": "dffdd",
+          "marks": 5,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 5
+            },
+            {
+              "level": "50%",
+              "marks": 2.5
+            },
+            {
+              "level": "25%",
+              "marks": 1.25
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ques": "sdfdsf",
+      "rubrics": [
+        {
+          "condition": "45",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T05:59:06.851Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:59:06.851Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4cbbb4bdecc636229d94"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69539fd96022d3b1f34bfed4"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-06-25",
+  "totalMarks": 7,
+  "title": "ai plagerism",
+  "assignmentDetails": [
+    {
+      "ques": "asdffd dsf ",
+      "rubrics": [
+        {
+          "condition": "sdfds ",
+          "marks": 4,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 4
+            },
+            {
+              "level": "50%",
+              "marks": 2
+            },
+            {
+              "level": "25%",
+              "marks": 1
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        },
+        {
+          "condition": "sdfd",
+          "marks": 3,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 3
+            },
+            {
+              "level": "50%",
+              "marks": 1.5
+            },
+            {
+              "level": "25%",
+              "marks": 0.75
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T06:39:55.114Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:39:55.114Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4e1db4bdecc636229ebc"
+  },
+  "teacherId": {
+    "$oid": "69c7b4de621b43bdb0bd0492"
+  },
+  "courseId": {
+    "$oid": "69e4ce311d1612bc61f2d6af"
+  },
+  "semesterId": {
+    "$oid": "6953a1206022d3b1f34bfeeb"
+  },
+  "dueDate": "2026-06-24",
+  "totalMarks": 5,
+  "title": "assignment submission ai checker",
+  "assignmentDetails": [
+    {
+      "ques": "sdf",
+      "rubrics": [
+        {
+          "condition": "df",
+          "marks": 3,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 3
+            },
+            {
+              "level": "50%",
+              "marks": 1.5
+            },
+            {
+              "level": "25%",
+              "marks": 0.75
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        },
+        {
+          "condition": "sdf",
+          "marks": 2,
+          "subRubrics": [
+            {
+              "level": "100%",
+              "marks": 2
+            },
+            {
+              "level": "50%",
+              "marks": 1
+            },
+            {
+              "level": "25%",
+              "marks": 0.5
+            },
+            {
+              "level": "0%",
+              "marks": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T06:45:49.036Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:45:49.036Z"
+  },
+  "__v": 0
+}]

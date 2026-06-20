@@ -1,0 +1,1140 @@
+[{
+  "_id": {
+    "$oid": "6a1c755938668ebff1c9f3bc"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: data structure and algorithm",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T17:52:25.933Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T17:52:25.933Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c755938668ebff1c9f3bd"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: data structure and algorithm",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T17:52:25.933Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T17:52:25.933Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c755938668ebff1c9f3be"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: data structure and algorithm",
+  "read": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T17:52:25.933Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T17:52:52.062Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c755938668ebff1c9f3bf"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: data structure and algorithm",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T17:52:25.933Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T17:52:25.933Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c763138668ebff1c9f435"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": true,
+  "createdAt": {
+    "$date": "2026-05-31T17:56:01.965Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1c771138668ebff1c9f4be"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: what is difference between ram and rom",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T17:59:45.003Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T17:59:45.003Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c771138668ebff1c9f4bf"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: what is difference between ram and rom",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T17:59:45.004Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T17:59:45.004Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c771138668ebff1c9f4c0"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: what is difference between ram and rom",
+  "read": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T17:59:45.004Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c771138668ebff1c9f4c1"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: what is difference between ram and rom",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T17:59:45.004Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T17:59:45.004Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c777138668ebff1c9f4c6"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: operating system",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T18:01:21.979Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T18:01:21.979Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c777138668ebff1c9f4c7"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: operating system",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T18:01:21.979Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T18:01:21.979Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c777138668ebff1c9f4c8"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: operating system",
+  "read": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T18:01:21.979Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c777138668ebff1c9f4c9"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: operating system",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-05-31T18:01:21.979Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T18:01:21.979Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1c786338668ebff1c9f5c2"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": true,
+  "createdAt": {
+    "$date": "2026-05-31T18:05:23.918Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T18:11:07.870Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1c787138668ebff1c9f5ca"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": true,
+  "createdAt": {
+    "$date": "2026-05-31T18:05:37.586Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T18:11:06.433Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1c7a3438668ebff1c9f7c2"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-05-31T18:13:08.103Z"
+  },
+  "updatedAt": {
+    "$date": "2026-05-31T18:13:08.103Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1c7ae738668ebff1c9f7f9"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": true,
+  "createdAt": {
+    "$date": "2026-05-31T18:16:07.922Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1c7b6f38668ebff1c9f833"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": true,
+  "createdAt": {
+    "$date": "2026-05-31T18:18:23.082Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1c7bb538668ebff1c9f8b1"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": true,
+  "createdAt": {
+    "$date": "2026-05-31T18:19:33.443Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a1e7bb7b34320be0aa71452"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: database",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-02T06:44:07.028Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-02T06:44:07.028Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1e7bb7b34320be0aa71453"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: database",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-02T06:44:07.029Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-02T06:44:07.029Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1e7bb7b34320be0aa71454"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: database",
+  "read": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-02T06:44:07.029Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1e7bb7b34320be0aa71455"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: database",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-02T06:44:07.029Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-02T06:44:07.029Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a1e7c95b34320be0aa714ca"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": true,
+  "createdAt": {
+    "$date": "2026-06-02T06:47:49.544Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a25245c9b1830621b4ff40e"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: assignment",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-07T07:57:16.279Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-07T07:57:16.279Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a25245c9b1830621b4ff40f"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: assignment",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-07T07:57:16.279Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-07T07:57:16.279Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a25245c9b1830621b4ff410"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: assignment",
+  "read": true,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-07T07:57:16.279Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a25245c9b1830621b4ff411"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: assignment",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-07T07:57:16.279Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-07T07:57:16.279Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a25b852da7add2ce87a2a78"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": true,
+  "createdAt": {
+    "$date": "2026-06-07T18:28:34.312Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:45:22.182Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2d457e4439eef87e3327a7"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": true,
+  "createdAt": {
+    "$date": "2026-06-13T11:56:46.141Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:57:29.673Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2d7b2a1f699b4c9d517fb6"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-13T15:45:46.497Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T15:45:46.497Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2d8f361f699b4c9d51807d"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-13T17:11:18.435Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:11:18.435Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2d9447bd629fac685315cc"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: data structure",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-13T17:32:55.855Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:32:55.855Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2d9447bd629fac685315cd"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: data structure",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-13T17:32:55.855Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:32:55.855Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2d9447bd629fac685315ce"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: data structure",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-13T17:32:55.855Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:32:55.855Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2d9447bd629fac685315cf"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: data structure",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-13T17:32:55.855Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:32:55.855Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2d949fbd629fac68531616"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-13T17:34:23.158Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:34:23.158Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e431575a48c4e7750b9c2"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: title of assignment",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T05:58:45.359Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:58:45.359Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e431575a48c4e7750b9c3"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: title of assignment",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T05:58:45.359Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:58:45.359Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e431575a48c4e7750b9c4"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: title of assignment",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T05:58:45.359Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:58:45.359Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e431575a48c4e7750b9c5"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: title of assignment",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T05:58:45.359Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:58:45.359Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e432a75a48c4e7750b9ca"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: sdf",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T05:59:06.859Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:59:06.859Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e432a75a48c4e7750b9cb"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: sdf",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T05:59:06.860Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:59:06.860Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e432a75a48c4e7750b9cc"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: sdf",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T05:59:06.860Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:59:06.860Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e432a75a48c4e7750b9cd"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: sdf",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T05:59:06.860Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T05:59:06.860Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e44a175a48c4e7750bc37"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-14T06:05:21.410Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:05:21.410Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e457a75a48c4e7750bddb"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-14T06:08:58.962Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:08:58.962Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e459075a48c4e7750be01"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-14T06:09:20.804Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:09:20.804Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e45a775a48c4e7750be3b"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-14T06:09:43.321Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:09:43.321Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4cbbb4bdecc636229d97"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: ai plagerism",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:39:55.133Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:39:55.133Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e4cbbb4bdecc636229d98"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: ai plagerism",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:39:55.133Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:39:55.133Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e4cbbb4bdecc636229d99"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: ai plagerism",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:39:55.133Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:39:55.133Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e4cbbb4bdecc636229d9a"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: ai plagerism",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:39:55.133Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:39:55.133Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e4d01b4bdecc636229dec"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-14T06:41:05.848Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:41:05.848Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4d7bb4bdecc636229e9e"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-14T06:43:07.387Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:43:07.387Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4e1db4bdecc636229ebf"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc8427e"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: assignment submission ai checker",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:45:49.052Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:45:49.052Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e4e1db4bdecc636229ec0"
+  },
+  "userId": {
+    "$oid": "696c96075a15757d2cc84289"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: assignment submission ai checker",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:45:49.052Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:45:49.052Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e4e1db4bdecc636229ec1"
+  },
+  "userId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: assignment submission ai checker",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:45:49.052Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:45:49.052Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e4e1db4bdecc636229ec2"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "New Assignment",
+  "type": "assignment",
+  "message": "New Assignment Added: assignment submission ai checker",
+  "read": false,
+  "__v": 0,
+  "createdAt": {
+    "$date": "2026-06-14T06:45:49.052Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:45:49.052Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a2e4f50b4bdecc636229fe3"
+  },
+  "userId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "title": "Assignment Graded",
+  "type": "grade",
+  "message": "Your assignment has been graded",
+  "read": false,
+  "createdAt": {
+    "$date": "2026-06-14T06:50:56.917Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:50:56.917Z"
+  },
+  "__v": 0
+}]

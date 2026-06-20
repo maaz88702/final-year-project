@@ -1,0 +1,432 @@
+[{
+  "_id": {
+    "$oid": "6a1e7c95b34320be0aa714c8"
+  },
+  "assignmentId": {
+    "$oid": "6a1e7bb6b34320be0aa7144f"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "obtainmarks": 2,
+  "details": [
+    {
+      "question": "what is database",
+      "rubric": "definition",
+      "level": "50%",
+      "marks": 2
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-02T06:47:49.538Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-02T06:47:49.538Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2d457e4439eef87e3327a4"
+  },
+  "assignmentId": {
+    "$oid": "6a1c755938668ebff1c9f3b9"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "obtainmarks": 10.5,
+  "details": [
+    {
+      "question": "what is data structure",
+      "rubric": "definition",
+      "level": "50%",
+      "marks": 2
+    },
+    {
+      "question": "what is data structure",
+      "rubric": "examples",
+      "level": "0%",
+      "marks": 0
+    },
+    {
+      "question": "what is data structure",
+      "rubric": "condition 3",
+      "level": "50%",
+      "marks": 2
+    },
+    {
+      "question": "define stack",
+      "rubric": "definition",
+      "level": "50%",
+      "marks": 2
+    },
+    {
+      "question": "define stack",
+      "rubric": "examples",
+      "level": "50%",
+      "marks": 2.5
+    },
+    {
+      "question": "this is quetion 3",
+      "rubric": "this is ruberic",
+      "level": "50%",
+      "marks": 2
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-13T11:56:46.119Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T11:56:46.119Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2d7b2a1f699b4c9d517fb3"
+  },
+  "assignmentId": {
+    "$oid": "6a1c771038668ebff1c9f4bb"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "obtainmarks": 1.5,
+  "details": [
+    {
+      "question": "definition",
+      "rubric": "abbrevations",
+      "level": "0%",
+      "marks": 0
+    },
+    {
+      "question": "definition",
+      "rubric": "examples",
+      "level": "50%",
+      "marks": 1.5
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-13T15:45:46.472Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T15:45:46.472Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2d8f361f699b4c9d51807a"
+  },
+  "assignmentId": {
+    "$oid": "6a25245c9b1830621b4ff40b"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "obtainmarks": 4,
+  "details": [
+    {
+      "question": "finaly year project",
+      "rubric": "student-teacher interaction",
+      "level": "100%",
+      "marks": 4
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-13T17:11:18.428Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:11:18.428Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2d949fbd629fac68531613"
+  },
+  "assignmentId": {
+    "$oid": "6a2d9447bd629fac685315c9"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "obtainmarks": 4,
+  "details": [
+    {
+      "question": "data define",
+      "rubric": "define",
+      "level": "100%",
+      "marks": 4
+    },
+    {
+      "question": "data define",
+      "rubric": "example",
+      "level": "100%",
+      "marks": 0
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-13T17:34:23.137Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-13T17:34:23.137Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e44a175a48c4e7750bc34"
+  },
+  "assignmentId": {
+    "$oid": "6a1c755938668ebff1c9f3b9"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "obtainmarks": 17.5,
+  "details": [
+    {
+      "question": "what is data structure",
+      "rubric": "definition",
+      "level": "25%",
+      "marks": 1
+    },
+    {
+      "question": "what is data structure",
+      "rubric": "examples",
+      "level": "100%",
+      "marks": 4
+    },
+    {
+      "question": "what is data structure",
+      "rubric": "condition 3",
+      "level": "100%",
+      "marks": 4
+    },
+    {
+      "question": "define stack",
+      "rubric": "definition",
+      "level": "50%",
+      "marks": 2
+    },
+    {
+      "question": "define stack",
+      "rubric": "examples",
+      "level": "50%",
+      "marks": 2.5
+    },
+    {
+      "question": "this is quetion 3",
+      "rubric": "this is ruberic",
+      "level": "100%",
+      "marks": 4
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T06:05:21.383Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:05:21.383Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e457a75a48c4e7750bdd8"
+  },
+  "assignmentId": {
+    "$oid": "6a2e432a75a48c4e7750b9c7"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "obtainmarks": 6.5,
+  "details": [
+    {
+      "question": "sdf",
+      "rubric": "dffdd",
+      "level": "50%",
+      "marks": 2.5
+    },
+    {
+      "question": "sdfdsf",
+      "rubric": "45",
+      "level": "100%",
+      "marks": 4
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T06:08:58.958Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:08:58.958Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e459075a48c4e7750bdfe"
+  },
+  "assignmentId": {
+    "$oid": "6a2e432a75a48c4e7750b9c7"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "obtainmarks": 4.5,
+  "details": [
+    {
+      "question": "sdf",
+      "rubric": "dffdd",
+      "level": "50%",
+      "marks": 2.5
+    },
+    {
+      "question": "sdfdsf",
+      "rubric": "45",
+      "level": "50%",
+      "marks": 2
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T06:09:20.798Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:09:20.798Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e45a775a48c4e7750be38"
+  },
+  "assignmentId": {
+    "$oid": "6a1c771038668ebff1c9f4bb"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "obtainmarks": 3.5,
+  "details": [
+    {
+      "question": "definition",
+      "rubric": "abbrevations",
+      "level": "100%",
+      "marks": 2
+    },
+    {
+      "question": "definition",
+      "rubric": "examples",
+      "level": "50%",
+      "marks": 1.5
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T06:09:43.315Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:09:43.315Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4d01b4bdecc636229de9"
+  },
+  "assignmentId": {
+    "$oid": "6a2e4cbbb4bdecc636229d94"
+  },
+  "studentId": {
+    "$oid": "69cd571ee02f4374630b4c7c"
+  },
+  "obtainmarks": 7,
+  "details": [
+    {
+      "question": "asdffd dsf ",
+      "rubric": "sdfds ",
+      "level": "100%",
+      "marks": 4
+    },
+    {
+      "question": "asdffd dsf ",
+      "rubric": "sdfd",
+      "level": "100%",
+      "marks": 3
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T06:41:05.837Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:41:05.837Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4d7bb4bdecc636229e9b"
+  },
+  "assignmentId": {
+    "$oid": "6a2e4cbbb4bdecc636229d94"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "obtainmarks": 3.5,
+  "details": [
+    {
+      "question": "asdffd dsf ",
+      "rubric": "sdfds ",
+      "level": "50%",
+      "marks": 2
+    },
+    {
+      "question": "asdffd dsf ",
+      "rubric": "sdfd",
+      "level": "50%",
+      "marks": 1.5
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T06:43:07.378Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:43:07.378Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6a2e4f50b4bdecc636229fe0"
+  },
+  "assignmentId": {
+    "$oid": "6a2e4e1db4bdecc636229ebc"
+  },
+  "studentId": {
+    "$oid": "69f0f223c6e736da04cefeff"
+  },
+  "obtainmarks": 2.5,
+  "details": [
+    {
+      "question": "sdf",
+      "rubric": "df",
+      "level": "50%",
+      "marks": 1.5
+    },
+    {
+      "question": "sdf",
+      "rubric": "sdf",
+      "level": "50%",
+      "marks": 1
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-06-14T06:50:56.911Z"
+  },
+  "updatedAt": {
+    "$date": "2026-06-14T06:50:56.911Z"
+  },
+  "__v": 0
+}]
