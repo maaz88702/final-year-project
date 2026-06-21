@@ -27,10 +27,11 @@ import {
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DownloadIcon from "@mui/icons-material/Download"; 
-import AssessmentIcon from "@mui/icons-material/Assessment"; // 🌟 Imported for Course Analytics button icon
+import AssessmentIcon from "@mui/icons-material/Assessment"; 
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const AttendanceView = () => {
   const baseURL = "http://localhost:3000";
@@ -45,6 +46,9 @@ const AttendanceView = () => {
   const [courseFilter, setCourseFilter] = useState("");
 
   // ================= FETCH ATTENDANCE =================
+  // ================= FETCH ATTENDANCE =================
+  // ================= FETCH ATTENDANCE =================
+ // ================= FETCH ATTENDANCE =================
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
@@ -54,16 +58,47 @@ const AttendanceView = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setAttendanceData(res.data);
+
+        const decodedToken = jwtDecode(token);
+        const loggedInTeacherId = decodedToken?.id || decodedToken?._id;
+
+        if (loggedInTeacherId && Array.isArray(res.data)) {
+          
+          // Check if the backend is providing a valid teacher identifier path
+          const hasTeacherField = res.data.length > 0 && 
+            (res.data[0].teacherId || res.data[0].teacher || res.data[0].courseId?.teacherId);
+
+          if (hasTeacherField) {
+            // Apply strict matching filter when field data exists
+            const teacherSpecificRecords = res.data.filter((item) => {
+              const recordTeacherField = item.teacherId || item.teacher || item.courseId?.teacherId;
+              const recordTeacherId = recordTeacherField?._id || recordTeacherField;
+              return String(recordTeacherId) === String(loggedInTeacherId);
+            });
+            setAttendanceData(teacherSpecificRecords);
+          } else {
+            // Fallback safety layer: displays returned records if backend omitted teacher property keys
+            console.warn("Backend documents lack a teacher relationship path reference. Defaulting to show full response array.");
+            setAttendanceData(res.data);
+          }
+
+        } else {
+          setAttendanceData([]);
+          toast.error("User identity verification expired. Please re-login.");
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Fetch attendance application context error:", error);
         toast.error("Failed to load attendance");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAttendance();
+    if (token) {
+      fetchAttendance();
+    } else {
+      toast.error("Access Denied: Token missing.");
+    }
   }, [token]);
 
   // ================= UNIQUE COURSES =================
@@ -232,7 +267,7 @@ const AttendanceView = () => {
           </Grid>
         </Grid>
 
-        {/* 🌟 NEW: COURSE ANALYTICS SHORTCUT BUTTONS BOX */}
+        {/* COURSE ANALYTICS SHORTCUT BUTTONS BOX */}
         {uniqueCourses.length > 0 && (
           <Box sx={{ mt: 4, p: 2, bgcolor: "grey.50", borderRadius: 3, border: "1px dashed", borderColor: "grey.300" }}>
             <Typography variant="subtitle2" fontWeight="bold" color="text.secondary" sx={{ mb: 1.5 }}>

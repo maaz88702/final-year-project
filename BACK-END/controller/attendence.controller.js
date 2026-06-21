@@ -85,20 +85,45 @@ const markAttendance = async (req, res) => {
 };
 
 // ================= GET ALL =================
+// Backend Controller: attendanceController.js
+// controllers/attendanceController.js
+// const Attendance = require("../models/Attendance");
+const Course = require("../models/Course.model");
+
 const getAttendance = async (req, res) => {
   try {
-    const data = await Attendance.find()
-      .populate("attendance.studentId", "studentName rollNo")
-      .populate("courseId", "courseTitle")
-      .populate("semesterId", "semester")
-      .sort({ date: -1 });
+    // 1. Extract the logged-in teacher's ID from your JWT auth middleware
+    const loggedInTeacherId = req.user.id; 
 
-    res.json(data);
+    console.log(`=== FETCHING ATTENDANCE FOR TEACHER: ${loggedInTeacherId} ===`);
 
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    // 2. Find all courses assigned to this specific teacher
+    const teacherCourses = await Course.find({ teacherId: loggedInTeacherId }).select("_id");
+    
+    // Extract just the IDs into a flat array: [ObjectId('...'), ObjectId('...')]
+    const courseIds = teacherCourses.map(course => course._id);
+
+    // 3. Find only the attendance sheets that match those course IDs
+    const records = await Attendance.find({ courseId: { $in: courseIds } })
+      .populate("semesterId")
+      .populate({
+        path: "courseId",
+        select: "courseTitle teacherId semesterId" // explicit fields to return
+      })
+      .populate("attendance.studentId");
+
+    console.log(`Successfully retrieved ${records.length} attendance sheets.`);
+
+    // 4. Send the targeted records back to your React frontend
+    res.status(200).json(records);
+
+  } catch (error) {
+    console.error("Error inside getAttendance controller:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+
 
 // ================= GET STUDENT =================
 const getStudentAttendance = async (req, res) => {
